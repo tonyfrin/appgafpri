@@ -1,0 +1,85 @@
+/* --------------Variables */
+:root{
+  /* Tipografia */
+  /* --font-main: 'Roboto', sans-serif; */
+  --font-main: "Poppins", sans-serif;
+  --color-text: rgb(38, 35, 33);
+}
+/* --------------Variables */
+
+
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-main);
+  color: var(--color-text);
+}
+
+.div-app {
+  max-width: 100%; /* Establece un ancho máximo para el contenedor principal */
+  margin: 0 auto; /* Centra el contenedor en la pantalla */
+}
+
+button{
+  background: none;
+  border: none;
+}
+
+select {
+  color: #000; 
+  -webkit-text-fill-color: #000; 
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input.gs-input-alert, div.gs-input-alert{
+  border: 2px solid #e91e63;
+  border-radius: 6px;
+}
+
+
+span.gs-disabled, .disabled a, .gs-disabled a, button.gs-disabled, .gs-disabled{
+  opacity: 0.3;
+  box-shadow: none;
+  cursor: default;
+}
+
+.div-app{
+  display: flex;
+  height: 100vh;
+}
+
+.content-app{
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.fade-in {
+  opacity: 0;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
+}
+
+.email-button{
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
