@@ -51,7 +51,7 @@ export const ServiceSection = () => {
         <section className={serviceSectionContainer}>
             <div className={serviceSectionContent}>
                 <div className={serviceSectionContentSmallTitle}>¿Qué te ofrece Gafpri?</div>
-                <h2 className={serviceSectionContentTitle}>4 Servicios integrados que te facilitan tu trabajo como Técnico en Refrigeración</h2>
+                <h2 className={serviceSectionContentTitle}>4 Servicios integrados que facilitan manejar tu dinero.</h2>
                 <BoxesInfo/>
             </div>
         </section>

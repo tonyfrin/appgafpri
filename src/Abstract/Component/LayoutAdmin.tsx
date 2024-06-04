@@ -103,7 +103,7 @@ export const LayoutAdmin = ({
         <main style={{ flexGrow: 1 }}>{loading ? (<Loading />) : children}</main>
         <MenuFooterApp items={menuItems}/>
         <MainFooter 
-            siteName="Gafpri Admin"
+            siteName="Gafpri Corp"
             isLogin={false}
             styles={{
               position: 'relative',

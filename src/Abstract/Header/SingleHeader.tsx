@@ -68,9 +68,6 @@ export const SingleHeader = ({
             maxWidth: '100px',
           }}
         />
-        <SingleMenu 
-          items={itemsMenu}
-        />
       </div>
     </header>
   );

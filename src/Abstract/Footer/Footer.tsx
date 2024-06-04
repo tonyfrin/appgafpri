@@ -90,7 +90,7 @@ export const MainFooter = ({
   footerPClass = '',
   styles = {},
   isLogin,
-  year = '2023',
+  year = '2024',
   siteName,
   onLogOut,
 }: Footer): JSX.Element => {

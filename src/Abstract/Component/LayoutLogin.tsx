@@ -68,7 +68,7 @@ export const LayoutLogin = ({
         />
         <main style={{ flexGrow: 1 }}>{loading ? (<Loading />) : children}</main>
         <MainFooter 
-            siteName="Gafpri Store"
+            siteName="Gafpri Corp"
             isLogin={false}
             styles={{
                 position: 'relative',

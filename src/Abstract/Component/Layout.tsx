@@ -47,7 +47,7 @@ export const Layout = ({
         />
         <main style={{ flexGrow: 1 }}>{children}</main>
         <MainFooter 
-            siteName="Gafpri Store"
+            siteName="Gafpri Corp"
             isLogin={false}
             styles={{
                 position: 'relative',

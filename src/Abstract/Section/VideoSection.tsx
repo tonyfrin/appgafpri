@@ -132,11 +132,11 @@ export const VideoSection = (): JSX.Element => {
                     <div className={videoSectionSubContentTitle}>
                         <div className={videoSectionContentTitleContainer}>
                             <h1 className={videoSectionContentTitleText}>
-                                <span>¿Eres técnico en Refrigeración?</span>
-                                <span className={videoSectionContentTitleTextSpan}>Estos servicios son para ti</span>
+                                <span>Recarga, compra, envía o transfiere <span style={{color: '#07b2e7'}}>con Gafpri.</span></span>
+                                <span className={videoSectionContentTitleTextSpan}></span>
                             </h1>
                             <div className={videoSectionContentTitleTextP}>
-                                GAFPRI es la solución integral diseñada para técnicos en refrigeración
+                                GAFPRI es la solución integral diseñada para ti. 
                             </div>
                             <div>
                             <Link href='/login'>
