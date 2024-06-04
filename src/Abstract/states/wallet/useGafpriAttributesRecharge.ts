@@ -53,8 +53,8 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
             setCommission('0.00');
             setTotal(amount);
         } else if (paymentType === 'paypal') {
-            setCommissionRate('3 %');
-            const newCommission = (parseFloat(amount) * 0.03).toFixed(2);
+            setCommissionRate('5 %');
+            const newCommission = (parseFloat(amount) * 0.05).toFixed(2);
             const newTotal = (parseFloat(amount) - parseFloat(newCommission)).toFixed(2);
             setCommission(newCommission);
             setTotal(newTotal);
