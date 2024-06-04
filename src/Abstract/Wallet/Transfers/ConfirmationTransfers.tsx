@@ -50,7 +50,7 @@ export function ConfirmationTransfers() {
         await useWallet.attributes.actions.getEntities();
         useWallet.pagesTransfers.actions.onSuccess();
       } else{
-   
+        useWallet.pagesTransfers.actions.onError();
         useError.actions.changeError([data.message]);
       }
     } catch (error) {

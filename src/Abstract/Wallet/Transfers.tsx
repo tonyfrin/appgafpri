@@ -6,6 +6,7 @@ import { AmountTransfert } from './Transfers/AmountTransfert';
 import { ConfirmationTransfers } from './Transfers/ConfirmationTransfers';
 import { SuccessTransfers } from './Transfers/SuccessTransfers';
 import { LayoutAppProfile } from '../Component/LayoutAppProfile';
+import { TransferError } from './Transfers/TransferError';
 
 
 export function Transfers() {
@@ -26,6 +27,8 @@ export function Transfers() {
             { useWallet.pagesTransfers.states.isConfirmation && <ConfirmationTransfers />}
 
             { useWallet.pagesTransfers.states.isSuccess && <SuccessTransfers />}
+
+            { useWallet.pagesTransfers.states.isError && <TransferError />}
          </div>
         </>
       </LayoutAppProfile>

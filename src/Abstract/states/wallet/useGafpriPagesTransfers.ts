@@ -7,6 +7,7 @@ type states = {
     isInfo: boolean;
     isBeneficiary: boolean;
     isConfirmation: boolean;
+    isError: boolean;
     isSuccess: boolean;
 }
 
@@ -17,6 +18,7 @@ type actions = {
     onBeneficiary: () => void;
     onConfirmation: () => void;
     onSuccess: () => void;
+    onError: () => void;
     returnInit: () => void;
 }
 
@@ -34,6 +36,7 @@ export const useGafpriPagesTransfers = ({
     const [isInfo, setIsInfo] = useState<boolean>(false);
     const [isBeneficiary, setIsBeneficiary] = useState<boolean>(false);
     const [isConfirmation, setIsConfirmation] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
     const onInit = () => {
@@ -42,6 +45,7 @@ export const useGafpriPagesTransfers = ({
         setIsInfo(false);
         setIsBeneficiary(false);
         setIsConfirmation(false);
+        setIsError(false);
         setIsSuccess(false);
     }
 
@@ -51,6 +55,7 @@ export const useGafpriPagesTransfers = ({
         setIsInfo(false);
         setIsBeneficiary(false);
         setIsConfirmation(false);
+        setIsError(false);
         setIsSuccess(false);
     }
 
@@ -60,6 +65,7 @@ export const useGafpriPagesTransfers = ({
         setIsInfo(true);
         setIsBeneficiary(false);
         setIsConfirmation(false);
+        setIsError(false);
         setIsSuccess(false);
     }  
 
@@ -69,6 +75,7 @@ export const useGafpriPagesTransfers = ({
         setIsInfo(false);
         setIsBeneficiary(true);
         setIsConfirmation(false);
+        setIsError(false);
         setIsSuccess(false);
     }
 
@@ -78,6 +85,17 @@ export const useGafpriPagesTransfers = ({
         setIsInfo(false);
         setIsBeneficiary(false);
         setIsConfirmation(true);
+        setIsError(false);
+        setIsSuccess(false);
+    }
+
+    const onError = () => {
+        setIsInit(false);
+        setIsCode(false);
+        setIsInfo(false);
+        setIsBeneficiary(false);
+        setIsConfirmation(false);
+        setIsError(true);
         setIsSuccess(false);
     }
 
@@ -87,6 +105,7 @@ export const useGafpriPagesTransfers = ({
         setIsInfo(false);
         setIsBeneficiary(false);
         setIsConfirmation(false);
+        setIsError(false);
         setIsSuccess(true);
     }
 
@@ -101,6 +120,7 @@ export const useGafpriPagesTransfers = ({
         isInfo,
         isBeneficiary,
         isConfirmation,
+        isError,
         isSuccess
     };
 
@@ -111,6 +131,7 @@ export const useGafpriPagesTransfers = ({
         onBeneficiary,
         onConfirmation,
         returnInit,
+        onError,
         onSuccess
      };
 

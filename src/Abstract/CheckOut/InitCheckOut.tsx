@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { css } from '@emotion/css';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import { IoLocationOutline } from 'react-icons/io5';
-import { IoBicycleOutline } from 'react-icons/io5';
+import { IoLocationOutline, IoBicycleOutline } from 'react-icons/io5';
 import { ButtonAppMobile } from '../Button/ButtonAppMobile';
 import { useTheme } from '../context/ThemeContext';
 import { FadeIn } from '../Fade/FadeIn';
