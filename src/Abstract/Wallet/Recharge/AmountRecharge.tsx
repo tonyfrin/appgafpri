@@ -6,7 +6,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { SelectApp } from '../../Select/SelectApp';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
-import { decimalFormatPriceConverter } from '../../helpers';
+import { decimalFormatPriceConverter, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
 import { Loading } from '../../Loading';
 import { Error } from '../../Error/Error';
 import { ButtonEditInfo } from '../../Button/ButtonEditInfo';
@@ -337,6 +337,10 @@ export function AmountRecharge() {
                       inputProps={{
                         placeholder: 'Monto',
                         type: 'number',
+                        min: "0",
+                        step: "0.01",
+                        onKeyPress: handleKeyPressForAmount,
+                        onPaste: handlePasteForAmount,
                         value: useWallet.attributesRecharge.states.amount,
                         onChange: (e) => useWallet.attributesRecharge.actions.setAmount(e.target.value)
                       }}

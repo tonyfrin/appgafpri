@@ -271,3 +271,29 @@ export function formatPhoneNumberVzla(phoneNumber: string): string | null {
   // Formatear el número de teléfono
   return `+${countryCode} (${areaCode}) ${firstPart}-${secondPart}`;
 }
+
+export const handleKeyPressForAmount = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const key = event.key;
+
+    // Permitir solo números (0-9), punto (.), tecla de borrar (Backspace), y Enter
+    if (
+        (key >= '0' && key <= '9') || 
+        key === '.' || 
+        key === 'Backspace' || 
+        key === 'Enter'
+    ) {
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
+};
+
+export const handlePasteForAmount = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const pastedData = event.clipboardData.getData('Text');
+
+    // Permitir solo si el contenido pegado es numérico o tiene punto
+    if (!/^[0-9]*\.?[0-9]*$/.test(pastedData)) {
+        event.preventDefault();
+    }
+};

@@ -1,11 +1,11 @@
 import React from 'react';
-import { IoCartOutline, IoBicycleOutline } from 'react-icons/io5';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import Link from 'next/link';
 import { css } from '@emotion/css';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { useTheme } from '../../context/ThemeContext';
-import { Error } from '@/Abstract/Error';
+import { Error } from '../../Error';
+import { WhatsApp } from '../../Notification/WhatsApp';
 
 
 const mainStyles = css`
@@ -57,6 +57,7 @@ export function TransferError() {
                   }}>
                       <h1 className={title1AppStyles}>No pudimos procesar su Transferencia, por favor vuelva a intentarlo.</h1>
                   </div>
+                    
                     <Link href="/billetera" style={{
                       textDecoration: 'none',
                       color: 'inherit',
@@ -71,6 +72,7 @@ export function TransferError() {
                       />
                     </Link>
                 </div>
+                <WhatsApp />
             </div>
           </main>
         </>

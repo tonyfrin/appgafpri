@@ -5,7 +5,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { SelectApp } from '../../Select/SelectApp';
-import { decimalFormatPriceConverter, formatPhoneNumber } from '../../helpers';
+import { decimalFormatPriceConverter, formatPhoneNumber, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -126,6 +126,10 @@ export function AmountTransfert() {
               placeholder: 'Monto',
               type: 'number',
               value: useWallet.attributesTransfers.states.amount,
+              min: "0",
+              step: "0.01",
+              onKeyPress: handleKeyPressForAmount,
+              onPaste: handlePasteForAmount,
               onChange: (e) => useWallet.attributesTransfers.actions.setAmount(e.target.value),
             }}
             containerStyles={{

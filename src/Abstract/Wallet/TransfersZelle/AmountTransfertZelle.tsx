@@ -5,7 +5,7 @@ import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { FiChevronLeft } from 'react-icons/fi';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { SelectApp } from '../../Select/SelectApp';
-import { decimalFormatPriceConverter, formatPhoneNumber } from '../../helpers';
+import { decimalFormatPriceConverter, formatPhoneNumber, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -133,6 +133,10 @@ export function AmountTransfertZelle() {
             inputProps={{
               placeholder: 'Monto',
               type: 'number',
+              min: "0",
+              step: "0.01",
+              onKeyPress: handleKeyPressForAmount,
+              onPaste: handlePasteForAmount,
               value: useWallet.attributesTransfersZelle.states.amount,
               onChange: (e) => useWallet.attributesTransfersZelle.actions.setAmount(e.target.value),
             }}

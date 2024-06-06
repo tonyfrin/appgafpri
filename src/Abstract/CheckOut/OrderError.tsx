@@ -3,6 +3,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { css } from '@emotion/css';
 import { ButtonAppMobile } from '../Button/ButtonAppMobile';
+import { WhatsApp } from '../Notification/WhatsApp';
 
 
 const mainStyles = css`
@@ -55,6 +56,7 @@ export function OrderError() {
                       />
                     </Link>
                 </div>
+                <WhatsApp />
             </div>
           </main>
         </>
