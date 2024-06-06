@@ -47,7 +47,7 @@ export const InitWallet = () => {
                         <div
                         style={{
                             width: '90%',
-                            margin: '1em auto',
+                            margin: 'auto',
                         }}
                         >
                             {entities.length > 0 && entities.map((entity, index) => {
@@ -62,7 +62,7 @@ export const InitWallet = () => {
                                     <>
                                     <div
                                         style={{
-                                            margin: '2em auto',
+                                            margin: '1em auto',
                                         }}
                                     >
                                         <div>
@@ -151,15 +151,16 @@ export const InitWallet = () => {
                                                                             margin: 'auto 0px',
                                                                             fontFamily: 'Poppins',
                                                                             textAlign: 'left',
-                                                                            width: '70%'
+                                                                            width: '50%'
                                                                         }}
                                                                     >{account.name}</span>
                                                                     <div
                                                                         style={{
                                                                             display: 'flex',
                                                                             flexDirection: 'column',
-                                                                            width: '30%',
+                                                                            width: '50%',
                                                                             margin: 'auto 0px',
+                                                                            alignItems: 'flex-end'
                                                                         }}
                                                                     >
                                                                         <span style={{
@@ -171,13 +172,7 @@ export const InitWallet = () => {
                                                                             siteOptions.CURRENCY_SYMBOL,
                                                                             siteOptions.CURRENCY_LOCATION
                                                                         )} >`}</span>
-                                                                        <span
-                                                                            style={{
-                                                                                fontSize: '0.5em',
-                                                                                textAlign: 'center'
-
-                                                                            }}
-                                                                        >Saldo disponible</span>
+                                                                        
                                                                     </div>
                                                                 </Link>
                                                         </div>

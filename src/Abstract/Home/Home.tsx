@@ -143,7 +143,7 @@ export const Home = () => {
                                     <>
                                     <div
                                         style={{
-                                            margin: '0 auto',
+                                            margin: '1em auto',
                                         }}
                                     >
                                         <div>
@@ -232,15 +232,16 @@ export const Home = () => {
                                                                             margin: 'auto 0px',
                                                                             fontFamily: 'Poppins',
                                                                             textAlign: 'left',
-                                                                            width: '70%'
+                                                                            width: '50%'
                                                                         }}
                                                                     >{account.name}</span>
                                                                     <div
                                                                         style={{
                                                                             display: 'flex',
                                                                             flexDirection: 'column',
-                                                                            width: '30%',
+                                                                            width: '50%',
                                                                             margin: 'auto 0px',
+                                                                            alignItems: 'flex-end'
                                                                         }}
                                                                     >
                                                                         <span style={{
@@ -252,13 +253,6 @@ export const Home = () => {
                                                                             siteOptions.CURRENCY_SYMBOL,
                                                                             siteOptions.CURRENCY_LOCATION
                                                                         )} >`}</span>
-                                                                        <span
-                                                                            style={{
-                                                                                fontSize: '0.5em',
-                                                                                textAlign: 'center'
-
-                                                                            }}
-                                                                        >Saldo disponible</span>
                                                                     </div>
                                                                 </Link>
                                                         </div>
