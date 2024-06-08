@@ -7,6 +7,7 @@ import { UseGafpriAttributesRechargeReturn } from "./useGafpriAttributesRecharge
 import { SiteOptions } from '../../config/gafpriConfig';
 import { UseGafpriAttributesTransfersReturn } from "./useGafpriAttributesTransfers";
 import { UseGafpriAttributesTransfersZelleReturn } from "./useGafpriAttributesTransfersZelle";
+import { PaymentMethodsAttributesReturn } from "../paymentMethods/useGafpriApiPaymentMethods";
 
 export type WalletAccountAtrributesReturn = {
     postsId: string;
@@ -41,6 +42,7 @@ export interface WalletBeneficiariesAttributesReturn {
     postCode?: string;
     country?: string;
     status?: string;
+    paymentMethods: PaymentMethodsAttributesReturn[];
   }
 
 export type WalletTransactionsAttributesReturn = {
@@ -99,6 +101,7 @@ type actions = {
     addTransfer: () => Promise<any>;
     addBeneficiaryZelle: () => Promise<any>;
     addTransferZelle: () => Promise<any>;
+    deleteBeneficiaryZelle: (id: string) => Promise<any>;
 }
 
 export type UseGafpriApiWalletAccountReturn = {
@@ -393,6 +396,22 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
         }
     }
 
+    const deleteBeneficiaryZelle = async (id: string): Promise<any> => {
+        try {
+            if(useLogin.data.states.token){
+                const data = await gafpriFetch({
+                    initMethod: 'DELETE',
+                    initRoute: `${WALLET_ACCOUNT_ROUTE}/beneficiary/${id}`,
+                    initToken: { token: useLogin.data.states.token },
+                });
+                return data;
+            }
+        } catch (error) {
+            console.error(error);
+            return error;
+        }
+    }
+
     const actions = {
         getWalletAccount,
         addRecharge,
@@ -402,7 +421,8 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
         getWalletAccountByEmail,
         addTransfer,
         addBeneficiaryZelle,
-        addTransferZelle
+        addTransferZelle,
+        deleteBeneficiaryZelle
     }
 
     return {

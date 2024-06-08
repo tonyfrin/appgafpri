@@ -9,6 +9,7 @@ import { Loading } from '../../Loading';
 import { Error } from '../../Error';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { formatPhoneNumber } from '../../helpers';
+import { PaymentMethodsAttributesReturn } from '../../states/paymentMethods/useGafpriApiPaymentMethods';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -62,25 +63,57 @@ export function BeneficiaryZelle() {
     useWallet.pagesTransfersZelle.actions.onAmount();
   }
 
-    useEffect(() => {
-          const fetchBeneficiaries = async () => {
-            try {
-                setFetchBeneficiaries(true);
-                const data = await useWallet.account.actions.getBeneficiaries('zelle');
-                if(data && data.success && data.items){
-                    setBeneficiaries(data.items);
-                } else{
-                    setBeneficiaries([]);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setBeneficiaries([]);
-            } finally{
-                setFetchBeneficiaries(false);
-            }
-          }
+  function statusCheck(objects: PaymentMethodsAttributesReturn[]): boolean {
+    return objects.some(obj => obj.posts.status === 'complete');
+  }
 
-          fetchBeneficiaries();
+  const deleteBeneficiary = async (id: string) => {
+    try {
+      setFetchBeneficiaries(true);
+      const data = await useWallet.account.actions.deleteBeneficiaryZelle(id);
+      if(data && data.success){
+        try {
+          
+          const data = await useWallet.account.actions.getBeneficiaries('zelle');
+          if(data && data.success && data.items){
+              setBeneficiaries(data.items);
+          } else{
+              setBeneficiaries([]);
+          }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setBeneficiaries([]);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally{
+      setFetchBeneficiaries(false);
+    }
+  }
+
+  
+
+
+    useEffect(() => {
+        const fetchBeneficiaries = async () => {
+          try {
+              setFetchBeneficiaries(true);
+              const data = await useWallet.account.actions.getBeneficiaries('zelle');
+              if(data && data.success && data.items){
+                  setBeneficiaries(data.items);
+              } else{
+                  setBeneficiaries([]);
+              }
+          } catch (error) {
+              console.error('Error fetching data:', error);
+              setBeneficiaries([]);
+          } finally{
+              setFetchBeneficiaries(false);
+          }
+        }
+
+        fetchBeneficiaries();
     }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -132,7 +165,7 @@ export function BeneficiaryZelle() {
                 </div>
                 <div>
                 <h1 style={{textAlign: 'center', padding: '0.3em', fontSize: '1em'}} className={title1AppStyles}>{
-                    itemsFilter && itemsFilter.length > 0 ? 'Recurrente' : 'Agrega un nuevo beneficiario'
+                    itemsFilter && itemsFilter.length > 0 ? 'Beneficiarios Agregados' : 'Agrega un nuevo beneficiario'
                   
                 }</h1>
                 <div style={{
@@ -154,7 +187,9 @@ export function BeneficiaryZelle() {
                         }}
                       /> :
                     <>
-                    {itemsFilter && itemsFilter.length > 0 && itemsFilter.map((item, index) => (
+                    {itemsFilter && itemsFilter.length > 0 && itemsFilter.map((item, index) => {
+                      const verified: boolean = statusCheck(item.paymentMethods)
+                      return (
                       <div key={`bene-${index}`} style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -164,7 +199,6 @@ export function BeneficiaryZelle() {
                         margin: '5px',
                         cursor: 'pointer'
                       }}
-                      onClick={() => next(item)}
                       >
                         <div style={{
                           width: '40px',
@@ -181,12 +215,15 @@ export function BeneficiaryZelle() {
                             textTransform: 'uppercase',
                           }}>{item.name.substring(0, 1)}</span>
                         </div>
-                        <div style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          textAlign: 'left',
-                          width: '80%'
-                        }}>
+                        <div 
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            textAlign: 'left',
+                            width: verified ? '80%' : '60%'
+                          }}
+                          onClick={() => next(item)}
+                        >
                           <span style={{
                             fontSize: '0.8em',
                             fontWeight: 600,
@@ -196,7 +233,26 @@ export function BeneficiaryZelle() {
                             fontWeight: 400,
                           }}>{item.email ? item.email : formatPhoneNumber(`${item.phone}`)}</span>
                         </div>
-                      </div>))}
+                        {!verified &&
+                          <div style={{
+                            width: '20%',
+                            display: 'flex',
+                            justifyContent: 'flex-end'
+                          }}>
+                            <span 
+                              style={{
+                                fontSize: '0.4em',
+                                margin: 'auto',
+                                padding: '5px',
+                                background: '#c12429',
+                                color: '#FFF',
+                                borderRadius: '5px',
+                              }}
+                              onClick={() => deleteBeneficiary(`${item.id}`)}
+                            >Borrar</span>
+                          </div>
+                        }
+                      </div>)})}
 
                       
                         <div style={{

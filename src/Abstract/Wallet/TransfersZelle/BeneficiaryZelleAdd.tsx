@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { css } from '@emotion/css';
 import { useTheme } from '../../context/ThemeContext';
 import { FiChevronLeft } from 'react-icons/fi';
@@ -26,13 +26,13 @@ export function BeneficiaryZelleAdd() {
   const [fetching, setFetching] = useState<boolean>(false);
 
   const changeEmail = (email: string) => {
-    useWallet.attributesTransfersZelle.actions.setEmail(email);
-    useWallet.attributesTransfersZelle.actions.setPhone('');
+    useWallet.attributesTransfersZelle.actions.changeEmail(email);
+    useWallet.attributesTransfersZelle.actions.changePhone('');
   }
 
   const changePhone = (phone: string) => {
-    useWallet.attributesTransfersZelle.actions.setPhone(phone);
-    useWallet.attributesTransfersZelle.actions.setEmail('');
+    useWallet.attributesTransfersZelle.actions.changePhone(phone);
+    useWallet.attributesTransfersZelle.actions.changeEmail('');
   }
 
   const add = async (): Promise<void> => {
@@ -59,8 +59,23 @@ export function BeneficiaryZelleAdd() {
   };
 
   useEffect(() => {
+    useWallet.attributesTransfersZelle.actions.validationPhone(useWallet.attributesTransfersZelle.states.phone);
+    useWallet.attributesTransfersZelle.actions.validationEmail(useWallet.attributesTransfersZelle.states.email);
+  /* eslint-disable */
+  }, [
+    useWallet.attributesTransfersZelle.states.email, 
+    useWallet.attributesTransfersZelle.states.phone, 
+  ]);
+
+  useEffect(() => {
     useWallet.attributesTransfersZelle.actions.validationButtonBeneficiaryAdd();
-  }, [useWallet.attributesTransfersZelle.states.email, useWallet.attributesTransfersZelle.states.phone, useWallet.attributesTransfersZelle.states.name]); // eslint-disable-line
+  }, [
+    useWallet.attributesTransfersZelle.states.email, 
+    useWallet.attributesTransfersZelle.states.phone, 
+    useWallet.attributesTransfersZelle.states.name,
+    useWallet.attributesTransfersZelle.states.emailValid,
+    useWallet.attributesTransfersZelle.states.phoneValid,
+  ]); // eslint-disable-line
 
   
 
@@ -113,7 +128,7 @@ export function BeneficiaryZelleAdd() {
                     />
                     {useWallet.attributesTransfersZelle.states.phone === '' &&
                     <InputAppContainer 
-                        title= 'Email'
+                        title= 'Ingrese un email valido'
                         inputProps={{
                           title: 'Email',
                           placeholder: 'Email',
