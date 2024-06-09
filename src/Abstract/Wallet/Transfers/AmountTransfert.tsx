@@ -6,6 +6,7 @@ import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { SelectApp } from '../../Select/SelectApp';
 import { decimalFormatPriceConverter, formatPhoneNumber, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
+import { InputAppAmount } from '../../Input/InputAppAmount';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -121,22 +122,15 @@ export function AmountTransfert() {
           >
             <h1 style={{textAlign: 'center', padding: '0.3em', fontSize: '0.8em', fontWeight: 400}} className={title1AppStyles}>Enviar:</h1>
           </div>
-          <InputAppContainer 
-            inputProps={{
-              placeholder: 'Monto',
-              type: 'number',
-              value: useWallet.attributesTransfers.states.amount,
-              min: "0",
-              step: "0.01",
-              onKeyPress: handleKeyPressForAmount,
-              onPaste: handlePasteForAmount,
-              onChange: (e) => useWallet.attributesTransfers.actions.setAmount(e.target.value),
-            }}
-            containerStyles={{
-              customStyles: `
-              width: 95%; 
-              margin: auto;`
-            }}
+          <InputAppAmount
+                inputProps={{
+                  placeholder: '0.00',
+                  type: 'text',
+                  functionChange: useWallet.attributesTransfers.actions.setAmount,
+                }}
+                amountMax={20000}
+                symbol={siteOptions.CURRENCY_SYMBOL}
+                title='Monto a Transferir'
           />
           
           <div

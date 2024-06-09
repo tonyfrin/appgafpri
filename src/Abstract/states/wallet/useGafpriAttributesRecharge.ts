@@ -81,7 +81,7 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
         const valid = generalValidationButtonNext({
             validations: [
                 nameSend !== '',
-                number !== ''
+                number.length > 5,
             ],
             inputId: 'info-recharge-button',
         })

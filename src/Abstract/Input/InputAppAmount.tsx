@@ -152,6 +152,7 @@ export const InputAppAmount = ({
                         justifyContent: 'center',
                         border: '2px solid #eaeaea',
                         padding: '0.5em 0.5em 0.5em 1.3em',
+                        backgroundColor: '#fff',
                         borderRadius: '15px',
                     }}
                 >

@@ -337,16 +337,10 @@ export function AmountRecharge() {
                         type: 'text',
                         functionChange: useWallet.attributesRecharge.actions.setAmount,
                       }}
-                      amountMax={5000}
+                      amountMax={20000}
                       symbol={siteOptions.CURRENCY_SYMBOL}
                       title='Monto a recargar'
-                      description={`Monto máximo de recarga ${decimalFormatPriceConverter(
-                        5000 || 0,
-                        siteOptions.DECIMAL_NUMBERS,
-                        siteOptions.CURRENCY_SYMBOL,
-                        siteOptions.CURRENCY_LOCATION
-                      )}`}
-                    />
+                  />
 
                     <InputAppContainer 
                       inputProps={{

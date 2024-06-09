@@ -6,6 +6,7 @@ import { FiChevronLeft } from 'react-icons/fi';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { SelectApp } from '../../Select/SelectApp';
 import { decimalFormatPriceConverter, formatPhoneNumber, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
+import { InputAppAmount } from '../../Input/InputAppAmount';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -128,23 +129,15 @@ export function AmountTransfertZelle() {
           >
             <h1 style={{textAlign: 'center', padding: '0.3em', fontSize: '0.8em', fontWeight: 400}} className={title1AppStyles}>Enviar:</h1>
           </div>
-          <InputAppContainer 
-            title='Monto'
-            inputProps={{
-              placeholder: 'Monto',
-              type: 'number',
-              min: "0",
-              step: "0.01",
-              onKeyPress: handleKeyPressForAmount,
-              onPaste: handlePasteForAmount,
-              value: useWallet.attributesTransfersZelle.states.amount,
-              onChange: (e) => useWallet.attributesTransfersZelle.actions.setAmount(e.target.value),
-            }}
-            containerStyles={{
-              customStyles: `
-              width: 95%; 
-              margin: auto;`
-            }}
+          <InputAppAmount
+              inputProps={{
+                placeholder: '0.00',
+                type: 'text',
+                functionChange: useWallet.attributesTransfersZelle.actions.setAmount,
+              }}
+              amountMax={20000}
+              symbol={siteOptions.CURRENCY_SYMBOL}
+              title='Monto a Transferir'
           />
           <InputAppContainer 
                 inputProps={{
