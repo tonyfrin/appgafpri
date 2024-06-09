@@ -6,19 +6,14 @@ import { useTheme } from '../../context/ThemeContext';
 import { SelectApp } from '../../Select/SelectApp';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
-import { decimalFormatPriceConverter, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
+import { decimalFormatPriceConverter } from '../../helpers';
 import { Loading } from '../../Loading';
 import { Error } from '../../Error/Error';
 import { ButtonEditInfo } from '../../Button/ButtonEditInfo';
-import Image from 'next/image';
 import LogoZelle from '../../assets/img/logo-zelle.png';
 import LogoPaypal from '../../assets/img/logo-pay-pal.png';
-import LogoBofa from '../../assets/img/logo-bofa-blanco.png';
-import LogoChase from '../../assets/img/logo-chase-blanco.png';
-import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
-import LogoPagoMovil2 from '../../assets/img/logo-pago-movil2.png';
-import LogoBnc from '../../assets/img/logo-bnc-blano.png';
 import { PaymentMethodsList } from '@/Abstract/List/PaymentMethodsList';
+import { InputAppAmount } from '@/Abstract/Input/InputAppAmount';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -189,6 +184,9 @@ export function AmountRecharge() {
     // },
     
   ]
+
+  
+
   
   
 
@@ -333,17 +331,21 @@ export function AmountRecharge() {
 
               {useWallet.attributesRecharge.states.paymentType !== '' && 
                 <>  
-                  <InputAppContainer 
+                  <InputAppAmount
                       inputProps={{
-                        placeholder: 'Monto',
-                        type: 'number',
-                        min: "0",
-                        step: "0.01",
-                        onKeyPress: handleKeyPressForAmount,
-                        onPaste: handlePasteForAmount,
-                        value: useWallet.attributesRecharge.states.amount,
-                        onChange: (e) => useWallet.attributesRecharge.actions.setAmount(e.target.value)
+                        placeholder: '0.00',
+                        type: 'text',
+                        functionChange: useWallet.attributesRecharge.actions.setAmount,
                       }}
+                      amountMax={5000}
+                      symbol={siteOptions.CURRENCY_SYMBOL}
+                      title='Monto a recargar'
+                      description={`Monto máximo de recarga ${decimalFormatPriceConverter(
+                        5000 || 0,
+                        siteOptions.DECIMAL_NUMBERS,
+                        siteOptions.CURRENCY_SYMBOL,
+                        siteOptions.CURRENCY_LOCATION
+                      )}`}
                     />
 
                     <InputAppContainer 
@@ -386,12 +388,14 @@ export function AmountRecharge() {
                     }}
                   >
                     <span className={textResumeStyles}>Total de recarga: </span>
-                    <span className={textResumeStyles} style={{fontWeight: '600'}}>{decimalFormatPriceConverter(
+                    <span className={textResumeStyles} style={{fontWeight: '600'}}>{
+                        decimalFormatPriceConverter(
                               useWallet.attributesRecharge.states.total || 0,
                               siteOptions.DECIMAL_NUMBERS,
                               siteOptions.CURRENCY_SYMBOL,
                               siteOptions.CURRENCY_LOCATION
-                            )}</span>
+                        )
+                    }</span>
                   </div>
                   <div style={{
                       display: 'flex',

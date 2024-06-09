@@ -289,6 +289,21 @@ export const handleKeyPressForAmount = (event: React.KeyboardEvent<HTMLInputElem
     }
 };
 
+export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, value: string) => {
+  const { key } = e;
+  const cursorPosition = e.currentTarget.selectionStart;
+
+  // Usar la función de validación de teclas
+  if (!handleKeyPressForAmount(e)) {
+    return;
+  }
+
+  // Prevenir entrada de números en posiciones no permitidas
+  if (cursorPosition !== null && cursorPosition < value.length) {
+    e.preventDefault();
+  }
+};
+
 export const handlePasteForAmount = (event: React.ClipboardEvent<HTMLInputElement>) => {
     const pastedData = event.clipboardData.getData('Text');
 
