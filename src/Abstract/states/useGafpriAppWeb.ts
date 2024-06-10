@@ -16,7 +16,7 @@ import { UseGafpriProfileReturn, useGafpriProfile } from "./profile/useGafpriPro
 import { UseGafpriWalletReturn, useGafpriWallet } from "./wallet/useGafpriWallet";
 import { UseGafpriSingUpReturn, useGafpriSingUp } from "./singUp/useGafpriSingUp";
 import { UseGafpriPaymentMethodsReturn, useGafpriPaymentMethods } from "./paymentMethods/useGafpriPaymentMethods";
-import { UseCurrenciesReturn, useGafpriCurrencies } from "gafprilibui";
+import { UseGafpriCurrenciesReturn, useGafpriCurrencies } from "./currencies/useGafpriCurrencies";
 
 type State = {
     isFetchingGlobal: boolean;
@@ -45,7 +45,7 @@ export type UseGafpriAppWebReturn = {
     useWallet: UseGafpriWalletReturn;
     useSingUp: UseGafpriSingUpReturn;
     usePaymentMethods: UseGafpriPaymentMethodsReturn;
-    useCurrencies: UseCurrenciesReturn;
+    useCurrencies: UseGafpriCurrenciesReturn;
 }
 
 export const useGafpriAppWeb = (): UseGafpriAppWebReturn => {
@@ -58,7 +58,7 @@ export const useGafpriAppWeb = (): UseGafpriAppWebReturn => {
     }
     const useError = useGafpriError();
     const useLogin = useGafpriLogin({ setIsFetchingGlobal, globalResetInfo, useError});
-    const useCurrencies = useGafpriCurrencies({token: useLogin.data.states.token, useError});
+    const useCurrencies = useGafpriCurrencies({useLogin});
     const useCategory = useGafpriCategory({ useError, useLogin });
     const useProducts = useGafpriProducts({useError, useLogin});
     const useCartItems = useGafpriCartItems({useLogin});
@@ -66,7 +66,7 @@ export const useGafpriAppWeb = (): UseGafpriAppWebReturn => {
     const useCheckOut = useGafpriCheckOut();
     const useUser = useGafpriUser({useLogin, siteOptions});
     const useAddress = useGafpriAddress({useLogin, apiUser: useUser.api});
-    const useSites = useGafpriSites({useLogin, useCurrencies});
+    const useSites = useGafpriSites({useLogin});
     const useOrder = useGafpriOrder({useLogin, useCheckOut, siteOptions});
     const useProfile = useGafpriProfile();
     const useWallet = useGafpriWallet({useLogin, useUser, siteOptions});

@@ -1,6 +1,8 @@
 import {useState, useEffect }from 'react';
 import { truncarTexto } from 'gafprilibui';
 import { generalValidationButtonNext } from '../../helpers';
+import { CurrenciesAttributesReturn } from '../currencies/useGafpriApiCurrencies';
+import { parse } from 'path';
 
 
 type states = {
@@ -8,12 +10,15 @@ type states = {
     amount: string;
     paymentTypeOptions: {label: string, value: string}[];
     commission: string;
-    commissionRate: string;
+    commissionRate: number;
     total: string;
     nameSend: string;
     number: string;
     walletAccountPostsId: string;
     note: string;
+    currency: CurrenciesAttributesReturn | null;
+    responsability: boolean;
+    change: string;
 }
 
 type actions = {
@@ -27,6 +32,12 @@ type actions = {
     setWalletAccountPostsId: (walletAccountPostsId: string) => void;
     validationAmountMySiteButton: () => boolean;
     changeNote: (note: string) => void;
+    setExchangeRate: (exchangeRate: number) => void;
+    setCommisionType: (commisionType: string) => void;
+    setCommissionRate: (commissionRate: number) => void;
+    setCurrency: (currency: CurrenciesAttributesReturn | null) => void;
+    setResponsability: (responsability: boolean) => void;
+    validationResponsabilitytButton: () => boolean;
 }
 
 export type UseGafpriAttributesRechargeReturn = {states: states, actions: actions};
@@ -39,25 +50,42 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
         {label: 'Paypal', value: 'paypal'},
     ];
     const [amount, setAmount] = useState<string>('');
+    const [change, setChange] = useState<string>('');
     const [commission, setCommission] = useState<string>('');
-    const [commissionRate, setCommissionRate] = useState<string>('');
+    const [commissionRate, setCommissionRate] = useState<number>(0);
+    const [commisionType, setCommisionType] = useState<string>('');
     const [total, setTotal] = useState<string>('');
     const [nameSend, setNameSend] = useState<string>('');
     const [number, setNumber] = useState<string>('');
     const [walletAccountPostsId, setWalletAccountPostsId] = useState<string>('');
     const [note, setNote] = useState<string>('');
+    const [exchangeRate, setExchangeRate] = useState<number>(0);
+    const [currency, setCurrency] = useState<CurrenciesAttributesReturn | null>(null);
+    const [responsability, setResponsability] = useState<boolean>(false);
 
     const changeTotal = (): void => {
-        if (paymentType === 'zelle') {
-            setCommissionRate('0 %');
+        if(commisionType === 'none') {
             setCommission('0.00');
-            setTotal(amount);
-        } else if (paymentType === 'paypal') {
-            setCommissionRate('5 %');
-            const newCommission = (parseFloat(amount) * 0.05).toFixed(2);
-            const newTotal = (parseFloat(amount) - parseFloat(newCommission)).toFixed(2);
-            setCommission(newCommission);
+            const newTotal = parseFloat(amount) / exchangeRate;
+            setChange(newTotal.toFixed(2));
+            setTotal(newTotal.toFixed(2));
+        } 
+
+        if(commisionType === 'percentage') {
+            const newCommission = (parseFloat(amount) / exchangeRate) * (commissionRate/100);
+            const newTotal = ((parseFloat(amount) - newCommission) / exchangeRate).toFixed(2);
+            const newChange = parseFloat(amount) * exchangeRate;
+            setChange(newChange.toFixed(2));
+            setCommission(newCommission.toFixed(2));
             setTotal(newTotal);
+        }
+
+        if(commisionType === 'fixed') {
+            const newCommission = (parseFloat(amount) / exchangeRate) * commissionRate;
+            setCommission(newCommission.toFixed(2));
+            const newTotal = parseFloat(amount) / (exchangeRate + commissionRate);
+            setTotal(newTotal.toFixed(2));
+            setChange(newTotal.toFixed(2));
         }
     }
 
@@ -70,9 +98,19 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
             validations: [
                 parseFloat(amount) > 0,
                 paymentType !== '',
-                walletAccountPostsId !== ''
+                walletAccountPostsId !== '',
             ],
             inputId: 'amount-recharge-button',
+        })
+        return valid;
+    }
+
+    const validationResponsabilitytButton = (): boolean => {
+        const valid = generalValidationButtonNext({
+            validations: [
+                responsability
+            ],
+            inputId: 'responsability-recharge-button',
         })
         return valid;
     }
@@ -105,19 +143,22 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
         setAmount('');
         setCommission('');
         setTotal('');
-        setCommissionRate('');
+        setCommissionRate(0);
         setNameSend('');
         setNumber('');
         setWalletAccountPostsId('');
         setNote('');
+        setCurrency(null);
+        setCommisionType('');
+        setResponsability(false);
     }
 
     useEffect(() => {
         changeTotal();
     }, [paymentType, amount]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const states = { paymentType, amount, paymentTypeOptions, commission, total, commissionRate, nameSend, number, walletAccountPostsId, note};
-    const actions = { setPaymentType, setAmount, infoReset, validationAmountButton, setNameSend, setNumber, validationInfoButton, setWalletAccountPostsId, validationAmountMySiteButton, changeNote};
+    const states = { paymentType, amount, paymentTypeOptions, commission, total, commissionRate, nameSend, number, walletAccountPostsId, note, currency, exchangeRate, commisionType, responsability, change};
+    const actions = { setPaymentType, setAmount, infoReset, validationAmountButton, setNameSend, setNumber, validationInfoButton, setWalletAccountPostsId, validationAmountMySiteButton, changeNote, setExchangeRate, setCommisionType, setCommissionRate, setCurrency, setResponsability, validationResponsabilitytButton};
 
     return { states, actions };
 

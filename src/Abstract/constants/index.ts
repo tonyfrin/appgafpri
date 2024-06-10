@@ -22,3 +22,4 @@ export const UPLOAD_PHOTO_ROUTE = `${getApiUrl()}//upload-file`;
 export const TYPE_DOCUMENT_ID_ROUTE = '/type-document-id';
 export const PAYMENT_METHODS_ROUTE = '/payment-methods';
 export const PAYMENT_ORDER_APP_ROUTE = '/payment-order-app';
+export const CURRENCIES_ROUTE = '/currencies';

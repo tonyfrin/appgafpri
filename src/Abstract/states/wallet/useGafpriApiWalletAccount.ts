@@ -167,10 +167,10 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 type: 'deposit',
                                 methodType: 'wallet',
                                 paymentType: attributesRecharge.states.paymentType,
-                                currenciesId: siteOptions.currencyId,
+                                currenciesId: attributesRecharge.states.currency?.id,
                                 number: attributesRecharge.states.number,
                                 amount: attributesRecharge.states.amount,
-                                change: attributesRecharge.states.amount,
+                                change: attributesRecharge.states.change,
                                 note: 'Recarga de saldo',
                                 nameSend: attributesRecharge.states.nameSend,
                                 transactionType: 'recharge',
@@ -182,7 +182,8 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 walletAccountPostsId: attributesRecharge.states.walletAccountPostsId,
                                 type: 'deposit',
                                 transactionsType: 'recharge',
-                                amount: attributesRecharge.states.amount,
+                                amount: attributesRecharge.states.change,
+                                change: attributesRecharge.states.change,
                             }
                         }]
                     }
@@ -227,6 +228,7 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 type: 'debit',
                                 transactionsType: 'transfer-zelle',
                                 amount: parseFloat(attributesTransfersZelle.states.amount),
+                                change: parseFloat(attributesTransfersZelle.states.amount),
                             }
                         }]
                     }
@@ -272,6 +274,7 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                     type: 'deposit',
                                     transactionsType: 'transfer',
                                     amount: attributesTransfers.states.amount,
+                                    change: attributesTransfers.states.amount,
                                 }
                             },
                             {
@@ -294,6 +297,7 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                     type: 'debit',
                                     transactionsType: 'transfer',
                                     amount: attributesTransfers.states.amount,
+                                    change: attributesTransfers.states.amount,
                                 }
                             }    
                     ]

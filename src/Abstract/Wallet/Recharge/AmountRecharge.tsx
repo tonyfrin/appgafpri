@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { FiChevronLeft } from 'react-icons/fi';
 import Link from 'next/link';
@@ -12,8 +12,11 @@ import { Error } from '../../Error/Error';
 import { ButtonEditInfo } from '../../Button/ButtonEditInfo';
 import LogoZelle from '../../assets/img/logo-zelle.png';
 import LogoPaypal from '../../assets/img/logo-pay-pal.png';
+import LogoBanesco from '../../assets/img/logo-pago-movil.png';
 import { PaymentMethodsList } from '@/Abstract/List/PaymentMethodsList';
 import { InputAppAmount } from '@/Abstract/Input/InputAppAmount';
+import { CurrenciesAttributesReturn } from '@/Abstract/states/currencies/useGafpriApiCurrencies';
+import { get } from 'http';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -110,8 +113,17 @@ const imageStyles = css`
 `
 
 export function AmountRecharge() {
-  const { useWallet, siteOptions, useError } = useTheme();
+  const { useWallet, siteOptions, useError, useCurrencies, useLogin } = useTheme();
   const [modalPm, setModalPm] = React.useState(false);
+  const [pagoMovilCurrency, setPagoMovilCurrency] = React.useState<CurrenciesAttributesReturn | null>(null);
+  const [pagoMovilCurrencyIsReady, setPagoMovilCurrencyIsReady] = React.useState(false);
+  const [mainCurrency, setMainCurrency] = React.useState<CurrenciesAttributesReturn | null>(null);
+  const [mainCurrencyIsReady, setMainCurrencyIsReady] = React.useState(false);
+  const pagoMovilCurrencyId = '2';
+
+  
+
+
 
   const next = () => {
     if(useWallet.attributesRecharge.actions.validationAmountButton()){
@@ -122,6 +134,47 @@ export function AmountRecharge() {
   useEffect(() => {
     useWallet.attributesRecharge.actions.validationAmountButton();
   }, [useWallet.attributesRecharge.states.amount, useWallet.attributesRecharge.states.paymentType, useWallet.attributesRecharge.states.walletAccountPostsId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const getPagoMovilCurrencyFetch = async () => {
+      if(useLogin.data.states.token && !pagoMovilCurrencyIsReady){
+        
+          try{
+            setPagoMovilCurrencyIsReady(false);
+            const currency = await useCurrencies.api.actions.getCurrency(pagoMovilCurrencyId);
+            if(currency && currency.success){
+              setPagoMovilCurrency(currency.item);
+              setPagoMovilCurrencyIsReady(true);
+            }
+          } catch (error) {
+            console.log(error);
+            setPagoMovilCurrency(null);
+            setPagoMovilCurrencyIsReady(false);
+          } 
+      }
+    }
+
+    const getMainCurrencyFetch = async () => {
+      if(useLogin.data.states.token){
+        
+          try{
+            setMainCurrencyIsReady(false);
+            const currency = await useCurrencies.api.actions.getCurrency(siteOptions.currencyId.toString());
+            if(currency && currency.success){
+              setMainCurrency(currency.item);
+              setMainCurrencyIsReady(true);
+            }
+          } catch (error) {
+            console.log(error);
+            setMainCurrency(null);
+            setMainCurrencyIsReady(false);
+          } 
+      }
+    }
+
+    getMainCurrencyFetch();
+    getPagoMovilCurrencyFetch();
+  }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const walletAccount = useWallet.attributes.states.walletAccount;
 
@@ -138,6 +191,27 @@ export function AmountRecharge() {
 
   const changePM = (pm: string) => {
     useWallet.attributesRecharge.actions.setPaymentType(pm);
+    if(pm === 'pagoMovil' && pagoMovilCurrency){
+      useWallet.attributesRecharge.actions.setCurrency(pagoMovilCurrency);
+      useWallet.attributesRecharge.actions.setExchangeRate(parseFloat(pagoMovilCurrency.exchangeRate));
+      useWallet.attributesRecharge.actions.setCommisionType(pagoMovilCurrency.commissionType);
+      useWallet.attributesRecharge.actions.setCommissionRate(parseFloat(pagoMovilCurrency.commissionRate));
+    }
+
+    if(pm === 'zelle'){
+      useWallet.attributesRecharge.actions.setCurrency(mainCurrency);
+      useWallet.attributesRecharge.actions.setExchangeRate(1);
+      useWallet.attributesRecharge.actions.setCommisionType('none');
+      useWallet.attributesRecharge.actions.setCommissionRate(0);
+    }
+
+    if(pm === 'paypal'){
+      useWallet.attributesRecharge.actions.setCurrency(mainCurrency);
+      useWallet.attributesRecharge.actions.setExchangeRate(1);
+      useWallet.attributesRecharge.actions.setCommisionType('percentage');
+      useWallet.attributesRecharge.actions.setCommissionRate(5);
+    }
+
     setModalPm(false);
   }
 
@@ -158,14 +232,14 @@ export function AmountRecharge() {
       checked: useWallet.attributesRecharge.states.paymentType === 'paypal',
       onClick: () => changePM('paypal')
     },
-    // {
-    //   id: 'pm4',
-    //   name: 'Pago Movil (Bs)',
-    //   image: LogoBnc.src,
-    //   backgroundColor: '#24407c',
-    //   checked: useWallet.attributesRecharge.states.paymentType === 'pagomovil',
-    //   onClick: () => changePM('pagomovil')
-    // },
+    {
+      id: 'pm4',
+      name: 'Pago Movil (Bs)',
+      image: LogoBanesco.src,
+      backgroundColor: '#ebebeb',
+      checked: useWallet.attributesRecharge.states.paymentType === 'pagoMovil',
+      onClick: () => changePM('pagoMovil')
+    },
     // {
     //   id: 'pm3',
     //   name: 'Bofa a Bofa',
@@ -193,7 +267,11 @@ export function AmountRecharge() {
   return (
     
     <>
-    {!useWallet.attributes.states.walletAccountIsReady ? <Loading /> : 
+    {!useWallet.attributes.states.walletAccountIsReady 
+    || !pagoMovilCurrencyIsReady 
+    || pagoMovilCurrency === null 
+    || !mainCurrencyIsReady 
+    || mainCurrency === null ? <Loading /> : 
         <>
           <div
             style = {{
@@ -306,7 +384,7 @@ export function AmountRecharge() {
                 </div>
               }
 
-              {useWallet.attributesRecharge.states.paymentType === 'pagomovil' &&
+              {useWallet.attributesRecharge.states.paymentType === 'pagoMovil' &&
                 <div
                   style={{
                     border: '1px solid #ebebeb',
@@ -322,7 +400,7 @@ export function AmountRecharge() {
                       padding: '1em',
                   }}>
                     <span className={textInfoStyles}>{'Los datos para Pago Movil (Bs) son:'}</span>
-                    <span className={textInfoStyles}>Banco: <span style={{fontWeight: 600}}>{'Banco Nacional de Crédito (BNC)'}</span></span>
+                    <span className={textInfoStyles}>Banco: <span style={{fontWeight: 600}}>{'Banesco'}</span></span>
                     <span className={textInfoStyles}>Identificación: <span style={{fontWeight: 600}}>7.693.205</span></span>
                     <span className={textInfoStyles}>Teléfono: <span style={{fontWeight: 600}}>0414-6375128</span></span>
                   </div>
@@ -337,9 +415,10 @@ export function AmountRecharge() {
                         type: 'text',
                         functionChange: useWallet.attributesRecharge.actions.setAmount,
                       }}
-                      amountMax={20000}
-                      symbol={siteOptions.CURRENCY_SYMBOL}
+                      amountMax={useWallet.attributesRecharge.states.paymentType === 'pagoMovil' ? 400000 : 20000}
+                      symbol={useWallet.attributesRecharge.states.paymentType === 'pagoMovil' ? pagoMovilCurrency.symbol : mainCurrency.symbol}
                       title='Monto a recargar'
+                      description={useWallet.attributesRecharge.states.paymentType === 'pagoMovil' ? `Tasa de cambio: ${pagoMovilCurrency.exchangeRate} ${pagoMovilCurrency.symbol} por ${mainCurrency.symbol} USD` : ''}
                   />
 
                     <InputAppContainer 
@@ -367,7 +446,7 @@ export function AmountRecharge() {
                     <span className={textResumeStyles} style={{fontWeight: '600'}}>{decimalFormatPriceConverter(
                               useWallet.attributesRecharge.states.commission || 0,
                               siteOptions.DECIMAL_NUMBERS,
-                              siteOptions.CURRENCY_SYMBOL,
+                              useWallet.attributesRecharge.states.paymentType === 'pagoMovil' ? pagoMovilCurrency.symbol : mainCurrency.symbol,
                               siteOptions.CURRENCY_LOCATION
                             )}</span>
                   </div>
@@ -381,12 +460,12 @@ export function AmountRecharge() {
                     
                     }}
                   >
-                    <span className={textResumeStyles}>Total de recarga: </span>
+                    <span className={textResumeStyles}>{`Recarga en Billetera: `}</span>
                     <span className={textResumeStyles} style={{fontWeight: '600'}}>{
                         decimalFormatPriceConverter(
                               useWallet.attributesRecharge.states.total || 0,
                               siteOptions.DECIMAL_NUMBERS,
-                              siteOptions.CURRENCY_SYMBOL,
+                              mainCurrency.symbol,
                               siteOptions.CURRENCY_LOCATION
                         )
                     }</span>

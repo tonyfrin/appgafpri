@@ -6,6 +6,7 @@ import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { decimalFormatPriceConverter } from '../../helpers';
 import { FiChevronLeft } from 'react-icons/fi';
 import { Error } from '../../Error/Error';
+import { Loading } from '../../Loading/Loading';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -52,6 +53,7 @@ export function InfoRecharge() {
 
   return (
     <>
+        {useWallet.attributesRecharge.states.currency === null ? <Loading /> :
           <div
             style={{
               marginBottom: '100px'
@@ -85,10 +87,10 @@ export function InfoRecharge() {
                     
                     }}
                   >
-                    <span className={textResumeStyles} style={{fontWeight: '600', textAlign: 'center'}}>{`Esta recargando con una Transferencia ${useWallet.attributesRecharge.states.paymentType} por un monto de ${decimalFormatPriceConverter(
+                    <span className={textResumeStyles} style={{fontWeight: '600', textAlign: 'center'}}>{`Esta recargando con una transferencia ${useWallet.attributesRecharge.states.paymentType === 'pagoMovil' ? 'Pago Movil' : useWallet.attributesRecharge.states.paymentType} por un monto de ${decimalFormatPriceConverter(
                               useWallet.attributesRecharge.states.amount || 0,
                               siteOptions.DECIMAL_NUMBERS,
-                              siteOptions.CURRENCY_SYMBOL,
+                              useWallet.attributesRecharge.states.currency.symbol,
                               siteOptions.CURRENCY_LOCATION
                             )}`}</span>
                   </div>
@@ -156,6 +158,7 @@ export function InfoRecharge() {
             
           
           </div>
+        }
     </>
   );
 }

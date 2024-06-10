@@ -95,7 +95,6 @@ export type UseGafpriAttributesSitesReturn = {
     currenciesId: number;
     currenciesIdValid: boolean;
     currenciesIdDefault: SelectDefault;
-    currenciesIdOptions: SelectDefault[];
 
     currencyLocation: string;
     currencyLocationValid: boolean;
@@ -208,13 +207,7 @@ export type UseGafpriAttributesSitesReturn = {
   };
 };
 
-export type UseGafpriAttributesSitesProps = {
-  useCurrencies: UseCurrenciesReturn;
-};
-
-export const useGafpriAttributesSites = ({
-  useCurrencies,
-}: UseGafpriAttributesSitesProps): UseGafpriAttributesSitesReturn => {
+export const useGafpriAttributesSites = (): UseGafpriAttributesSitesReturn => {
   const [sites, setSites] = useState<SitesAttributesReturn[]>([]);
   const pushSites = (value: SitesAttributesReturn): void => {
     setSites([...sites, value]);
@@ -295,13 +288,6 @@ export const useGafpriAttributesSites = ({
   const [currenciesIdDefault, setCurrenciesIdDefault] = useState<SelectDefault>(
     { value: '', label: 'Elija la moneda del Sitio' }
   );
-
-  const currenciesIdOptions: SelectDefault[] = [{ value: '', label: 'Elija la moneda del Sitio' }];
-
-  useCurrencies.states.currencies.data.items?.map((item) => {
-    currenciesIdOptions.push({ label: `${item.name} ${item.symbol}`, value: `${item.id}` });
-    return null;
-  }) || [];
 
   const [currencyLocation, setCurrencyLocation] = useState('left');
   const [currencyLocationValid, setCurrencyLocationValid] = useState(true);
@@ -926,7 +912,6 @@ export const useGafpriAttributesSites = ({
     currenciesId,
     currenciesIdValid,
     currenciesIdDefault,
-    currenciesIdOptions,
 
     currencyLocation,
     currencyLocationValid,
