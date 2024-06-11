@@ -6,6 +6,13 @@ import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { decimalFormatPriceConverter, formatPhoneNumber, scrollToTop } from '../../helpers';
 import { Loading } from '../../Loading';
 import { Error } from '../../Error';
+import Image from 'next/image';
+import LogoGafpri from '../../assets/img/logo-llama-gafpri-blanca.png'
+
+const imageStyles = css`
+  width: 80%;
+  height: auto;
+`
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -77,12 +84,33 @@ export function ConfirmationTransfers() {
                   />
                   <div style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        justifyContent: 'space-around',
                         padding: '1em 0px',
                         width: '90%',
                         margin: 'auto',
-                        borderBottom: '1px solid #e1e1e1'
+                        borderBottom: '1px solid #e1e1e1',
+                        alignItems: 'center'
                     }}> 
+                     <div
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        borderRadius: '50%',
+                        backgroundColor: '#07b2e7',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '0.1em'
+                      }}
+                    >
+                      <Image
+                        src={LogoGafpri.src}
+                        alt={`Gafpri`}
+                        width={15}
+                        height={15}
+                        className={imageStyles}
+                      />
+                    </div>
                         <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia de Saldo</h1>
                         <FiChevronLeft 
                             className={arrowStyle}

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { truncarTexto } from 'gafprilibui';
 import { WalletAccountAtrributesReturn } from './useGafpriApiWalletAccount';
+import { generalValidationButtonNext } from '@/Abstract/helpers';
+import { parse } from 'path';
 
 type account = {
     id: string;
@@ -25,6 +27,7 @@ type actions = {
     setAmount: (amount: string) => void;
     setNumber: (number: string) => void;
     changeNote: (value: string) => void;
+    validationButtonAmount: () => boolean;
 }
 
 export type UseGafpriAttributesTransfersReturn = {states: states, actions: actions};
@@ -46,13 +49,21 @@ export const useGafpriAttributesTransfers = (): UseGafpriAttributesTransfersRetu
         setNote('');
     }
 
+    const validationButtonAmount = (): boolean => {
+        const valid = generalValidationButtonNext({
+            validations: [parseFloat(amount) > 0, account !== null],
+            inputId: 'amount-button-next',
+        })
+        return valid;
+    }
+
     const changeNote = (value: string): void => {
         setNote(truncarTexto(value, 100));
     }
 
     const states = { email, beneficiary, account, amount, number, note };
 
-    const actions = { setEmail, infoReset, setBeneficiary, setAccount, setAmount, setNumber, changeNote };
+    const actions = { setEmail, infoReset, setBeneficiary, setAccount, setAmount, setNumber, changeNote, validationButtonAmount };
 
     return { states, actions };
 

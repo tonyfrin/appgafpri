@@ -1,9 +1,14 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { useTheme } from '../../context/ThemeContext';
-import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { FiChevronLeft } from 'react-icons/fi';
 import Link from 'next/link';
+import { TransfersMethodsList } from '@/Abstract/List/TransfersMethodsList';
+import LogoZelle from '../../assets/img/logo-zelle.png';
+import LogoPaypal from '../../assets/img/logo-pay-pal.png';
+import LogoBanesco from '../../assets/img/logo-pago-movil.png';
+import LogoGafpri from '../../assets/img/logo-llama-gafpri-blanca.png'
+import { useRouter } from 'next/router';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -21,15 +26,31 @@ const arrowStyle = css`
 
 export function InitTransfers() {
   const { useWallet } = useTheme();
+  const router = useRouter();
 
-  const email = ():void => {
-    useWallet.attributesTransfers.actions.setAccount({
-      id: useWallet.attributes.states.walletAccount[0].postsId,
-      name: useWallet.attributes.states.walletAccount[0].name,
-      balance: useWallet.attributes.states.walletAccount[0].available,
-    })
-    useWallet.pagesTransfers.actions.onBeneficiary();
-  }
+  const itemsPmList = [
+    {
+      id: 'pm1',
+      name: 'Billetera Gafpri',
+      image: LogoGafpri.src,
+      backgroundColor: '#07b2e7',
+      onClick: () => router.push('/billetera/enviar/gafpri')
+    },
+    {
+      id: 'pm2',
+      name: 'Zelle',
+      image: LogoZelle.src,
+      backgroundColor: 'rgb(107 29 207)',
+      onClick: () => router.push('/billetera/enviar/zelle')
+    },
+    // {
+    //   id: 'pm4',
+    //   name: 'Pago Movil (Bs)',
+    //   image: LogoBanesco.src,
+    //   backgroundColor: '#ebebeb',
+    //   onClick: () => router.push('/billetera/enviar/pagomovil')
+    // }, 
+  ]
 
   return (
     <>
@@ -53,35 +74,11 @@ export function InitTransfers() {
                 />
                 </Link>
             </div>
-              <div style={{
-                  display: 'flex',
-                  margin: '1em',
-                  textDecoration: 'none',
-              }}>
-                  <ButtonAppMobile 
-                      title="Billetera"
-                      containerProps={{
-                        onClick: email
-                      }}
-                  />
-              </div>
-              
-                <Link 
-                  href='/billetera/enviar/zelle' 
-                  style={{
-                    display: 'flex',
-                    margin: '1em',
-                    textDecoration: 'none',
-                  }}
-                >
-                  <ButtonAppMobile 
-                      title="Zelle"
-                  />
-                </Link>
-              
-            
-          
-          
+            <div>
+              <TransfersMethodsList 
+                items={itemsPmList}
+              />
+            </div>
           </div>
     </>
   );

@@ -10,8 +10,6 @@ import { Error } from '../../Error';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { formatPhoneNumber } from '../../helpers';
 import { PaymentMethodsAttributesReturn } from '../../states/paymentMethods/useGafpriApiPaymentMethods';
-import Image from 'next/image';
-import LogoZelle from '../../assets/img/logo-zelle.png';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -27,17 +25,12 @@ const arrowStyle = css`
     margin: auto 0px;
 `
 
-const imageStyles = css`
-  width: 80%;
-  height: auto;
-`
-
 type items = {
   name: string;
   email: string;
 }
 
-export function BeneficiaryZelle() {
+export function BeneficiaryPagoMovil() {
   const { useWallet, useLogin, useError } = useTheme();
   const [beneficiaries, setBeneficiaries] = useState<WalletBeneficiariesAttributesReturn[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
@@ -57,17 +50,17 @@ export function BeneficiaryZelle() {
   const itemsFilter: WalletBeneficiariesAttributesReturn[] = [] 
   
   beneficiaries.forEach(beneficiary => {
-      if ((beneficiary.email && beneficiary.email.toLowerCase().includes(useWallet.attributesTransfersZelle.states.findValue)) || 
-        (beneficiary.phone && beneficiary.phone.includes(useWallet.attributesTransfersZelle.states.findValue)) ||
-        (beneficiary.name && beneficiary.name.toLowerCase().includes(useWallet.attributesTransfersZelle.states.findValue))
+      if ( 
+        (beneficiary.phone && beneficiary.phone.includes(useWallet.attributesTransfersPagoMovil.states.findValue)) ||
+        (beneficiary.name && beneficiary.name.toLowerCase().includes(useWallet.attributesTransfersPagoMovil.states.findValue))
       ) {
           itemsFilter.push(beneficiary);
       }
   });
 
   const next = async (beneficiary: WalletBeneficiariesAttributesReturn) => {
-    useWallet.attributesTransfersZelle.actions.setBeneficiary(beneficiary);
-    useWallet.pagesTransfersZelle.actions.onAmount();
+    useWallet.attributesTransfersPagoMovil.actions.setBeneficiary(beneficiary);
+    useWallet.pagesTransfersPagoMovil.actions.onAmount();
   }
 
   function statusCheck(objects: PaymentMethodsAttributesReturn[]): boolean {
@@ -81,7 +74,7 @@ export function BeneficiaryZelle() {
       if(data && data.success){
         try {
           
-          const data = await useWallet.account.actions.getBeneficiaries('zelle');
+          const data = await useWallet.account.actions.getBeneficiaries('PagoMovil');
           if(data && data.success && data.items){
               setBeneficiaries(data.items);
           } else{
@@ -106,7 +99,7 @@ export function BeneficiaryZelle() {
         const fetchBeneficiaries = async () => {
           try {
               setFetchBeneficiaries(true);
-              const data = await useWallet.account.actions.getBeneficiaries('zelle');
+              const data = await useWallet.account.actions.getBeneficiaries('pagoMovil');
               if(data && data.success && data.items){
                   setBeneficiaries(data.items);
               } else{
@@ -133,34 +126,13 @@ export function BeneficiaryZelle() {
                 />
                 <div style={{
                     display: 'flex',
-                    justifyContent: 'space-around',
+                    justifyContent: 'space-between',
                     padding: '1em 0px',
                     width: '90%',
                     margin: 'auto',
-                    borderBottom: '1px solid #e1e1e1',
-                    alignItems: 'center'
+                    borderBottom: '1px solid #e1e1e1'
                 }}> 
-                     <div
-                      style={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                        backgroundColor: 'rgb(107 29 207)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: '0.1em'
-                      }}
-                    >
-                      <Image
-                        src={LogoZelle.src}
-                        alt={`zelle`}
-                        width={15}
-                        height={15}
-                        className={imageStyles}
-                      />
-                    </div>
-                    <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia Zelle</h1>
+                    <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia Pago Movil</h1>
                     <Link 
                       style={{
                         textDecoration: 'none',
@@ -170,7 +142,7 @@ export function BeneficiaryZelle() {
                     >
                     <FiChevronLeft 
                         className={arrowStyle}
-                        onClick={useWallet.pagesTransfersZelle.actions.returnInit}
+                        onClick={useWallet.pagesTransfersPagoMovil.actions.returnInit}
                     />
                     </Link>
                 </div>
@@ -186,8 +158,8 @@ export function BeneficiaryZelle() {
                         inputProps={{
                           placeholder: 'Email o Teléfono',
                           type: 'text',
-                          value: useWallet.attributesTransfersZelle.states.findValue,
-                          onChange: (e) => useWallet.attributesTransfersZelle.actions.setFindValue(e.target.value.toLowerCase()),
+                          value: useWallet.attributesTransfersPagoMovil.states.findValue,
+                          onChange: (e) => useWallet.attributesTransfersPagoMovil.actions.setFindValue(e.target.value.toLowerCase()),
                         }}
                       />
                 </div>
@@ -300,7 +272,7 @@ export function BeneficiaryZelle() {
                               fontSize: '1em'
                             }}
                             containerProps={{
-                              onClick: () => useWallet.pagesTransfersZelle.actions.onBeneficiaryAdd()
+                              onClick: () => useWallet.pagesTransfersPagoMovil.actions.onBeneficiaryAdd()
                             }}
                             
                           />

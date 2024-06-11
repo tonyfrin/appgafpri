@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { decimalFormatPriceConverter, formatPhoneNumber } from '../../helpers';
+import { useRouter } from 'next/router';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -24,6 +25,12 @@ const textResumeStyles = css`
 
 export function SuccessTransfers() {
   const { useWallet, siteOptions } = useTheme();
+  const router = useRouter();
+
+  const returnInit = async () => {
+    await router.push('/billetera');
+    useWallet.pagesTransfers.actions.returnInit();
+  }
   
 
   return (
@@ -173,7 +180,7 @@ export function SuccessTransfers() {
                       title="Aceptar"
                       containerProps={{
                         id: 'amount-recharge-button',
-                        onClick: useWallet.pagesTransfers.actions.returnInit,
+                        onClick: returnInit,
                       }}
                   />
               </Link>

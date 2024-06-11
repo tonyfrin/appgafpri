@@ -9,6 +9,8 @@ import { UseGafpriUserReturn } from "../user/useGafpriUser";
 import { SiteOptions } from "../../config/gafpriConfig";
 import { UseGafpriPagesTransfersZelleReturn, useGafpriPagesTransfersZelle } from "./useGafpriPagesTransfersZelle";
 import { UseGafpriAttributesTransfersZelleReturn, useGafpriAttributesTransfersZelle } from "./useGafpriAttributesTransfersZelle";
+import { UseGafpriAttributesTransfersPagoMovilReturn, useGafpriAttributesTransfersPagoMovil } from "./useGafpriAttributesTransfersPagoMovil";
+import { UseGafpriPagesTransfersPagoMovilReturn, useGafpriPagesTransfersPagoMovil } from "./useGafpriPagesTransfersPagoMovil";
 
 type actions = {
     globalResetInfo: () => void;
@@ -23,6 +25,8 @@ export type UseGafpriWalletReturn = {
     account: UseGafpriApiWalletAccountReturn;
     attributes: UseGafpriAttributesWalletReturn;
     attributesTransfersZelle: UseGafpriAttributesTransfersZelleReturn;
+    attributesTransfersPagoMovil: UseGafpriAttributesTransfersPagoMovilReturn;
+    pagesTransfersPagoMovil: UseGafpriPagesTransfersPagoMovilReturn;
     actions: actions;
 }
 
@@ -40,6 +44,8 @@ export const useGafpriWallet = ({useLogin, useUser, siteOptions}: UseGafpriWalle
     const attributesTransfers = useGafpriAttributesTransfers();
     const pagesTransfers = useGafpriPagesTransfers({attributesTransfers});
     const attributesTransfersZelle = useGafpriAttributesTransfersZelle();
+    const attributesTransfersPagoMovil = useGafpriAttributesTransfersPagoMovil();
+    const pagesTransfersPagoMovil = useGafpriPagesTransfersPagoMovil({attributesTransfersPagoMovil});
     const account = useGafpriApiWalletAccount({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle});
     const attributes = useGafpriAttributesWallet({account, useLogin, useUser});
     
@@ -63,8 +69,10 @@ export const useGafpriWallet = ({useLogin, useUser, siteOptions}: UseGafpriWalle
         attributesTransfers,
         account,
         pagesTransfersZelle,
+        pagesTransfersPagoMovil,
         attributes,
         attributesTransfersZelle,
+        attributesTransfersPagoMovil,
         actions,
     };
 }

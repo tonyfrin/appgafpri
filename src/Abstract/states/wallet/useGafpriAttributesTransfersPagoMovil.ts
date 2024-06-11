@@ -10,69 +10,62 @@ type account = {
 }
 
 type states = {
-    email: string;
-    emailValid: boolean;
+    accountNumber: string;
+    accountNumberValid: boolean;
+    bankName: string;
     phone: string;
     phoneValid: boolean;
     beneficiary: WalletBeneficiariesAttributesReturn | null;
     account: account | null;
     amount: string;
+    change: string;
+    commission: string;
     name: string;
     findValue: string;
     note: string;
-    responsability: boolean;
 }
 
 type actions = {
-    validationEmail: (value: string) => boolean;
+    validationAccountNumber: (value: string) => boolean;
     validationPhone: (value: string) => boolean;
-    changeEmail: (value: string) => void;
+    changeAccountNumber: (value: string) => void;
     changePhone: (value: string) => void;
 
     infoReset: () => void;
     setBeneficiary: (beneficiary: WalletBeneficiariesAttributesReturn | null) => void;
     setAccount: (account: account | null) => void;
     setAmount: (amount: string) => void;
+    setChange: (change: string) => void;
+    setCommission: (commission: string) => void;
     
     setName: (name: string) => void;
+    setBankName: (bankName: string) => void;
     validationButtonBeneficiaryAdd:() => boolean;
-    validationResponsabilitytButton: () => boolean;
     setFindValue: (findValue: string) => void;
     validationButtonAmount: () => boolean;
     changeNote: (value: string) => void;
-    setResponsability: (value: boolean) => void;
 }
 
 
 
-export type UseGafpriAttributesTransfersZelleReturn = {states: states, actions: actions};
+export type UseGafpriAttributesTransfersPagoMovilReturn = {states: states, actions: actions};
 
 
 
-export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfersZelleReturn => {
+export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTransfersPagoMovilReturn => {
     const [name, setName] = useState<string>('');
-    const [email, setEmail] = useState('');
-    const [emailValid, setEmailValid] = useState<boolean>(false);
     const [phone, setPhone] = useState('');
+    const [bankName, setBankName] = useState<string>('');
+    const [accountNumber, setAccountNumber] = useState<string>('');
+    const [accountNumberValid, setAccountNumberValid] = useState<boolean>(false);
     const [phoneValid, setPhoneValid] = useState<boolean>(false);
     const [beneficiary, setBeneficiary] = useState<WalletBeneficiariesAttributesReturn | null>(null);
     const [account, setAccount] = useState<account | null>(null);
     const [amount, setAmount] = useState<string>('');
+    const [change, setChange] = useState<string>('');
+    const [commission, setCommission] = useState<string>('');
     const [findValue, setFindValue] = useState<string>('');
     const [note, setNote] = useState<string>('');
-    const [responsability, setResponsability] = useState<boolean>(false);
-
-    const validationEmail = (value: string): boolean => {
-        const valid = validationInput(
-          value,
-          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-          true
-        );
-        if (valid !== emailValid) {
-          setEmailValid(valid);
-        }
-        return valid;
-      }
 
     const validationPhone = (value: string): boolean => {
         const valid = validationInput(
@@ -86,10 +79,24 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
         return valid;
     }
 
+    const validationAccountNumber = (value: string): boolean => {
+        const valid = validationInput(
+          value,
+          /^[0-9]{6,}$/,
+          true
+        );
+        if (valid !== phoneValid) {
+          setPhoneValid(valid);
+        }
+        return valid;
+    }
+
     const validationButtonBeneficiaryAdd = (): boolean => {
         return generalValidationButtonNext({
             validations: [
-                (emailValid || phoneValid),
+                phoneValid,
+                bankName !== '',
+                accountNumberValid,
                 name !== '',
             ],
             inputId: 'beneficiary-add-button'
@@ -107,31 +114,23 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
         })
     }
 
-    const validationResponsabilitytButton = (): boolean => {
-        const valid = generalValidationButtonNext({
-            validations: [
-                responsability
-            ],
-            inputId: 'responsability-zelle-button',
-        })
-        return valid;
-    }
-
     const infoReset = () => {
-        setEmail('');
+        setBankName('');
+        setAccountNumber('');
+        setAccountNumberValid(false);
         setName('');
         setBeneficiary(null);
         setAccount(null);
         setAmount('');
         setPhone('');
+        setPhoneValid(false);
         setFindValue('');
         setNote('');
     }
 
-    const changeEmail = (value: string) => {
-        const newValue = value.toLowerCase();
-        validationEmail(newValue);
-        setEmail(value);
+    const changeAccountNumber = (value: string) => {
+        validationAccountNumber(value);
+        setAccountNumber(value);
     }
 
     const changePhone = (value: string) => {
@@ -146,35 +145,38 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
     
 
     const states = { 
-        email, 
-        emailValid,
+        accountNumber,
+        accountNumberValid,
+        bankName,
         beneficiary, 
         account, 
+        change,
+        commission,
         amount, 
         phone,
         phoneValid, 
         name, 
         findValue, 
-        note,
-        responsability
+        note 
     };
 
     const actions = { 
-        validationEmail,
+        validationAccountNumber,
+        changeAccountNumber,
         validationPhone,
-        changeEmail,
+        setBankName,
         changePhone,
         infoReset, 
         setBeneficiary, 
         setAccount, 
         setAmount, 
+        setChange,
+        setCommission,
         setName, 
         validationButtonBeneficiaryAdd, 
-        validationResponsabilitytButton,
         setFindValue, 
         validationButtonAmount, 
-        changeNote,
-        setResponsability
+        changeNote 
     };
 
     return { states, actions };

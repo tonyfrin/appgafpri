@@ -31,10 +31,10 @@ export type UseGafpriPagesTransfersReturn = {states: states, actions: actions};
 export const useGafpriPagesTransfers = ({
     attributesTransfers
 }: UseGafpriPagesTransfersProps): UseGafpriPagesTransfersReturn => {
-    const [isInit, setIsInit] = useState<boolean>(true);
+    const [isInit, setIsInit] = useState<boolean>(false);
     const [isCode, setIsCode] = useState<boolean>(false);
     const [isInfo, setIsInfo] = useState<boolean>(false);
-    const [isBeneficiary, setIsBeneficiary] = useState<boolean>(false);
+    const [isBeneficiary, setIsBeneficiary] = useState<boolean>(true);
     const [isConfirmation, setIsConfirmation] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -111,7 +111,7 @@ export const useGafpriPagesTransfers = ({
 
     const returnInit = (): void => {
         attributesTransfers.actions.infoReset();
-        onInit();
+        onBeneficiary();
     }
 
     const states = {

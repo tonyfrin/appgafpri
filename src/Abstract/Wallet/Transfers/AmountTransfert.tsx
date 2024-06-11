@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { css } from '@emotion/css';
 import { FiChevronLeft } from 'react-icons/fi';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { SelectApp } from '../../Select/SelectApp';
-import { decimalFormatPriceConverter, formatPhoneNumber, handleKeyPressForAmount, handlePasteForAmount } from '../../helpers';
+import { decimalFormatPriceConverter, formatPhoneNumber } from '../../helpers';
 import { InputAppAmount } from '../../Input/InputAppAmount';
+import Image from 'next/image';
+import LogoGafpri from '../../assets/img/logo-llama-gafpri-blanca.png'
+
+const imageStyles = css`
+  width: 80%;
+  height: auto;
+`
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -86,17 +93,48 @@ export function AmountTransfert() {
     useWallet.pagesTransfers.actions.onBeneficiary();
   }
 
+  const next = () => {
+    if(useWallet.attributesTransfers.actions.validationButtonAmount()) {
+      useWallet.pagesTransfers.actions.onConfirmation();
+    }
+  }
+
+  useEffect(() => {
+    useWallet.attributesTransfers.actions.validationButtonAmount();
+  },[useWallet.attributesTransfers.states.amount, useWallet.attributesTransfers.states.account]) // eslint-disable-line
+
 
   return (
     <>
-        <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  padding: '1em 0px',
-                  width: '90%',
-                  margin: 'auto',
-                  borderBottom: '1px solid #e1e1e1'
+            <div style={{
+                   display: 'flex',
+                   justifyContent: 'space-around',
+                   padding: '1em 0px',
+                   width: '90%',
+                   margin: 'auto',
+                   borderBottom: '1px solid #e1e1e1',
+                   alignItems: 'center'
               }}> 
+                    <div
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        borderRadius: '50%',
+                        backgroundColor: '#07b2e7',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '0.1em'
+                      }}
+                    >
+                      <Image
+                        src={LogoGafpri.src}
+                        alt={`Gafpri`}
+                        width={15}
+                        height={15}
+                        className={imageStyles}
+                      />
+                    </div>
                   <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Indique el monto</h1>
                   <div style={{
                     textDecoration: 'none',
@@ -255,8 +293,8 @@ export function AmountTransfert() {
                     padding: '0.9em',
                 }}
                 containerProps={{
-                  onClick: () => useWallet.pagesTransfers.actions.onConfirmation()
-                
+                  onClick: () => next(),
+                  id: 'amount-button-next'
                 }}
             />
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { css } from '@emotion/css';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
@@ -6,6 +6,13 @@ import { decimalFormatPriceConverter, formatPhoneNumber, scrollToTop } from '../
 import { FiChevronLeft } from 'react-icons/fi';
 import { Loading } from '../../Loading';
 import { Error } from '../../Error';
+import Image from 'next/image';
+import LogoZelle from '../../assets/img/logo-zelle.png';
+
+const imageStyles = css`
+  width: 80%;
+  height: auto;
+`
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -29,6 +36,34 @@ const arrowStyle = css`
     margin: auto 0px;
 `
 
+const checkboxStyles = css`
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+  &:checked {
+    border-color: #000;
+    background-color: #000;
+  }
+
+  &:checked::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 2px;
+  }
+`;
+
 export function ConfirmationTransfersZelle() {
   const { useWallet, siteOptions, useError } = useTheme();
   const [fetching, setFetching] = React.useState<boolean>(false);
@@ -41,35 +76,41 @@ export function ConfirmationTransfersZelle() {
   }
 
   const add =  async (): Promise<void> => {
-    try{
-      setFetching(true);
-      useWallet.pagesTransfersZelle.actions.onFetching();
-      const data = await useWallet.account.actions.addTransferZelle();
-      if(data && data.success){
-        await useWallet.attributes.actions.getWalletAccount();
-        await useWallet.attributes.actions.getEntities();
-        useWallet.pagesTransfersZelle.actions.onSuccess();
-      } else{
-   
-        useError.actions.changeError([data.message]);
+    if(useWallet.attributesTransfersZelle.actions.validationResponsabilitytButton()){
+      try{
+        setFetching(true);
+        useWallet.pagesTransfersZelle.actions.onFetching();
+        const data = await useWallet.account.actions.addTransferZelle();
+        if(data && data.success){
+          await useWallet.attributes.actions.getWalletAccount();
+          await useWallet.attributes.actions.getEntities();
+          useWallet.pagesTransfersZelle.actions.onSuccess();
+        } else{
+    
+          useError.actions.changeError([data.message]);
+          useWallet.pagesTransfersZelle.actions.onCheck();
+        }
+      } catch (error) {
+        console.log(error);
+        useError.actions.changeError(['Error al realizar la transferencia']);
         useWallet.pagesTransfersZelle.actions.onCheck();
+      } finally {
+        setFetching(false);
+        scrollToTop();
       }
-    } catch (error) {
-      console.log(error);
-      useError.actions.changeError(['Error al realizar la transferencia']);
-      useWallet.pagesTransfersZelle.actions.onCheck();
-    } finally {
-      setFetching(false);
-      scrollToTop();
     }
   }
+
+  useEffect(() => {
+    useWallet.attributesTransfersZelle.actions.validationResponsabilitytButton();
+  }, [useWallet.attributesTransfersZelle.states.responsability]); // eslint-disable-line react-hooks/exhaustive-deps
   
 
   return (
     <>
           <div
             style={{
-              marginBottom: '100px'
+              marginBottom: '300px'
             }}
           >
             
@@ -80,13 +121,34 @@ export function ConfirmationTransfersZelle() {
                   />
                   <div style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        justifyContent: 'space-around',
                         padding: '1em 0px',
                         width: '90%',
                         margin: 'auto',
-                        borderBottom: '1px solid #e1e1e1'
+                        borderBottom: '1px solid #e1e1e1',
+                        alignItems: 'center'
                     }}> 
-                        <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia de Saldo</h1>
+                        <div
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgb(107 29 207)',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '0.1em'
+                      }}
+                    >
+                      <Image
+                        src={LogoZelle.src}
+                        alt={`zelle`}
+                        width={15}
+                        height={15}
+                        className={imageStyles}
+                      />
+                    </div>
+                        <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia Zelle</h1>
                         <FiChevronLeft 
                             className={arrowStyle}
                             onClick={returnToAmount}
@@ -230,6 +292,47 @@ export function ConfirmationTransfersZelle() {
                                 fontWeight: 400,
                               }}
                             >{useWallet.attributesTransfersZelle.states.note}</span>
+                            <div><h1 className={title1AppStyles} style={{marginTop: '1em', textAlign: 'center'}}>¿La información es correcta?</h1></div>
+
+                            <div
+                              style={{
+                                display: 'flex',
+                                width: '85%',
+                                margin: 'auto',
+                                border: '2px solid #eaeaea',
+                                borderRadius: '15px',
+                                padding: '2%',
+                              }}
+                            >
+                              <div style={{
+                                width: '10%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignContent: 'center',
+                                alignItems: 'center'
+                              }}>
+                                <input 
+                                  type="checkbox"
+                                  className={checkboxStyles}
+                                  checked={useWallet.attributesTransfersZelle.states.responsability}
+                                  onChange={() => useWallet.attributesTransfersZelle.actions.setResponsability(!useWallet.attributesTransfersZelle.states.responsability)}
+                                />
+                              </div>
+                              <div style={{
+                                width: '90%',
+                                display: 'flex',
+                              }}>
+                                <span
+                                  style={{
+                                    textAlign: 'justify',
+                                    fontSize: '0.6em',
+                                    fontFamily: 'Poppins',
+                                    lineHeight: '1.3',
+                                    padding: '10px'
+                                  }}
+                                >{'Al marcar esta casilla, declaro que conozco a la persona a la que solicito que se le realice la transferencia mediante Zelle y autorizo a Gafpri Corp a efectuar dicha transferencia en mi nombre, utilizando mi saldo disponible en la billetera. Entiendo y acepto que Gafpri Corp no es responsable por el destino de los fondos una vez realizada la transferencia.'}</span>
+                              </div>
+                            </div>
                           </div>
 
                       <div style={{
@@ -240,7 +343,7 @@ export function ConfirmationTransfersZelle() {
                           <ButtonAppMobile 
                               title="Enviar"
                               containerProps={{
-                                id: 'amount-recharge-button',
+                                id: 'responsability-zelle-button',
                                 onClick: add,
                               }}
                           />

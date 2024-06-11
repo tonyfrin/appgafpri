@@ -4,7 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { decimalFormatPriceConverter } from '../../helpers';
 import { FaCheckCircle } from 'react-icons/fa';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -25,6 +25,12 @@ const textResumeStyles = css`
 
 export function SuccessTransfersZelle() {
   const { useWallet, siteOptions } = useTheme();
+  const router = useRouter();
+
+  const returnInit = async () => {
+    await router.push('/billetera');
+    useWallet.pagesTransfersZelle.actions.returnInit();
+  }
   
 
   return (
@@ -157,6 +163,7 @@ export function SuccessTransfersZelle() {
                 <div
                       style={{
                         margin: '2em auto 0.5em',
+                        width: '90%',
                       }}
                     >
                       <h1 style={{textAlign: 'center', padding: '0.3em', fontSize: '0.8em', fontWeight: 400}} className={title1AppStyles}>{'Recibirá un correo al ser completada la transferencia.'}</h1>
@@ -164,6 +171,7 @@ export function SuccessTransfersZelle() {
                 <div
                       style={{
                         margin: '0.5em auto',
+                        width: '90%',
                       }}
                     >
                       <h1 style={{textAlign: 'center', padding: '0.3em', fontSize: '0.8em', fontWeight: 400}} className={title1AppStyles}><span style={{fontWeight: 600}}>Importante: </span>Las transferencias Zelle se completan en el horario comprendido de 8:00am a 6:00pm de lunes a sabado.</h1>
@@ -171,8 +179,7 @@ export function SuccessTransfersZelle() {
                   
                   
 
-              <Link 
-                  href='/billetera'
+              <div 
                   style={{
                     display: 'flex',
                     margin: '3em 1em',
@@ -182,11 +189,10 @@ export function SuccessTransfersZelle() {
                   <ButtonAppMobile 
                       title="Aceptar"
                       containerProps={{
-                        id: 'amount-recharge-button',
-                        onClick: useWallet.pagesTransfersZelle.actions.returnInit,
+                        onClick: returnInit,
                       }}
                   />
-              </Link>
+              </div>
           
           </div>
     </>

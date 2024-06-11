@@ -6,6 +6,7 @@ import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { useTheme } from '../../context/ThemeContext';
 import { Error } from '../../Error';
 import { WhatsApp } from '../../Notification/WhatsApp';
+import { useRouter } from 'next/router';
 
 
 const mainStyles = css`
@@ -23,10 +24,12 @@ const title1AppStyles = css`
 
 export function TransferError() {
   const { useWallet, useError } = useTheme();
+  const router = useRouter();
 
-  const returnInit = () => {
+  const returnInit = async () => {
+    await router.push('/billetera/enviar');
     useWallet.attributesTransfers.actions.infoReset();
-    useWallet.pagesTransfers.actions.onInit();
+    useWallet.pagesTransfers.actions.onBeneficiary();
   }
 
   return (
@@ -58,19 +61,21 @@ export function TransferError() {
                       <h1 className={title1AppStyles}>No pudimos procesar su Transferencia, por favor vuelva a intentarlo.</h1>
                   </div>
                     
-                    <Link href="/billetera" style={{
-                      textDecoration: 'none',
-                      color: 'inherit',
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}>
+                    <div  
+                      style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
                       <ButtonAppMobile 
                         title="Regresar a la billetera"
                         containerProps={{
                           onClick: () => returnInit()
                         }}
                       />
-                    </Link>
+                    </div>
                 </div>
                 <WhatsApp />
             </div>
