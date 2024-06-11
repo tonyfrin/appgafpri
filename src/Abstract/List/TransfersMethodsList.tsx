@@ -56,6 +56,10 @@ export function TransfersMethodsList({
         <div 
           className={fila3} key={`pm-${item.id}`}
           onClick={item.onClick}
+          style={{
+            cursor: 'pointer'
+          
+          }}
         >
           <div 
             style={{
