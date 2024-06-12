@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';;
 import { css } from '@emotion/css';
-import Link from 'next/link';
-import { FiChevronLeft } from 'react-icons/fi';
+import { useRouter } from 'next/router';
 import { useTheme } from '../../context/ThemeContext';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { WalletBeneficiariesAttributesReturn } from '../../states/wallet/useGafpriApiWalletAccount';
 import { Loading } from '../../Loading';
 import { Error } from '../../Error';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
-import { formatPhoneNumber } from '../../helpers';
 import { PaymentMethodsAttributesReturn } from '../../states/paymentMethods/useGafpriApiPaymentMethods';
+import { HeaderPageReturn } from '@/Abstract/Header/HeaderPageReturn';
+import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
+import { formatPhoneNumberVzla } from '../../helpers';
+import { CurrenciesAttributesReturn } from '../../states/currencies/useGafpriApiCurrencies';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -31,11 +33,13 @@ type items = {
 }
 
 export function BeneficiaryPagoMovil() {
-  const { useWallet, useLogin, useError } = useTheme();
+  const { useWallet, useLogin, useError, useCurrencies } = useTheme();
+  const router = useRouter();
   const [beneficiaries, setBeneficiaries] = useState<WalletBeneficiariesAttributesReturn[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [fetchBeneficiaries, setFetchBeneficiaries] = useState<boolean>(false);
-
+  const [pagoMovilCurrencyIsReady, setPagoMovilCurrencyIsReady] = React.useState(false);
+  const pagoMovilCurrencyId = '2';
   const items: items[] = [];
 
   beneficiaries.map((item) => {
@@ -74,7 +78,7 @@ export function BeneficiaryPagoMovil() {
       if(data && data.success){
         try {
           
-          const data = await useWallet.account.actions.getBeneficiaries('PagoMovil');
+          const data = await useWallet.account.actions.getBeneficiaries('pagoMovil');
           if(data && data.success && data.items){
               setBeneficiaries(data.items);
           } else{
@@ -93,6 +97,10 @@ export function BeneficiaryPagoMovil() {
   }
 
   
+    const returnInit = async () => {
+      await router.push('/billetera/enviar');
+      useWallet.pagesTransfersPagoMovil.actions.returnInit();
+    }
 
 
     useEffect(() => {
@@ -116,36 +124,44 @@ export function BeneficiaryPagoMovil() {
         fetchBeneficiaries();
     }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    useEffect(() => {
+      const getPagoMovilCurrencyFetch = async () => {
+        if(useLogin.data.states.token && !pagoMovilCurrencyIsReady){
+          
+            try{
+              setPagoMovilCurrencyIsReady(false);
+              const currency = await useCurrencies.api.actions.getCurrency(pagoMovilCurrencyId);
+              if(currency && currency.success){
+                useWallet.attributesTransfersPagoMovil.actions.setCurrency(currency.item);
+                setPagoMovilCurrencyIsReady(true);
+              }
+            } catch (error) {
+              console.log(error);
+              useWallet.attributesTransfersPagoMovil.actions.setCurrency(null);
+              setPagoMovilCurrencyIsReady(false);
+            } 
+        }
+      }
+
+      getPagoMovilCurrencyFetch();
+    }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
           <div>
-            {fetching ? <Loading /> :
+            {fetching || !pagoMovilCurrencyIsReady ? <Loading /> :
               <>
                 <Error 
                   error={useError.states.error}
                 />
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    padding: '1em 0px',
-                    width: '90%',
-                    margin: 'auto',
-                    borderBottom: '1px solid #e1e1e1'
-                }}> 
-                    <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia Pago Movil</h1>
-                    <Link 
-                      style={{
-                        textDecoration: 'none',
-                        display: 'flex',
-                      }}
-                      href={'/billetera/enviar'}
-                    >
-                    <FiChevronLeft 
-                        className={arrowStyle}
-                        onClick={useWallet.pagesTransfersPagoMovil.actions.returnInit}
-                    />
-                    </Link>
-                </div>
+                <HeaderPageReturn 
+                  title={'Envío Pago Movil (Bs)'}
+                  onClick={returnInit}
+                  image={{
+                    src: LogoPagoMovil.src,
+                    backgroundColor: '#ebebeb',
+                  }}
+                />
                 <div style={{
                   margin: '1em 0px'
                 }}>
@@ -156,7 +172,7 @@ export function BeneficiaryPagoMovil() {
                 }}>Buscar Beneficiario</h1></div>
                       <InputAppContainer 
                         inputProps={{
-                          placeholder: 'Email o Teléfono',
+                          placeholder: 'Nombre o Teléfono',
                           type: 'text',
                           value: useWallet.attributesTransfersPagoMovil.states.findValue,
                           onChange: (e) => useWallet.attributesTransfersPagoMovil.actions.setFindValue(e.target.value.toLowerCase()),
@@ -197,7 +213,8 @@ export function BeneficiaryPagoMovil() {
                         padding: '5px',
                         borderRadius: '10px',
                         margin: '5px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        alignItems: 'center'
                       }}
                       >
                         <div style={{
@@ -231,7 +248,15 @@ export function BeneficiaryPagoMovil() {
                           <span style={{
                             fontSize: '0.6em',
                             fontWeight: 400,
-                          }}>{item.email ? item.email : formatPhoneNumber(`${item.phone}`)}</span>
+                          }}>{formatPhoneNumberVzla(`${item.phone}`)}</span>
+                          <span style={{
+                            fontSize: '0.6em',
+                            fontWeight: 400,
+                          }}>{item.bankName}</span>
+                          <span style={{
+                            fontSize: '0.6em',
+                            fontWeight: 400,
+                          }}>{`${item.accountNumber}`}</span>
                         </div>
                         {!verified &&
                           <div style={{

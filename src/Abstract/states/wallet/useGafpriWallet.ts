@@ -46,7 +46,7 @@ export const useGafpriWallet = ({useLogin, useUser, siteOptions}: UseGafpriWalle
     const attributesTransfersZelle = useGafpriAttributesTransfersZelle();
     const attributesTransfersPagoMovil = useGafpriAttributesTransfersPagoMovil();
     const pagesTransfersPagoMovil = useGafpriPagesTransfersPagoMovil({attributesTransfersPagoMovil});
-    const account = useGafpriApiWalletAccount({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle});
+    const account = useGafpriApiWalletAccount({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle, attributesTransfersPagoMovil});
     const attributes = useGafpriAttributesWallet({account, useLogin, useUser});
     
     const pagesTransfersZelle = useGafpriPagesTransfersZelle({attributesTransfersZelle});

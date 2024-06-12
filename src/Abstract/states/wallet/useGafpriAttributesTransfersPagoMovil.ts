@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { truncarTexto } from 'gafprilibui';
 import { WalletBeneficiariesAttributesReturn } from './useGafpriApiWalletAccount';
 import { generalValidationButtonNext, validationInput } from '../../helpers';
+import { CurrenciesAttributesReturn } from '../currencies/useGafpriApiCurrencies';
 
 type account = {
     id: string;
@@ -23,6 +24,8 @@ type states = {
     name: string;
     findValue: string;
     note: string;
+    currency: CurrenciesAttributesReturn | null;
+    responsability: boolean;
 }
 
 type actions = {
@@ -44,6 +47,9 @@ type actions = {
     setFindValue: (findValue: string) => void;
     validationButtonAmount: () => boolean;
     changeNote: (value: string) => void;
+    setCurrency: (currency: CurrenciesAttributesReturn | null) => void;
+    setResponsability: (value: boolean) => void;
+    validationResponsabilitytButton: () => boolean;
 }
 
 
@@ -66,11 +72,13 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
     const [commission, setCommission] = useState<string>('');
     const [findValue, setFindValue] = useState<string>('');
     const [note, setNote] = useState<string>('');
+    const [currency, setCurrency] = useState<CurrenciesAttributesReturn | null>(null);
+    const [responsability, setResponsability] = useState<boolean>(false);
 
     const validationPhone = (value: string): boolean => {
         const valid = validationInput(
           value,
-          /^[0-9]{10}$/,
+          /^[0-9]{12}$/,
           true
         );
         if (valid !== phoneValid) {
@@ -85,8 +93,8 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
           /^[0-9]{6,}$/,
           true
         );
-        if (valid !== phoneValid) {
-          setPhoneValid(valid);
+        if (valid !== accountNumberValid) {
+          setAccountNumberValid(valid);
         }
         return valid;
     }
@@ -114,6 +122,16 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
         })
     }
 
+    const validationResponsabilitytButton = (): boolean => {
+        const valid = generalValidationButtonNext({
+            validations: [
+                responsability
+            ],
+            inputId: 'responsability-zelle-button',
+        })
+        return valid;
+    }
+
     const infoReset = () => {
         setBankName('');
         setAccountNumber('');
@@ -134,9 +152,13 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
     }
 
     const changePhone = (value: string) => {
-        validationPhone(value);
-        setPhone(value);
-    }
+        let newValue = value;
+        if(value !== ''){
+          newValue = `58${value}`;
+        }
+        validationPhone(newValue);
+        setPhone(newValue);
+      }
 
     const changeNote = (value: string): void => {
         setNote(truncarTexto(value, 100));
@@ -157,7 +179,9 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
         phoneValid, 
         name, 
         findValue, 
-        note 
+        note,
+        currency,
+        responsability
     };
 
     const actions = { 
@@ -176,7 +200,10 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
         validationButtonBeneficiaryAdd, 
         setFindValue, 
         validationButtonAmount, 
-        changeNote 
+        changeNote,
+        setCurrency,
+        setResponsability,
+        validationResponsabilitytButton
     };
 
     return { states, actions };

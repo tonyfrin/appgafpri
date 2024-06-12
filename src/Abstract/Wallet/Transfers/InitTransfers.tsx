@@ -43,13 +43,13 @@ export function InitTransfers() {
       backgroundColor: 'rgb(107 29 207)',
       onClick: () => router.push('/billetera/enviar/zelle')
     },
-    // {
-    //   id: 'pm4',
-    //   name: 'Pago Movil (Bs)',
-    //   image: LogoBanesco.src,
-    //   backgroundColor: '#ebebeb',
-    //   onClick: () => router.push('/billetera/enviar/pagomovil')
-    // }, 
+    {
+      id: 'pm4',
+      name: 'Pago Movil (Bs)',
+      image: LogoBanesco.src,
+      backgroundColor: '#ebebeb',
+      onClick: () => router.push('/billetera/enviar/pagomovil')
+    }, 
   ]
 
   return (

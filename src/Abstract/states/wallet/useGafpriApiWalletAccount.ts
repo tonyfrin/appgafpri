@@ -8,6 +8,7 @@ import { SiteOptions } from '../../config/gafpriConfig';
 import { UseGafpriAttributesTransfersReturn } from "./useGafpriAttributesTransfers";
 import { UseGafpriAttributesTransfersZelleReturn } from "./useGafpriAttributesTransfersZelle";
 import { PaymentMethodsAttributesReturn } from "../paymentMethods/useGafpriApiPaymentMethods";
+import { UseGafpriAttributesTransfersPagoMovilReturn } from "./useGafpriAttributesTransfersPagoMovil";
 
 export type WalletAccountAtrributesReturn = {
     postsId: string;
@@ -60,15 +61,6 @@ export type WalletTransactionsAttributesReturn = {
     walletAccount: WalletAccountAtrributesReturn;
 }
 
-type DataItemsReturn = {
-    items?: WalletAccountAtrributesReturn[];
-    totalCount?: number;
-    success: boolean;
-    statusCode?: number;
-    error?: string;
-    message?: string;
- }
-
  type DataItemsBeneficiariesReturn = {
     items?: WalletBeneficiariesAttributesReturn[];
     totalCount?: number;
@@ -102,6 +94,8 @@ type actions = {
     addBeneficiaryZelle: () => Promise<any>;
     addTransferZelle: () => Promise<any>;
     deleteBeneficiaryZelle: (id: string) => Promise<any>;
+    addBeneficiaryPagoMovil: () => Promise<any>;
+    addTransferPagoMovil: () => Promise<any>;
 }
 
 export type UseGafpriApiWalletAccountReturn = {
@@ -114,10 +108,11 @@ export type UseGafpriApiWalletAccountProps = {
     siteOptions: SiteOptions;
     attributesTransfers: UseGafpriAttributesTransfersReturn;
     attributesTransfersZelle: UseGafpriAttributesTransfersZelleReturn;
+    attributesTransfersPagoMovil: UseGafpriAttributesTransfersPagoMovilReturn;
 }
 
 
-export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle}: UseGafpriApiWalletAccountProps): UseGafpriApiWalletAccountReturn  => {
+export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle, attributesTransfersPagoMovil}: UseGafpriApiWalletAccountProps): UseGafpriApiWalletAccountReturn  => {
     
     const getWalletAccount = async (): Promise<any> => {
         try {
@@ -229,6 +224,51 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 transactionsType: 'transfer-zelle',
                                 amount: parseFloat(attributesTransfersZelle.states.amount),
                                 change: parseFloat(attributesTransfersZelle.states.amount),
+                            }
+                        }]
+                    }
+                });
+                return data;
+            }
+        } catch (error) {
+            return error;
+        }
+    }
+
+    const addTransferPagoMovil = async (): Promise<any> => {
+        try {
+            if(useLogin.data.states.token){
+                const data = await gafpriFetch({
+                    initMethod: 'POST',
+                    initRoute: PAYMENT_WALLET,
+                    initToken: { token: useLogin.data.states.token },
+                    initCredentials:{
+                        total: parseFloat(attributesTransfersPagoMovil.states.amount),
+                        note: attributesTransfersPagoMovil.states.note,
+                        posts: {
+                            visibility: 'public',
+                        },
+                        paymentMethods: [{
+                            paymentMethods:{
+                                type: 'debit',
+                                methodType: 'wallet',
+                                paymentType: 'pagoMovil',
+                                currenciesId: attributesTransfersPagoMovil.states.currency?.id,
+                                amount: parseFloat(attributesTransfersPagoMovil.states.change),
+                                change: parseFloat(attributesTransfersPagoMovil.states.amount),
+                                note: 'Transferencia de saldo por Pago Movil',
+                                transactionType: 'transfer-pago-movil',
+                                walletBeneficiariesId: attributesTransfersPagoMovil.states.beneficiary?.id,
+                                posts: {
+                                    visibility: 'public',
+                                },
+                            },
+                            walletTransactions: {
+                                walletAccountPostsId: attributesTransfersPagoMovil.states.account?.id,
+                                type: 'debit',
+                                transactionsType: 'transfer-pago-movil',
+                                amount: parseFloat(attributesTransfersPagoMovil.states.amount),
+                                change: parseFloat(attributesTransfersPagoMovil.states.amount),
                             }
                         }]
                     }
@@ -380,6 +420,33 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
         }
     }
 
+    const addBeneficiaryPagoMovil = async (): Promise<any> => {
+        try {
+            if(useLogin.data.states.token){
+                const dataBeneficiary = {
+                    name: attributesTransfersPagoMovil.states.name,
+                    type: 'pagoMovil',
+                    status: 'active',
+                    phone: attributesTransfersPagoMovil.states.phone,
+                    bankName: attributesTransfersPagoMovil.states.bankName,
+                    accountNumber: attributesTransfersPagoMovil.states.accountNumber,
+                }
+
+                const data = await gafpriFetch({
+                    initMethod: 'POST',
+                    initRoute: `${WALLET_ACCOUNT_ROUTE}/beneficiary`,
+                    initToken: { token: useLogin.data.states.token },
+                    initCredentials: dataBeneficiary
+                });
+                return data;
+            }
+        } catch (error) {
+            console.error(error);
+            return error;
+            
+        }
+    }
+
     const getWalletAccountByEmail = async (email: string): Promise<DataItemReturn> => {
         try {
             if(useLogin.data.states.token){
@@ -426,7 +493,9 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
         addTransfer,
         addBeneficiaryZelle,
         addTransferZelle,
-        deleteBeneficiaryZelle
+        deleteBeneficiaryZelle,
+        addBeneficiaryPagoMovil,
+        addTransferPagoMovil
     }
 
     return {
