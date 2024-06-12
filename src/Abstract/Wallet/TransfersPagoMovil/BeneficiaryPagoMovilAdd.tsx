@@ -77,7 +77,11 @@ export function BeneficiaryPagoMovilAdd() {
 
   return (
     <>
-          <div>
+          <div 
+            style={{
+              marginBottom: '300px'
+            }}
+          >
             {fetching ? <Loading /> :
               <>
                 <Error 
