@@ -127,7 +127,7 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
             validations: [
                 responsability
             ],
-            inputId: 'responsability-zelle-button',
+            inputId: 'responsability-pago-movil-button',
         })
         return valid;
     }

@@ -10,8 +10,7 @@ import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { PaymentMethodsAttributesReturn } from '../../states/paymentMethods/useGafpriApiPaymentMethods';
 import { HeaderPageReturn } from '@/Abstract/Header/HeaderPageReturn';
 import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
-import { formatPhoneNumberVzla } from '../../helpers';
-import { CurrenciesAttributesReturn } from '../../states/currencies/useGafpriApiCurrencies';
+import { formatPhoneNumberVzla, scrollToTop } from '../../helpers';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -65,6 +64,7 @@ export function BeneficiaryPagoMovil() {
   const next = async (beneficiary: WalletBeneficiariesAttributesReturn) => {
     useWallet.attributesTransfersPagoMovil.actions.setBeneficiary(beneficiary);
     useWallet.pagesTransfersPagoMovil.actions.onAmount();
+    scrollToTop();
   }
 
   function statusCheck(objects: PaymentMethodsAttributesReturn[]): boolean {

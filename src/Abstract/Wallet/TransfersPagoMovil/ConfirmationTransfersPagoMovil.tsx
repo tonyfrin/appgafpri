@@ -323,7 +323,7 @@ export function ConfirmationTransfersPagoMovil() {
                           <ButtonAppMobile 
                               title="Enviar"
                               containerProps={{
-                                id: 'responsability-PagoMovil-button',
+                                id: 'responsability-pago-movil-button',
                                 onClick: add,
                               }}
                           />

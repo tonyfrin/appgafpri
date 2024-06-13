@@ -7,6 +7,7 @@ import { Error } from '../../Error';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { HeaderPageReturn } from '@/Abstract/Header/HeaderPageReturn';
 import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
+import { scrollToTop } from '../../helpers';
 
 const imageStyles = css`
   width: 80%;
@@ -41,6 +42,7 @@ export function BeneficiaryPagoMovilAdd() {
           if(data && data.success) {
             useWallet.attributesTransfersPagoMovil.actions.setBeneficiary(data.item);
             useWallet.pagesTransfersPagoMovil.actions.onAmount();
+            
           } else{
             useError.actions.changeError([`${data.message}`]);
             useWallet.pagesTransfersPagoMovil.actions.onBeneficiaryAdd();
@@ -48,8 +50,10 @@ export function BeneficiaryPagoMovilAdd() {
         }catch(err) {
           useError.actions.changeError([`${err}`]);
           useWallet.pagesTransfersPagoMovil.actions.onBeneficiaryAdd();
+          
         } finally {
           setFetching(false);
+          scrollToTop();
         }
     }
   };

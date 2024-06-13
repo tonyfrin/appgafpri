@@ -2,10 +2,9 @@ import React, { use, useEffect } from 'react';;
 import { css } from '@emotion/css';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
-import { FiChevronLeft } from 'react-icons/fi';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { SelectApp } from '../../Select/SelectApp';
-import { decimalFormatPriceConverter, formatPhoneNumberVzla } from '../../helpers';
+import { decimalFormatPriceConverter, formatPhoneNumberVzla, scrollToTop } from '../../helpers';
 import { InputAppAmount } from '../../Input/InputAppAmount';
 import { HeaderPageReturn } from '../../Header/HeaderPageReturn';
 import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
@@ -104,6 +103,7 @@ export function AmountTransfertPagoMovil() {
   const next = (): void => {
     if (useWallet.attributesTransfersPagoMovil.actions.validationButtonAmount()) {
       useWallet.pagesTransfersPagoMovil.actions.onCheck();
+      scrollToTop();
     }
   }
 
