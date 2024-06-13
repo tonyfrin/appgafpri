@@ -13,7 +13,7 @@ export default function FacebookPixel() {
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '398361285855768');
+    fbq('init', '465221299527127');
     fbq('track', 'PageView');
   }, []);
 
