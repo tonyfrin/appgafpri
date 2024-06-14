@@ -26,6 +26,15 @@ const layoutContainerStyle = (
   min-height: ${styles.minHeight || '100vh'};
   background-color: #f9f9f9;
   ${styles.custom || ''}
+
+   
+`;
+
+const MainStyle = css`
+   @media (min-width: 800px) {
+      width: 800px;
+      margin: 0 auto;
+    }
 `;
 
 
@@ -126,7 +135,7 @@ export const LayoutAppProfile = ({
                   image: Logo,
               }}
           />
-          <main style={{ flexGrow: 1 }}>{loading ? (<Loading />) : children}</main>
+          <main style={{ flexGrow: 1}} className={MainStyle}>{loading ? (<Loading />) : children}</main>
           <MenuFooterApp items={menuItems}/>
           <MainFooter 
               siteName="Gafpri Store"

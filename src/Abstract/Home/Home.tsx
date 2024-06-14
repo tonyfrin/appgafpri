@@ -8,6 +8,12 @@ import { Loading } from '../Loading';
 import { EmptyWallet } from '../Wallet/EmptyWallet';
 import { ProductsAttributesReturn } from '../states/products/useGafpriApiProducts';
 import { ProductList } from '../List/ProductList';
+import { WalletButton } from '../Button/WalletButton';
+import { IoStorefrontOutline } from 'react-icons/io5';
+import { RiRefund2Line } from 'react-icons/ri';
+import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { HomeWalletButton } from '../Button/HomeWalletButton';
+import { IoWalletOutline } from 'react-icons/io5';
 
 
 const title1AppStyles = css`
@@ -15,7 +21,7 @@ const title1AppStyles = css`
   padding: 0.9em;
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  text-align: left;
+  text-align: center;
 `
 
 export const Home = () => {
@@ -25,12 +31,14 @@ export const Home = () => {
     const [items, setItems] = useState<ProductsAttributesReturn[]>([]);
     const [offset, setOffset] = useState<number>(0);
     const [totalItems, setTotalItems] = useState<number | null>(null);
-
+    const [totalBalanceAvailable, setTotalBalanceAvailable] = useState<number>(0);
     const entities = useWallet.attributes.states.entities;
     const countEntities = entities.length;
     const walletAccountCount = entities.reduce((acc, entity) => {
         return acc + entity.walletAccount.length;
     }, 0);
+
+    
 
     const pushProducts = (products: ProductsAttributesReturn[]) => {
         setItems([...items, ...products]);
@@ -106,6 +114,28 @@ export const Home = () => {
           fetchData();
       }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
 
+      useEffect(() => {
+        if(entities.length > 0){
+            let total = 0;
+            entities.map((entity, index) => {
+                if(entity.walletAccount.length === 0) return (<></>);
+                    
+                const totalBalance = entity.walletAccount.reduce((acc, account) => {
+                    return acc + parseFloat(account.available.toString());
+                }, 0);
+
+                console.log('totalBalance', totalBalance);
+    
+                total = total + totalBalance;
+            
+            });
+            setTotalBalanceAvailable(total);
+        }
+    }, [entities]); 
+        
+      
+     
+
     return (
         <>
         {!useWallet.attributes.states.entityIsReady || !useWallet.attributes.states.walletAccountIsReady || fetching ? <Loading /> :  (
@@ -121,150 +151,79 @@ export const Home = () => {
                         flexDirection: 'column',
                         margin: '0px auto 100px auto',
                     }}>
-                        <div>
-                            <h1 className={title1AppStyles}>Tu saldo en Billetera</h1>
-                        </div>
                         <div
-                        style={{
-                            width: '90%',
-                            margin: '0 auto',
-                        }}
+                            style={{
+                                display: 'flex',
+                                backgroundColor: '#324375',
+                                width: '85%',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '#fff',
+                                padding: '1em',
+                                margin: '1em auto',
+                                borderRadius: '20px',
+                                flexDirection: 'column'
+                            }}
                         >
-                            
-                            {entities.length > 0 && entities.map((entity, index) => {
-                                if(entity.walletAccount.length === 0) return (<></>);
-                                    
-                                    const totalBalance = entity.walletAccount.reduce((acc, account) => {
-                                        return acc + parseFloat(account.available.toString());
-                                    }, 0);
-
-
-                                return (
-                                    <>
-                                    <div
-                                        style={{
-                                            margin: '1em auto',
-                                        }}
-                                    >
-                                        <div>
-                                            <div
-                                                style={{
-                                                    
-                                                    width: '95%',
-                                                    margin: 'auto',
-                                                
-                                                }}
-                                            ><span style={{
-                                                fontSize: '0.8em',
-                                                padding: '5px',
-                                                margin: '0',
-                                                fontFamily: 'Poppins',
-                                                textAlign: 'left',
-                                            }}>{entity.name}</span></div>
-                                        </div>
-
-                                        <div
-                                            style={{
-                                                backgroundColor: '#334779',
-                                                borderRadius: '10px 10px 0 0',
-                                                padding: '0.5em',
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                            }}
-                                        >
-                                            <span style={{
-                                                fontSize: '0.7em',
-                                                margin: '0',
-                                                fontFamily: 'Poppins',
-                                                textAlign: 'left',
-                                                color: '#fff'
-                                            }}>{`Cuenta en billetera(${entity.walletAccount.length})`}</span>
-                                            <div style={{
-                                                fontSize: '0.7em',
-                                                fontWeight: '300',
-                                                margin: '0',
-                                                fontFamily: 'Poppins',
-                                                textAlign: 'right',
-                                                color: '#fff'
-                                            }}>{decimalFormatPriceConverter(
-                                                totalBalance || 0,
-                                                siteOptions.DECIMAL_NUMBERS,
-                                                siteOptions.CURRENCY_SYMBOL,
-                                                siteOptions.CURRENCY_LOCATION
-                                            )}</div>
-                                        </div>
-                                        
-                                        <div
-                                            style = {{
-                                                border: '1px solid #e6e6e6',
-                                                padding: '10px',
-                                                borderRadius: '0px 0px 15px 15px'
-                                            }}
-                                        >
-                                            {entity.walletAccount.length > 0 && entity.walletAccount.map((account: WalletAccountAtrributesReturn, index: number) => {
-                                                return (
-                                                    <>
-                                                        <div
-                                                            style={{
-                                                                border: '0.5px solid #ebebeb',
-                                                                borderRadius: '15px',
-                                                                margin: '0px 0px 2% 0px',
-                                                                textDecoration: 'none',
-                                                                color: 'inherit'
-                                                            }}
-                                                            
-                                                            key={`wallet-account-${index}`}
-                                                        >
-                                                                <Link
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        justifyContent: 'space-between',
-                                                                        margin: 'auto',
-                                                                        padding: '2em 2%',
-                                                                        textDecoration: 'none',
-                                                                        color: 'inherit'
-                                                                    }}
-                                                                    href="/billetera/cuenta/[id]" as={`/billetera/cuenta/${account.postsId}`}
-                                                                >
-                                                                    <span
-                                                                        style={{
-                                                                            fontSize: '0.8em',
-                                                                            margin: 'auto 0px',
-                                                                            fontFamily: 'Poppins',
-                                                                            textAlign: 'left',
-                                                                            width: '50%'
-                                                                        }}
-                                                                    >{account.name}</span>
-                                                                    <div
-                                                                        style={{
-                                                                            display: 'flex',
-                                                                            flexDirection: 'column',
-                                                                            width: '50%',
-                                                                            margin: 'auto 0px',
-                                                                            alignItems: 'flex-end'
-                                                                        }}
-                                                                    >
-                                                                        <span style={{
-                                                                            fontWeight: '600',
-                                                                            textAlign: 'center',
-                                                                        }}>{`${decimalFormatPriceConverter(
-                                                                            account.available || 0,
-                                                                            siteOptions.DECIMAL_NUMBERS,
-                                                                            siteOptions.CURRENCY_SYMBOL,
-                                                                            siteOptions.CURRENCY_LOCATION
-                                                                        )} >`}</span>
-                                                                    </div>
-                                                                </Link>
-                                                        </div>
-                                                    </>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                    </>
-                                )
-                            })}
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginTop: '0.3em'
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontSize: '0.6rem',
+                                        fontWeight: '400',
+                                        fontFamily: 'Poppins',
+                                    }}
+                                >Saldo disponible</span>
+                                <span
+                                    style={{
+                                        fontSize: '2.5rem',
+                                        fontWeight: '600',
+                                        fontFamily: 'Poppins',
+                                    }}
+                                >{decimalFormatPriceConverter(
+                                    totalBalanceAvailable || 0,
+                                    siteOptions.DECIMAL_NUMBERS,
+                                    siteOptions.CURRENCY_SYMBOL,
+                                    siteOptions.CURRENCY_LOCATION
+                                )}</span>
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                    marginTop: '1em',
+                                    marginBottom: '0.2em'
+                                }}
+                            >
+                                <HomeWalletButton 
+                                    href='/billetera/recarga'
+                                    Icon={RiRefund2Line}
+                                    title='Recargar'
+                                />
+                                <HomeWalletButton 
+                                    href='/billetera/enviar'
+                                    Icon={IoPaperPlaneOutline}
+                                    title='Enviar'
+                                />
+                                <HomeWalletButton 
+                                    href='/billetera'
+                                    Icon={IoWalletOutline}
+                                    title='Cuentas'
+                                />
+                            </div>
                         </div>
+                        
+                        
+                        
+                        
                         <div>
                             <div>
                                 <h1 className={title1AppStyles}>Todos nuestros Productos</h1>

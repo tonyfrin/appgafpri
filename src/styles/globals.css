@@ -19,7 +19,7 @@ html, body {
 }
 
 .div-app {
-  max-width: 100%; /* Establece un ancho máximo para el contenedor principal */
+  max-width: 900px; /* Establece un ancho máximo para el contenedor principal */
   margin: 0 auto; /* Centra el contenedor en la pantalla */
 }
 
