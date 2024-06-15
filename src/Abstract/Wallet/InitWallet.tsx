@@ -204,7 +204,7 @@ export const InitWallet = () => {
                             <WalletButton 
                                 href='/billetera/enviar'
                                 Icon={IoPaperPlaneOutline}
-                                title='Enviar'
+                                title='Retirar'
                             />
                         </div>
                     </div>

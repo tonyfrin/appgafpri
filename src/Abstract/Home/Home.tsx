@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { useTheme } from '../context/ThemeContext';
-import Link from 'next/link';
-import { WalletAccountAtrributesReturn } from '../states/wallet/useGafpriApiWalletAccount';
 import { decimalFormatPriceConverter } from '../helpers';
 import { Loading } from '../Loading';
 import { EmptyWallet } from '../Wallet/EmptyWallet';
 import { ProductsAttributesReturn } from '../states/products/useGafpriApiProducts';
 import { ProductList } from '../List/ProductList';
-import { WalletButton } from '../Button/WalletButton';
-import { IoStorefrontOutline } from 'react-icons/io5';
 import { RiRefund2Line } from 'react-icons/ri';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { HomeWalletButton } from '../Button/HomeWalletButton';
@@ -123,8 +119,6 @@ export const Home = () => {
                 const totalBalance = entity.walletAccount.reduce((acc, account) => {
                     return acc + parseFloat(account.available.toString());
                 }, 0);
-
-                console.log('totalBalance', totalBalance);
     
                 total = total + totalBalance;
             
@@ -211,7 +205,7 @@ export const Home = () => {
                                 <HomeWalletButton 
                                     href='/billetera/enviar'
                                     Icon={IoPaperPlaneOutline}
-                                    title='Enviar'
+                                    title='Retirar'
                                 />
                                 <HomeWalletButton 
                                     href='/billetera'

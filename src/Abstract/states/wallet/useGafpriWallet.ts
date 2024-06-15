@@ -11,6 +11,9 @@ import { UseGafpriPagesTransfersZelleReturn, useGafpriPagesTransfersZelle } from
 import { UseGafpriAttributesTransfersZelleReturn, useGafpriAttributesTransfersZelle } from "./useGafpriAttributesTransfersZelle";
 import { UseGafpriAttributesTransfersPagoMovilReturn, useGafpriAttributesTransfersPagoMovil } from "./useGafpriAttributesTransfersPagoMovil";
 import { UseGafpriPagesTransfersPagoMovilReturn, useGafpriPagesTransfersPagoMovil } from "./useGafpriPagesTransfersPagoMovil";
+import { UseGafpriAttributesCashAdvanceReturn, useGafpriAttributesCashAdvance } from './useGafpriAttributesCashAdvance';
+import { UseGafpriPagesCashAdvanceReturn, useGafpriPagesCashAdvance } from "./useGafpriPagesCashAdvance";
+
 
 type actions = {
     globalResetInfo: () => void;
@@ -27,6 +30,8 @@ export type UseGafpriWalletReturn = {
     attributesTransfersZelle: UseGafpriAttributesTransfersZelleReturn;
     attributesTransfersPagoMovil: UseGafpriAttributesTransfersPagoMovilReturn;
     pagesTransfersPagoMovil: UseGafpriPagesTransfersPagoMovilReturn;
+    attributesCashAdvance: UseGafpriAttributesCashAdvanceReturn;
+    pagesCashAdvance: UseGafpriPagesCashAdvanceReturn;
     actions: actions;
 }
 
@@ -46,16 +51,20 @@ export const useGafpriWallet = ({useLogin, useUser, siteOptions}: UseGafpriWalle
     const attributesTransfersZelle = useGafpriAttributesTransfersZelle();
     const attributesTransfersPagoMovil = useGafpriAttributesTransfersPagoMovil();
     const pagesTransfersPagoMovil = useGafpriPagesTransfersPagoMovil({attributesTransfersPagoMovil});
-    const account = useGafpriApiWalletAccount({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle, attributesTransfersPagoMovil});
+    const attributesCashAdvance = useGafpriAttributesCashAdvance();
+    const account = useGafpriApiWalletAccount({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle, attributesTransfersPagoMovil, attributesCashAdvance});
     const attributes = useGafpriAttributesWallet({account, useLogin, useUser});
-    
     const pagesTransfersZelle = useGafpriPagesTransfersZelle({attributesTransfersZelle});
+    
+    const pagesCashAdvance = useGafpriPagesCashAdvance({attributes: attributesCashAdvance});
     
     const globalResetInfo = (): void => {
         attributes.actions.infoReset();
         pagesRecharge.actions.returnInit();
         pagesTransfers.actions.returnInit();
         pagesTransfersZelle.actions.returnInit();
+        pagesTransfersPagoMovil.actions.returnInit();
+        pagesCashAdvance.actions.returnInit();
     }
     
     const actions: actions = {
@@ -73,6 +82,8 @@ export const useGafpriWallet = ({useLogin, useUser, siteOptions}: UseGafpriWalle
         attributes,
         attributesTransfersZelle,
         attributesTransfersPagoMovil,
+        attributesCashAdvance,
+        pagesCashAdvance,
         actions,
     };
 }

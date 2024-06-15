@@ -9,6 +9,7 @@ import { UseGafpriAttributesTransfersReturn } from "./useGafpriAttributesTransfe
 import { UseGafpriAttributesTransfersZelleReturn } from "./useGafpriAttributesTransfersZelle";
 import { PaymentMethodsAttributesReturn } from "../paymentMethods/useGafpriApiPaymentMethods";
 import { UseGafpriAttributesTransfersPagoMovilReturn } from "./useGafpriAttributesTransfersPagoMovil";
+import { UseGafpriAttributesCashAdvanceReturn } from "./useGafpriAttributesCashAdvance";
 
 export type WalletAccountAtrributesReturn = {
     postsId: string;
@@ -96,6 +97,7 @@ type actions = {
     deleteBeneficiaryZelle: (id: string) => Promise<any>;
     addBeneficiaryPagoMovil: () => Promise<any>;
     addTransferPagoMovil: () => Promise<any>;
+    addCashAdvance: () => Promise<any>;
 }
 
 export type UseGafpriApiWalletAccountReturn = {
@@ -109,10 +111,11 @@ export type UseGafpriApiWalletAccountProps = {
     attributesTransfers: UseGafpriAttributesTransfersReturn;
     attributesTransfersZelle: UseGafpriAttributesTransfersZelleReturn;
     attributesTransfersPagoMovil: UseGafpriAttributesTransfersPagoMovilReturn;
+    attributesCashAdvance: UseGafpriAttributesCashAdvanceReturn;
 }
 
 
-export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle, attributesTransfersPagoMovil}: UseGafpriApiWalletAccountProps): UseGafpriApiWalletAccountReturn  => {
+export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOptions, attributesTransfers, attributesTransfersZelle, attributesTransfersPagoMovil, attributesCashAdvance}: UseGafpriApiWalletAccountProps): UseGafpriApiWalletAccountReturn  => {
     
     const getWalletAccount = async (): Promise<any> => {
         try {
@@ -235,6 +238,54 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
         }
     }
 
+    const addCashAdvance = async (): Promise<any> => {
+        try {
+            if(useLogin.data.states.token){
+                const data = await gafpriFetch({
+                    initMethod: 'POST',
+                    initRoute: PAYMENT_WALLET,
+                    initToken: { token: useLogin.data.states.token },
+                    initCredentials:{
+                        total: parseFloat(attributesCashAdvance.states.amount),
+                        note: attributesCashAdvance.states.note,
+                        posts: {
+                            visibility: 'public',
+                        },
+                        paymentMethods: [{
+                            paymentMethods:{
+                                type: 'debit',
+                                methodType: 'wallet',
+                                paymentType: 'cash',
+                                currenciesId: siteOptions.currencyId,
+                                amount: parseFloat(attributesCashAdvance.states.amount),
+                                change: parseFloat(attributesCashAdvance.states.amount),
+                                note: 'Avance de efectivo',
+                                transactionType: 'cash-advance',
+                                posts: {
+                                    visibility: 'public',
+                                },
+                                sitesId: attributesCashAdvance.states.store?.id,
+                                instructions: attributesCashAdvance.states.instructions,
+                                commissionOption: attributesCashAdvance.states.commissionOption,
+                                processingDate: attributesCashAdvance.states.date,
+                            },
+                            walletTransactions: {
+                                walletAccountPostsId: attributesCashAdvance.states.account?.id,
+                                type: 'debit',
+                                transactionsType: 'cash-advance',
+                                amount: parseFloat(attributesCashAdvance.states.amount),
+                                change: parseFloat(attributesCashAdvance.states.amount),
+                            }
+                        }]
+                    }
+                });
+                return data;
+            }
+        } catch (error) {
+            return error;
+        }
+    }
+  
     const addTransferPagoMovil = async (): Promise<any> => {
         try {
             if(useLogin.data.states.token){
@@ -495,7 +546,8 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
         addTransferZelle,
         deleteBeneficiaryZelle,
         addBeneficiaryPagoMovil,
-        addTransferPagoMovil
+        addTransferPagoMovil,
+        addCashAdvance
     }
 
     return {

@@ -7,7 +7,8 @@ import { TransfersMethodsList } from '@/Abstract/List/TransfersMethodsList';
 import LogoZelle from '../../assets/img/logo-zelle.png';
 import LogoPaypal from '../../assets/img/logo-pay-pal.png';
 import LogoBanesco from '../../assets/img/logo-pago-movil.png';
-import LogoGafpri from '../../assets/img/logo-llama-gafpri-blanca.png'
+import LogoGafpri from '../../assets/img/logo-llama-gafpri-blanca.png';
+import LogoCash from '../../assets/img/logo-cash.png';
 import { useRouter } from 'next/router';
 
 const title1AppStyles = css`
@@ -50,6 +51,13 @@ export function InitTransfers() {
       backgroundColor: '#ebebeb',
       onClick: () => router.push('/billetera/enviar/pagomovil')
     }, 
+    {
+      id: 'pm5',
+      name: 'Avance de Efectivo',
+      image: LogoCash.src,
+      backgroundColor: '#008000',
+      onClick: () => router.push('/billetera/enviar/efectivo')
+    }
   ]
 
   return (
@@ -63,7 +71,7 @@ export function InitTransfers() {
                 margin: 'auto',
                 borderBottom: '1px solid #e1e1e1'
             }}> 
-                <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Transferencia de Saldo</h1>
+                <h1 style={{textAlign: 'center', padding: '0.3em'}} className={title1AppStyles}>Retirar Saldo</h1>
                 <Link href='/billetera' style={{
                   textDecoration: 'none',
                   display: 'flex',
