@@ -1,5 +1,6 @@
 import React, { use, useEffect } from 'react';
 import { css } from '@emotion/css';
+import { useRouter } from 'next/router';
 import { FiChevronLeft } from 'react-icons/fi';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
@@ -53,8 +54,11 @@ const checkboxStyles = css`
 
 export function SuccessCashAdvance() {
   const { useWallet, siteOptions, useError } = useTheme();
+  const router = useRouter();
 
-  const add = () => {
+  const add = async () => {
+    await router.push('/billetera');
+    useWallet.pagesCashAdvance.actions.returnInit();
     scrollToTop();
   }
  
@@ -63,7 +67,6 @@ export function SuccessCashAdvance() {
     useWallet.attributesRecharge.actions.validationResponsabilitytButton();
   }, [useWallet.attributesRecharge.states.responsability]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const currentAccount = useWallet.attributesCashAdvance.states.account;
 
   return (
     <>
