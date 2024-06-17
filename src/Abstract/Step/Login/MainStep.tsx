@@ -42,7 +42,6 @@ export const MainStep = () => {
     } else if (useSingUp.pages.states.isPhoneCheck) {
       useSingUp.pages.actions.onPhone();
     } else if (useSingUp.pages.states.isName) {
-      // useSingUp.pages.actions.onPhoneCheck();
       useSingUp.pages.actions.onPhone();
     } else if (useSingUp.pages.states.isLegal) {
       useSingUp.pages.actions.onName();

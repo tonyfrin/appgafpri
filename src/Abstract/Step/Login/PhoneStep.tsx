@@ -42,14 +42,13 @@ export const PhoneStep = () => {
 
     const next = async () => {
         if (useSingUp.attributes.actions.validationButtonStep3()) {
-            // try{
-            //     await useSingUp.api.actions.requestPhoneCode(useSingUp.attributes.states.phone);
-            // } catch (error) {
-            //     console.error(error);
-            // } finally {
-            //     useSingUp.pages.actions.onPhoneCheck();
-            // }
-            useSingUp.pages.actions.onName();
+            try{
+                await useSingUp.api.actions.requestPhoneCode(useSingUp.attributes.states.phone);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                useSingUp.pages.actions.onPhoneCheck();
+            }
         }
     }
 

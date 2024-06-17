@@ -82,7 +82,7 @@ export const useGafpriApiSingUp = ({attributes}: UseGafpriApiSingUpProps)  => {
                 email: attributes.states.email,
                 code: attributes.states.checkEmail,
                 phone: attributes.states.phone,
-                // phoneCode: attributes.states.checkPhone,
+                phoneCode: attributes.states.checkPhone,
                 name: attributes.states.name,
                 lastName: attributes.states.lastName,
                 photo: attributes.states.userPhoto,
