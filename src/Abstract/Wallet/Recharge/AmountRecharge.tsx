@@ -322,7 +322,7 @@ export function AmountRecharge() {
               <ButtonEditInfo 
                     content={
                       useWallet.attributesRecharge.states.paymentType === 'zelle' ? 'Zelle' 
-                      : useWallet.attributesRecharge.states.paymentType === 'paypal' ? 'PayPal' : 'Elejir metodo de pago'}
+                      : useWallet.attributesRecharge.states.paymentType === 'paypal' ? 'PayPal' : 'Elegir metodo de pago'}
                     buttonProps={{
                         buttonTitle: modalPm ? '▲' : '▼' ,
                     }}
