@@ -33,6 +33,7 @@ type State = {
     userPhotoValid: boolean;
     submittingDocumentId: boolean;
     submittingUser: boolean;
+    successRegister: boolean;
 };
 
 type Actions = {
@@ -69,6 +70,7 @@ type Actions = {
     setSubmittingDocumentId: (value: boolean) => void;
     setSubmittingUser: (value: boolean) => void;
     infoReset: () => void;
+    setSuccessRegister: (value: boolean) => void;
 };
 
 
@@ -132,6 +134,8 @@ export function useGafpriAttributesSingUp({useError}: UseGafpriAttributesSingUpP
   const [userPhotoValid, setUserPhotoValid] = useState(false);
   const [submittingUser, setSubmittingUser] = useState(false);
 
+  const [successRegister, setSuccessRegister] = useState(false);
+
   const infoReset = () => {
     setEmail('');
     setEmailValid(false);
@@ -168,6 +172,7 @@ export function useGafpriAttributesSingUp({useError}: UseGafpriAttributesSingUpP
 
     setSubmittingDocumentId(false);
     setSubmittingUser(false);
+    setSuccessRegister(false);
   }
 
   const validationEmail = (value: string) => {
@@ -473,7 +478,8 @@ export function useGafpriAttributesSingUp({useError}: UseGafpriAttributesSingUpP
     userPhoto,
     userPhotoValid,
     submittingDocumentId,
-    submittingUser
+    submittingUser,
+    successRegister
   };
 
   const actions = {
@@ -509,7 +515,8 @@ export function useGafpriAttributesSingUp({useError}: UseGafpriAttributesSingUpP
     validationButtonStep8,
     setSubmittingDocumentId,
     setSubmittingUser,
-    infoReset
+    infoReset,
+    setSuccessRegister
   };
 
   return {

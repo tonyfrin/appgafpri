@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
 import { PhotoForm } from '../../Form/PhotoForm';
@@ -6,6 +6,8 @@ import { useTheme } from '../../context/ThemeContext';
 import { Error } from '../../Error';
 import Image from 'next/image';
 import { WhatsApp } from '../../Notification/WhatsApp';
+import { useRouter } from 'next/router';
+import { Loading } from '../../Loading';
 
 const buttonAppMobileContentStyles = css`
     font-size: 1.5em;
@@ -55,6 +57,8 @@ const imageStyle = css`
 
 export const SelfieStep = () => {
     const { useSingUp, useError } = useTheme();
+    const [fetching, setFetching] = React.useState(false);
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -69,9 +73,11 @@ export const SelfieStep = () => {
 
         if (useSingUp.attributes.actions.validationButtonStep8()) {
             try {
+                setFetching(true);
                 const data = await useSingUp.api.actions.addUser();
                 if(data && data.success){
-                    useSingUp.pages.actions.onFinal();
+                    useSingUp.attributes.actions.setSuccessRegister(true);
+                    await router.push('/login/crear/exito');
                 } else {
                     const error = []
                     error.push(data.message);
@@ -81,10 +87,14 @@ export const SelfieStep = () => {
             } catch (error) {
                 useError.actions.changeError(['Lo sentimos, ocurrió un error inesperado. Por favor, inténtalo de nuevo.']);
                 useSingUp.pages.actions.returnInit();
+            } finally {
+                setFetching(false);
             }
         }
     }
   return (
+    <>
+    {fetching ? <Loading /> :
     <div
         style={{
             marginBottom: '300px'
@@ -135,5 +145,7 @@ export const SelfieStep = () => {
             </div>
         </div>
      </div>
+    }
+     </>
   );
 }
