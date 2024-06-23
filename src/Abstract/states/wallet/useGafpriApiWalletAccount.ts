@@ -310,6 +310,8 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 note: 'Transferencia de saldo por Pago Movil',
                                 transactionType: 'transfer-pago-movil',
                                 walletBeneficiariesId: attributesTransfersPagoMovil.states.beneficiary?.id,
+                                instructions: attributesTransfersPagoMovil.states.instructions,
+                                processingDate: attributesTransfersPagoMovil.states.date,
                                 posts: {
                                     visibility: 'public',
                                 },

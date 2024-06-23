@@ -1,4 +1,5 @@
-import React, { use, useEffect } from 'react';;
+import React, { use, useEffect } from 'react';
+import moment, { Moment } from 'moment-timezone';
 import { css } from '@emotion/css';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
@@ -9,6 +10,8 @@ import { InputAppAmount } from '../../Input/InputAppAmount';
 import { HeaderPageReturn } from '../../Header/HeaderPageReturn';
 import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
 import { Loading } from '@/Abstract/Loading';
+import { describe } from 'node:test';
+moment.locale('es');
 
 const textResumeStyles = css`
   font-size: 0.7em;
@@ -16,6 +19,44 @@ const textResumeStyles = css`
   margin: 0;
   font-family: 'Poppins', sans-serif;
   text-align: left;
+`
+
+const checkboxStyles = css`
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+  &:checked {
+    border-color: #000;
+    background-color: #000;
+  }
+
+  &:checked::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 2px;
+  }
+`;
+
+const fila3 = css`
+  border: 2px solid rgb(234, 234, 234);
+  border-radius: 10px;
+  padding: 1em 2%;
+  display: flex;
+  width: 80%;
+  margin: auto;
+  align-items: center;
 `
 
 const title1AppStyles = css`
@@ -46,10 +87,18 @@ const textInfoTitleStyles = css`
   color: #9e9e9e;
 `
 
-const arrowStyle = css`
-    font-size: 1.5rem;
-    color: #314577;
-    margin: auto 0px;
+const containerColumnCenterStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+`
+
+const priceTotalStyles = css`
+  font-size: 0.8em;
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
 `
 
 type account = {
@@ -61,6 +110,42 @@ type account = {
 export function AmountTransfertPagoMovil() {
   const { useWallet, siteOptions } = useTheme();
 
+  function addDay(date: Moment, day: number) {
+    // Sumar un día
+    date.add(day, 'day');
+
+    return date;
+}
+
+
+  useEffect(() => {
+    const currentTime = new Date();
+    const dateMoment = moment(currentTime);
+    const datePlusOneHour = moment(currentTime);
+    const dateVenezuela = dateMoment.tz('America/Caracas');
+    const dateVenezuelaPlusOneHour = datePlusOneHour.tz('America/Caracas');
+    let descriptionOptions1 = '';
+    let dateOptions1 = '';
+
+    if (dateVenezuela.hour() >= 8 && dateVenezuela.hour() <= 18){
+      dateVenezuelaPlusOneHour.add(1, 'hour');
+      descriptionOptions1 = `Para procesar hoy entre ${dateVenezuela.format('h:mm A')} y las ${dateVenezuelaPlusOneHour.format('h:mm A')}`;
+      dateOptions1 = dateVenezuela.toDate().toString();
+
+    } else if(dateVenezuela.hour() < 8){
+      descriptionOptions1 = `Para procesar hoy entre las 8:00 AM y las 9:00 AM`;
+      dateOptions1 = dateVenezuela.toDate().toString();
+      
+    } else if(dateVenezuela.hour() > 18){
+      const dateVenezuelaPlusOneDay: Moment = addDay(dateVenezuela.clone(), 1);
+      descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 9:00 AM`;
+      dateOptions1 = dateVenezuelaPlusOneDay.toDate().toString();
+    }
+
+    useWallet.attributesTransfersPagoMovil.actions.setDate(dateOptions1);
+    useWallet.attributesTransfersPagoMovil.actions.setInstructions(descriptionOptions1);
+  }, []); // eslint-disable-line
+  
   const accounts: account[] = [];
 
   useWallet.attributes.states.walletAccount.forEach((account) => {
@@ -242,6 +327,27 @@ export function AmountTransfertPagoMovil() {
                     }</span>
                   </div>
           </div>
+          {useWallet.attributesTransfersPagoMovil.states.instructions !== '' &&
+            <div className={fila3}>
+                <div style={{
+                  width: '10%',
+                }}>
+                  <input
+                      type="checkbox"
+                      className={checkboxStyles}
+                      checked={true}
+                    />
+                </div>
+                <div style={{
+                  width: '90%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }} className={containerColumnCenterStyles}>
+                  <span className={priceTotalStyles}>{useWallet.attributesTransfersPagoMovil.states.instructions}</span>
+                  
+                </div>
+            </div>
+          }
           <InputAppContainer 
                 inputProps={{
                   placeholder: 'Nota interna (opcional)',

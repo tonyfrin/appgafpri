@@ -26,6 +26,8 @@ type states = {
     note: string;
     currency: CurrenciesAttributesReturn | null;
     responsability: boolean;
+    date: string;
+    instructions: string;
 }
 
 type actions = {
@@ -50,6 +52,8 @@ type actions = {
     setCurrency: (currency: CurrenciesAttributesReturn | null) => void;
     setResponsability: (value: boolean) => void;
     validationResponsabilitytButton: () => boolean;
+    setDate: (date: string) => void;
+    setInstructions: (instructions: string) => void;
 }
 
 
@@ -74,6 +78,8 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
     const [note, setNote] = useState<string>('');
     const [currency, setCurrency] = useState<CurrenciesAttributesReturn | null>(null);
     const [responsability, setResponsability] = useState<boolean>(false);
+    const [date, setDate] = useState<string>('');
+    const [instructions, setInstructions] = useState<string>('');
 
     const validationPhone = (value: string): boolean => {
         const valid = validationInput(
@@ -144,6 +150,10 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
         setPhoneValid(false);
         setFindValue('');
         setNote('');
+        setCurrency(null);
+        setResponsability(false);
+        setDate('');
+        setInstructions('');
     }
 
     const changeAccountNumber = (value: string) => {
@@ -181,7 +191,9 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
         findValue, 
         note,
         currency,
-        responsability
+        responsability,
+        date,
+        instructions,
     };
 
     const actions = { 
@@ -203,7 +215,9 @@ export const useGafpriAttributesTransfersPagoMovil = (): UseGafpriAttributesTran
         changeNote,
         setCurrency,
         setResponsability,
-        validationResponsabilitytButton
+        validationResponsabilitytButton,
+        setDate,
+        setInstructions,
     };
 
     return { states, actions };

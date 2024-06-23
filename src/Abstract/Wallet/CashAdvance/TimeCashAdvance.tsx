@@ -99,7 +99,7 @@ const priceStyles = css`
   font-size: 0.8em;
   font-weight: 400;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; 
 `
 
 export function TimeCashAdvance() {
@@ -116,16 +116,16 @@ export function TimeCashAdvance() {
   const dateVenezuelaPlusTowDay = datePlusTowDay.tz('America/Caracas');
 
   function addBusinessDay(date: Moment, day: number) {
-    // Sumar un día
-    date.add(day, 'day');
+      // Sumar un día
+      date.add(day, 'day');
 
-    // Si es domingo (día 0) mover al lunes (día 1)
-    if (date.isoWeekday() === 7) {
-        date.add(1, 'day');
-    }
+      // Si es domingo (día 0) mover al lunes (día 1)
+      if (date.isoWeekday() === 7) {
+          date.add(1, 'day');
+      }
 
-    return date;
-}
+      return date;
+  }
 
   // Sumar una hora
   

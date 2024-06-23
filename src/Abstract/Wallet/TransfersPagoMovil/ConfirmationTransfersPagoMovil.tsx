@@ -8,9 +8,11 @@ import { Error } from '../../Error';
 import { HeaderPageReturn } from '../../Header/HeaderPageReturn';
 import LogoPagoMovil from '../../assets/img/logo-pago-movil.png';
 
-const imageStyles = css`
-  width: 80%;
-  height: auto;
+const priceTotalStyles = css`
+  font-size: 0.8em;
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
 `
 
 const title1AppStyles = css`
@@ -29,10 +31,11 @@ const textResumeStyles = css`
   text-align: left;
 `
 
-const arrowStyle = css`
-    font-size: 1.5rem;
-    color: #314577;
-    margin: auto 0px;
+const containerColumnCenterStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
 `
 
 const checkboxStyles = css`
@@ -62,6 +65,16 @@ const checkboxStyles = css`
     margin: 2px;
   }
 `;
+
+const fila3 = css`
+  border: 2px solid rgb(234, 234, 234);
+  border-radius: 10px;
+  padding: 1em 2%;
+  display: flex;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+`
 
 export function ConfirmationTransfersPagoMovil() {
   const { useWallet, siteOptions, useError } = useTheme();
@@ -248,6 +261,31 @@ export function ConfirmationTransfersPagoMovil() {
                               siteOptions.CURRENCY_LOCATION
                             )}</span>
                           </div>
+                          {useWallet.attributesTransfersPagoMovil.states.instructions !== '' &&
+                            <div style={{
+                              margin: '1em auto'
+                            }}>
+                              <div className={fila3}>
+                                  <div style={{
+                                    width: '10%',
+                                  }}>
+                                    <input
+                                        type="checkbox"
+                                        className={checkboxStyles}
+                                        checked={true}
+                                      />
+                                  </div>
+                                  <div style={{
+                                    width: '90%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                  }} className={containerColumnCenterStyles}>
+                                    <span className={priceTotalStyles}>{useWallet.attributesTransfersPagoMovil.states.instructions}</span>
+                                    
+                                  </div>
+                              </div>
+                            </div>
+                          }
                           <div
                             style={{
                               margin: '2em auto 0px auto',
