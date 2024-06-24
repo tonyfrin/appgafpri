@@ -71,8 +71,9 @@ export function useGafpriAttributesLogin(): UseGafpriAttributesLoginReturn {
 
   const changeUserName = (value: string) => {
     const newValue = value.toLowerCase();
-    validationUserName(newValue);
-    setUserName(newValue);
+    let resultString = newValue.replace(/\s+/g, '');
+    validationUserName(resultString);
+    setUserName(resultString);
   }
 
   const changePassword = (value: string) => {
