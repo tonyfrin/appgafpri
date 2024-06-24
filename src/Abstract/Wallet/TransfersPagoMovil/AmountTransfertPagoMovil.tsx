@@ -197,7 +197,7 @@ export function AmountTransfertPagoMovil() {
   const exchangeRate = parseFloat(useWallet.attributesTransfersPagoMovil.states.currency.exchangeRate);
   const commissionRate = parseFloat(useWallet.attributesTransfersPagoMovil.states.currency.commissionRate);
   const totalRate = exchangeRate + commissionRate;
-  const saleCommissionRate = (totalRate * 0.03).toFixed(2);
+  const saleCommissionRate = (totalRate * 0.05).toFixed(2);
   const totalCommissionRate = (commissionRate - parseFloat(saleCommissionRate)).toFixed(2);
   const saleTotalRate = exchangeRate + parseFloat(totalCommissionRate);
 
