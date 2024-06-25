@@ -21,6 +21,11 @@ type states = {
     findValue: string;
     note: string;
     responsability: boolean;
+    date: string;
+    instructions: string;
+    commission: string;
+    commissionOption: string;
+    total: string;
 }
 
 type actions = {
@@ -41,6 +46,11 @@ type actions = {
     validationButtonAmount: () => boolean;
     changeNote: (value: string) => void;
     setResponsability: (value: boolean) => void;
+    setCommission: (commission: string) => void;
+    setDate: (date: string) => void;
+    setInstructions: (instructions: string) => void;
+    setCommissionOption: (commissionOption: string) => void;
+    setTotal: (total: string) => void;
 }
 
 
@@ -61,6 +71,11 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
     const [findValue, setFindValue] = useState<string>('');
     const [note, setNote] = useState<string>('');
     const [responsability, setResponsability] = useState<boolean>(false);
+    const [date, setDate] = useState<string>('');
+    const [instructions, setInstructions] = useState<string>('');
+    const [commission, setCommission] = useState<string>('');
+    const [commissionOption, setCommissionOption] = useState<string>('');
+    const [total, setTotal] = useState<string>('');
 
     const validationEmail = (value: string): boolean => {
         const valid = validationInput(
@@ -126,6 +141,12 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
         setPhone('');
         setFindValue('');
         setNote('');
+        setResponsability(false);
+        setDate('');
+        setInstructions('');
+        setCommission('');
+        setCommissionOption('');
+        setTotal('');
     }
 
     const changeEmail = (value: string) => {
@@ -156,7 +177,12 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
         name, 
         findValue, 
         note,
-        responsability
+        responsability,
+        date,
+        instructions,
+        commission,
+        commissionOption,
+        total
     };
 
     const actions = { 
@@ -174,7 +200,12 @@ export const useGafpriAttributesTransfersZelle = (): UseGafpriAttributesTransfer
         setFindValue, 
         validationButtonAmount, 
         changeNote,
-        setResponsability
+        setResponsability,
+        setCommission,
+        setDate,
+        setInstructions,
+        setCommissionOption,
+        setTotal
     };
 
     return { states, actions };

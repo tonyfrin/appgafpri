@@ -97,7 +97,7 @@ export function AmountTransfertZelle() {
 
   const next = (): void => {
     if (useWallet.attributesTransfersZelle.actions.validationButtonAmount()) {
-      useWallet.pagesTransfersZelle.actions.onCheck();
+      useWallet.pagesTransfersZelle.actions.onTime();
     }
   }
 

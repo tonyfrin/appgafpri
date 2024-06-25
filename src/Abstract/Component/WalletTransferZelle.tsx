@@ -7,6 +7,7 @@ import { BeneficiaryZelleAdd } from '../Wallet/TransfersZelle/BeneficiaryZelleAd
 import { AmountTransfertZelle } from '../Wallet/TransfersZelle/AmountTransfertZelle';
 import { ConfirmationTransfersZelle } from '../Wallet/TransfersZelle/ConfirmationTransfersZelle';
 import { SuccessTransfersZelle } from '../Wallet/TransfersZelle/SuccessTransfersZelle';
+import { TimeZelle } from '../Wallet/TransfersZelle/TimeZelle';
 
 
 export function WalletTransferZelle() {
@@ -33,6 +34,11 @@ export function WalletTransferZelle() {
                    {
                       useWallet.pagesTransfersZelle.states.isAmount &&
                       <AmountTransfertZelle />
+                   }
+
+                  {
+                      useWallet.pagesTransfersZelle.states.isTime &&
+                      <TimeZelle />
                    }
 
                    {

@@ -14,6 +14,16 @@ const imageStyles = css`
   height: auto;
 `
 
+const fila3 = css`
+  border: 2px solid rgb(234, 234, 234);
+  border-radius: 10px;
+  padding: 1em 2%;
+  display: flex;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+`
+
 const title1AppStyles = css`
   font-size: 1.2em;
   padding: 0.9em;
@@ -34,6 +44,13 @@ const arrowStyle = css`
     font-size: 1.5rem;
     color: #314577;
     margin: auto 0px;
+`
+
+const priceStyles = css`
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0;
+  font-family: 'Poppins', sans-serif; 
 `
 
 const checkboxStyles = css`
@@ -63,6 +80,20 @@ const checkboxStyles = css`
     margin: 2px;
   }
 `;
+
+const containerColumnCenterStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+`
+
+const priceTotalStyles = css`
+  font-size: 0.8em;
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+`
 
 export function ConfirmationTransfersZelle() {
   const { useWallet, siteOptions, useError } = useTheme();
@@ -268,6 +299,50 @@ export function ConfirmationTransfersZelle() {
                               siteOptions.CURRENCY_LOCATION
                             )}</span>
                           </div>
+                          {useWallet.attributesTransfersZelle.states.instructions !== '' &&
+                            <div style={{
+                              margin: '1em auto'
+                            }}>
+                              <div className={fila3}>
+                                  <div style={{
+                                    width: '10%',
+                                  }}>
+                                    <input
+                                        type="checkbox"
+                                        className={checkboxStyles}
+                                        checked={true}
+                                      />
+                                  </div>
+                                  <div style={{
+                                    width: '60%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                  }} className={containerColumnCenterStyles}>
+                                    <span className={priceTotalStyles}>{useWallet.attributesTransfersZelle.states.instructions}</span>
+                                  </div>
+                                  <div style={{
+                                    width: '30%',
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
+                                    
+                                  }}>
+                                    <span 
+                                      className={priceStyles} 
+                                      style={{
+                                        textAlign: 'right',
+                                        fontWeight: 600,
+                                        fontSize: '1em'
+                                      }}
+                                    >{decimalFormatPriceConverter(
+                                      useWallet.attributesTransfersZelle.states.commission || 0,
+                                      siteOptions.DECIMAL_NUMBERS,
+                                      siteOptions.CURRENCY_SYMBOL,
+                                      siteOptions.CURRENCY_LOCATION
+                                    )}</span>
+                                  </div>
+                              </div>
+                            </div>
+                          }
                           <div
                             style={{
                               margin: '2em auto 0px auto',

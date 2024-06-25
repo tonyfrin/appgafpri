@@ -201,7 +201,7 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                     initRoute: PAYMENT_WALLET,
                     initToken: { token: useLogin.data.states.token },
                     initCredentials:{
-                        total: parseFloat(attributesTransfersZelle.states.amount),
+                        total: parseFloat(attributesTransfersZelle.states.total),
                         note: attributesTransfersZelle.states.note,
                         posts: {
                             visibility: 'public',
@@ -220,6 +220,9 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 posts: {
                                     visibility: 'public',
                                 },
+                                instructions: attributesTransfersZelle.states.instructions,
+                                commissionOption: attributesTransfersZelle.states.commissionOption,
+                                processingDate: attributesTransfersZelle.states.date,
                             },
                             walletTransactions: {
                                 walletAccountPostsId: attributesTransfersZelle.states.account?.id,
