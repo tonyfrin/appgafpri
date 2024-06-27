@@ -123,8 +123,8 @@ export function TimeZelle() {
   let dateOptions2 = '';
   let dateOptions3 = '';
 
-  const commisionOptions1 = parseFloat(useWallet.attributesTransfersZelle.states.amount) * 0.015;
-  const commisionOptions2 = parseFloat(useWallet.attributesTransfersZelle.states.amount) * 0.0075;
+  const commisionOptions1 = parseFloat(useWallet.attributesTransfersZelle.states.amount) * 0.02;
+  const commisionOptions2 = parseFloat(useWallet.attributesTransfersZelle.states.amount) * 0.01;
   const commisionOptions3 = 0;
 
 

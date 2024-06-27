@@ -83,7 +83,7 @@ export const CreditSection = () => {
         <section className={serviceSectionContainer}>
             <div className={serviceSectionContent}>
                 <div className={containerText}>
-                    <h3 className={titleStyle}>Compra a credito en nuestras tiendas asociadas</h3>
+                    <h3 className={titleStyle}>Compra a crédito en nuestras tiendas asociadas</h3>
                     <p className={serviceSectionContentSmallTitle}>Obtén acceso a créditos sin intereses en todas nuestras tiendas asociadas. ¡Compra lo que necesitas hoy y paga sin preocupaciones adicionales!</p>
                 </div>
                 <Image width={CreditBanner.width} height={CreditBanner.height} className={serviceSectionContentImage} src={CreditBanner.src} alt="Wallet" />

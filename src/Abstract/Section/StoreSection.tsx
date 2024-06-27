@@ -65,7 +65,7 @@ const industrialItems = [
             href: '/'
         },
         {
-            title: 'Elemetos',
+            title: 'Elementos',
             src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/elemento.png',
             href: '/'
         },
@@ -75,7 +75,7 @@ const industrialItems = [
             href: '/'
         },
         {
-            title: 'Valvulas',
+            title: 'Válvulas',
             src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/valvula-expansion.png',
             href: '/'
         },
@@ -87,7 +87,7 @@ export const StoreSection = () => {
         <section className={serviceSectionContainer}>
             <div className={serviceSectionContent}>
                 <div className={serviceSectionContentSmallTitle}>La gama de repuestos de refrigeración más amplia</div>
-                <h2 className={serviceSectionContentTitle}>En Gafpri encuentas el repuesto que buscas</h2>
+                <h2 className={serviceSectionContentTitle}>En Gafpri encuentras el repuesto que buscas</h2>
                 <ServiceCarousel >
                     {
                         industrialItems.map(( term, index ) => {
