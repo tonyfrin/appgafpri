@@ -209,7 +209,7 @@ export function AmountRecharge() {
       useWallet.attributesRecharge.actions.setCurrency(mainCurrency);
       useWallet.attributesRecharge.actions.setExchangeRate(1);
       useWallet.attributesRecharge.actions.setCommisionType('percentage');
-      useWallet.attributesRecharge.actions.setCommissionRate(5);
+      useWallet.attributesRecharge.actions.setCommissionRate(6.5);
     }
 
     setModalPm(false);
