@@ -81,7 +81,7 @@ export const InitProfile = () => {
                 }}
             >
                 <Image 
-                    src={useLogin.data.states.currentUser?.photo || ''} 
+                    src='https://categorygafpri.s3.us-east-2.amazonaws.com/fotousuariogafpri.png' 
                     alt="profile" width={200} height={200} 
                     className={photoProfile}
                 />
