@@ -51,13 +51,13 @@ export function InitTransfers() {
       backgroundColor: '#ebebeb',
       onClick: () => router.push('/billetera/enviar/pagomovil')
     }, 
-    {
-      id: 'pm5',
-      name: 'Avance de Efectivo',
-      image: LogoCash.src,
-      backgroundColor: '#008000',
-      onClick: () => router.push('/billetera/enviar/efectivo')
-    }
+    // {
+    //   id: 'pm5',
+    //   name: 'Avance de Efectivo',
+    //   image: LogoCash.src,
+    //   backgroundColor: '#008000',
+    //   onClick: () => router.push('/billetera/enviar/efectivo')
+    // }
   ]
 
   return (
