@@ -191,11 +191,6 @@ export const InitWallet = () => {
                                 justifyContent: 'center'
                             }}
                         >
-                            <WalletButton 
-                                href='/billetera/tiendas'
-                                Icon={IoStorefrontOutline}
-                                title='Tiendas'
-                            />
                              <WalletButton 
                                 href='/billetera/recarga'
                                 Icon={RiRefund2Line}

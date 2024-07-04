@@ -114,8 +114,15 @@ export function StoreCashAdvance() {
 
   const sites = useSites.api.states.sites;
 
+  const listSitesId = [
+    '12',
+    '1',
+    '6',
+    '10',
+  ]
+
   sites?.forEach((site) => {
-    if(`${site.id}` !== `${siteOptions.id}` && site.city === city){
+    if(`${site.id}` !== `${siteOptions.id}` && site.city === city && !listSitesId.includes(`${site.id}`)){
         items.push(site);
     }
   });
