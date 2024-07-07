@@ -209,7 +209,7 @@ export function AmountRecharge() {
       useWallet.attributesRecharge.actions.setCurrency(mainCurrency);
       useWallet.attributesRecharge.actions.setExchangeRate(1);
       useWallet.attributesRecharge.actions.setCommisionType('percentage');
-      useWallet.attributesRecharge.actions.setCommissionRate(6.5);
+      useWallet.attributesRecharge.actions.setCommissionRate(8.5);
     }
 
     setModalPm(false);
@@ -442,7 +442,7 @@ export function AmountRecharge() {
                     
                     }}
                   >
-                    <span className={textResumeStyles}>{`Gastos Administrativos: `}</span>
+                    <span className={textResumeStyles}>{`Cargos Administrativos${useWallet.attributesRecharge.states.paymentType === 'paypal' ? ' (8.5 %):' : ':'} `}</span>
                     <span className={textResumeStyles} style={{fontWeight: '600'}}>{decimalFormatPriceConverter(
                               useWallet.attributesRecharge.states.commission || 0,
                               siteOptions.DECIMAL_NUMBERS,
