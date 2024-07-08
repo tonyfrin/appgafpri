@@ -232,14 +232,14 @@ export function AmountRecharge() {
       checked: useWallet.attributesRecharge.states.paymentType === 'paypal',
       onClick: () => changePM('paypal')
     },
-    {
-      id: 'pm4',
-      name: 'Pago Movil (Bs)',
-      image: LogoBanesco.src,
-      backgroundColor: '#ebebeb',
-      checked: useWallet.attributesRecharge.states.paymentType === 'pagoMovil',
-      onClick: () => changePM('pagoMovil')
-    },
+    // {
+    //   id: 'pm4',
+    //   name: 'Pago Movil (Bs)',
+    //   image: LogoBanesco.src,
+    //   backgroundColor: '#ebebeb',
+    //   checked: useWallet.attributesRecharge.states.paymentType === 'pagoMovil',
+    //   onClick: () => changePM('pagoMovil')
+    // },
     // {
     //   id: 'pm3',
     //   name: 'Bofa a Bofa',
