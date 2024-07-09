@@ -11,6 +11,7 @@ import { Loading } from '../../Loading';
 import { Error } from '../../Error/Error';
 import Image from 'next/image';
 import { SitesAttributesReturn } from '@/Abstract/states/sites/useGafpriApiSites';
+import { CurrenciesAttributesReturn } from '@/Abstract/states/currencies/useGafpriApiCurrencies';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -59,8 +60,10 @@ const arrowStyle = css`
 `
 
 export function AmountRechargeMySite({id}: {id: string | string[] | undefined}) {
-  const { useWallet, siteOptions, useError, useSites } = useTheme();
+  const { useWallet, siteOptions, useError, useSites, useLogin, useCurrencies } = useTheme();
   const [site, setSite] = useState<SitesAttributesReturn | null>(null);
+  const [mainCurrency, setMainCurrency] = React.useState<CurrenciesAttributesReturn | null>(null);
+  const [mainCurrencyIsReady, setMainCurrencyIsReady] = React.useState(false);
   
 
   useEffect(() => {
@@ -75,7 +78,28 @@ export function AmountRechargeMySite({id}: {id: string | string[] | undefined}) 
   if(id && typeof id !== 'string') { return <Loading />}
 
   
-  
+  useEffect(() => {
+
+    const getMainCurrencyFetch = async () => {
+      if(useLogin.data.states.token){
+        
+          try{
+            setMainCurrencyIsReady(false);
+            const currency = await useCurrencies.api.actions.getCurrency(siteOptions.currencyId.toString());
+            if(currency && currency.success){
+              setMainCurrency(currency.item);
+              setMainCurrencyIsReady(true);
+            }
+          } catch (error) {
+            console.log(error);
+            setMainCurrency(null);
+            setMainCurrencyIsReady(false);
+          } 
+      }
+    }
+
+    getMainCurrencyFetch();
+  }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
   
 
   if(!site){
@@ -83,7 +107,8 @@ export function AmountRechargeMySite({id}: {id: string | string[] | undefined}) 
   }
 
   const next = () => {
-    if(useWallet.attributesRecharge.actions.validationAmountMySiteButton() && site){
+    if(useWallet.attributesRecharge.actions.validationAmountMySiteButton() && site && mainCurrency && mainCurrencyIsReady){
+      useWallet.attributesRecharge.actions.setCurrency(mainCurrency);
       const walletAccountPostsId = site.sitesEntity[0].entity.walletAccount[0].postsId;
       useWallet.attributesRecharge.actions.setWalletAccountPostsId(walletAccountPostsId);
       useWallet.pagesRecharge.actions.onInfo();

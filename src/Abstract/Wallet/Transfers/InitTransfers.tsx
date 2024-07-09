@@ -26,42 +26,57 @@ const arrowStyle = css`
 `
 
 export function InitTransfers() {
-  const { useWallet } = useTheme();
+  const { useWallet, useLogin } = useTheme();
   const router = useRouter();
 
-  const itemsPmList = [
-    {
-      id: 'pm1',
-      name: 'Billetera Gafpri',
-      image: LogoGafpri.src,
-      backgroundColor: '#07b2e7',
-      onClick: () => router.push('/billetera/enviar/gafpri')
-    },
-    {
-      id: 'pm2',
-      name: 'Zelle',
-      image: LogoZelle.src,
-      backgroundColor: 'rgb(107 29 207)',
-      onClick: () => router.push('/billetera/enviar/zelle')
-    },
-    {
-      id: 'pm4',
-      name: 'Pago Movil (Bs)',
-      image: LogoBanesco.src,
-      backgroundColor: '#ebebeb',
-      onClick: () => router.push('/billetera/enviar/pagomovil')
-    }, 
-    // {
-    //   id: 'pm5',
-    //   name: 'Avance de Efectivo',
-    //   image: LogoCash.src,
-    //   backgroundColor: '#008000',
-    //   onClick: () => router.push('/billetera/enviar/efectivo')
-    // }
-  ]
+  let itemsPmList = []
+
+  if(useLogin.data.states.currentUser?.id && parseInt(`${useLogin.data.states.currentUser?.id}`, 10) <= 1583) {
+    itemsPmList  = [
+      {
+        id: 'pm1',
+        name: 'Billetera Gafpri',
+        image: LogoGafpri.src,
+        backgroundColor: '#07b2e7',
+        onClick: () => router.push('/billetera/enviar/gafpri')
+      },
+      {
+        id: 'pm2',
+        name: 'Zelle',
+        image: LogoZelle.src,
+        backgroundColor: 'rgb(107 29 207)',
+        onClick: () => router.push('/billetera/enviar/zelle')
+      },
+      {
+        id: 'pm4',
+        name: 'Pago Movil (Bs)',
+        image: LogoBanesco.src,
+        backgroundColor: '#ebebeb',
+        onClick: () => router.push('/billetera/enviar/pagomovil')
+      }, 
+    ]
+  } else{
+    itemsPmList  = [
+      {
+        id: 'pm1',
+        name: 'Billetera Gafpri',
+        image: LogoGafpri.src,
+        backgroundColor: '#07b2e7',
+        onClick: () => router.push('/billetera/enviar/gafpri')
+      },
+      {
+        id: 'pm4',
+        name: 'Pago Movil (Bs)',
+        image: LogoBanesco.src,
+        backgroundColor: '#ebebeb',
+        onClick: () => router.push('/billetera/enviar/pagomovil')
+      }, 
+    ]
+  }
 
   return (
     <>
+
           <div>
           <div style={{
                 display: 'flex',
