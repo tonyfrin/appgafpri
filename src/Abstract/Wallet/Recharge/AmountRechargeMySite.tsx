@@ -75,9 +75,6 @@ export function AmountRechargeMySite({id}: {id: string | string[] | undefined}) 
     setSite(id && typeof id === 'string' ? useSites.api.actions.getMySiteById(id) : null);
   }, [id, useSites.api.states.mySites]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if(id && typeof id !== 'string') { return <Loading />}
-
-  
   useEffect(() => {
 
     const getMainCurrencyFetch = async () => {
@@ -100,6 +97,8 @@ export function AmountRechargeMySite({id}: {id: string | string[] | undefined}) 
 
     getMainCurrencyFetch();
   }, [useLogin.data.states.token]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if(id && typeof id !== 'string') { return <Loading />}
   
 
   if(!site){
