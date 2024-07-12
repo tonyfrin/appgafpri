@@ -42,13 +42,13 @@ export type UseGafpriPagesSingUpProps = {
 
 export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): UseGafpriPagesSingUpReturn {
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [isEmail, setIsEmail] = useState<boolean>(true);
+  const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isEmailCheck, setIsEmailCheck] = useState<boolean>(false);
   const [isPhone, setIsPhone] = useState<boolean>(false);
   const [isPhoneCheck, setIsPhoneCheck] = useState<boolean>(false);
   const [isName, setIsName] = useState<boolean>(false);
   const [isLegal, setIsLegal] = useState<boolean>(false);
-  const [isPhotoLegal, setIsPhotoLegal] = useState<boolean>(false);
+  const [isPhotoLegal, setIsPhotoLegal] = useState<boolean>(true);
   const [isSelfie, setIsSelfie] = useState<boolean>(false);
   const [isFinal, setIsFinal] = useState<boolean>(false);
 

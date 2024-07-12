@@ -42,7 +42,7 @@ export const generalChangePhotoWebSockets = async ({
     const clientId = uuidv4();
     const TIMEOUT_DURATION = 10000; // 10 segundos
 
-  let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
   const handleTimeout = () => {
     changeError(['La solicitud ha tardado demasiado. Por favor, intenta de nuevo.']);
@@ -120,10 +120,12 @@ export const generalChangePhotoWebSockets = async ({
               };
 
 
-              // Convertir el objeto a JSON y enviarlo a través del WebSocket
+              ws.onopen = () => {
+                ws.send(JSON.stringify(data));
+                timeoutId = setTimeout(handleTimeout, TIMEOUT_DURATION);// Configurar el timeout después de enviar el mensaje
+              };
               
-              ws.send(JSON.stringify(data));
-              timeoutId = setTimeout(handleTimeout, TIMEOUT_DURATION);
+             
             } else{
               changeError(['Error al leer el archivo']);
               setSubmitting(false);
