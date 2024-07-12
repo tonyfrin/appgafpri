@@ -52,8 +52,8 @@ export const WhatsApp = ({
                         textDecoration: 'none',
                     }}
                     target='_blank'
-                    href='https://wa.me/18323522096?text=Hola%21%20necesito%20ayuda%20con%20la%20App%20Gafpri'
-                >+1 (832) 352-2096.</a></p>
+                    href='https://wa.me/18323145667?text=Hola%21%20necesito%20ayuda%20con%20la%20App%20Gafpri'
+                >+1 (832) 314-5667.</a></p>
             </div>
         </>
     );

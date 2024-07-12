@@ -55,7 +55,7 @@ export function SuccessPasswordReset() {
                     fontFamily: 'Poppins, sans-serif',
                     textAlign: 'center'
                 }}
-            >{'Por favor, revisa todos tus buzones de correo. Si tienes algún problema para recibir tu contraseña provisional, no dudes en contactarnos a través de WhatsApp al +1 (832) 352-2096. Estaremos encantados de ayudarte.'}</p>
+            >{'Por favor, revisa todos tus buzones de correo. Si tienes algún problema para recibir tu contraseña provisional, no dudes en contactarnos a través de WhatsApp al +1 (832) 314-5667. Estaremos encantados de ayudarte.'}</p>
               <Link href="/login" style={{
                 textDecoration: 'none',
                 color: 'inherit',

@@ -40,10 +40,22 @@ export const generalChangePhotoWebSockets = async ({
 }: GeneralChangePhotoProps): Promise<void> => {
     const ws = new WebSocket('wss://lit-cove-22933-f97494e6b56f.herokuapp.com');
     const clientId = uuidv4();
+    const TIMEOUT_DURATION = 10000; // 10 segundos
+
+  let timeoutId: NodeJS.Timeout;
+
+  const handleTimeout = () => {
+    changeError(['La solicitud ha tardado demasiado. Por favor, intenta de nuevo.']);
+    setSubmitting(false);
+    ws.close();
+  };
   
-    
+  ws.onopen = () => {
+    console.log('Connected to the WebSocket server');
+  };
 
     ws.onmessage = (event) => {
+      clearTimeout(timeoutId);
       const receivedData = JSON.parse(event.data);
       
       if (receivedData.model === 'image' && receivedData.action === 'create' && receivedData.from === from) {
@@ -58,19 +70,21 @@ export const generalChangePhotoWebSockets = async ({
     }; 
   
   ws.onerror = (error) => {
+    clearTimeout(timeoutId); // Limpiar el timeout si hay un error
     console.error('WebSocket error:', error);
+    changeError(['Ocurrió un error con la conexión. Por favor, intenta de nuevo.']);
+    setSubmitting(false);
   };
 
   ws.onclose = () => {
     console.log('Disconnected from the WebSocket server');
-    // Intentar reconexión automáticamente después de cierto tiempo
+    clearTimeout(timeoutId);
   };
   
   const newFile = e.target.files && e.target.files[0];
 
   if (!newFile) return;
 
-  // Obtén el tipo MIME en función de la extensión del archivo
   const mimeType = getMimeTypeByExtension(newFile.name);
   if (!mimeType) {
     changeError([
@@ -108,11 +122,8 @@ export const generalChangePhotoWebSockets = async ({
 
               // Convertir el objeto a JSON y enviarlo a través del WebSocket
               
-              ws.onopen = () => {
-                console.log('Connected to the WebSocket server');
-                ws.send(JSON.stringify(data));
-                ws.send('pong');
-              };
+              ws.send(JSON.stringify(data));
+              timeoutId = setTimeout(handleTimeout, TIMEOUT_DURATION);
             } else{
               changeError(['Error al leer el archivo']);
               setSubmitting(false);
@@ -120,13 +131,6 @@ export const generalChangePhotoWebSockets = async ({
       };
       fileReader.readAsArrayBuffer(newFile);
     }
-
-
-
-
-   
-    
-
 
   } catch (newErrorValue: any) {
     changeError([`${newErrorValue.message}`]);
