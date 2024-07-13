@@ -38,7 +38,7 @@ export const generalChangePhotoWebSockets = async ({
   setPhoto,
   from,
 }: GeneralChangePhotoProps): Promise<void> => {
-    const ws = new WebSocket('wss://lit-cove-22933-f97494e6b56f.herokuapp.com');
+    const ws = new WebSocket('wss://uploadimageservice-a77ce5247df5.herokuapp.com'); 
     const clientId = uuidv4();
     const TIMEOUT_DURATION = 10000; // 10 segundos
 
