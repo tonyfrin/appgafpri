@@ -60,6 +60,7 @@ export type WalletTransactionsAttributesReturn = {
     attachment: string | null;
     createdAt: string;
     walletAccount: WalletAccountAtrributesReturn;
+    paymentMethods: PaymentMethodsAttributesReturn;
 }
 
  type DataItemsBeneficiariesReturn = {

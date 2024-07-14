@@ -18,6 +18,7 @@
     change: string;
     note: string;
     posts: PostsAttributesReturn;
+    instructions: string;
     walletTransactions: WalletTransactionsAttributesReturn[];
  }
 

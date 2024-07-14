@@ -328,6 +328,12 @@ export const Account = ({id}: {id: string | string[] | undefined}) => {
                                                                             }}>{transaction.description}</span>
                                                                             
                                                                             <span className={cx(statusButtonStyles('rgb(0, 20, 53)', 'rgb(230, 224, 217)'))}>Pendiente</span>
+                                                                            <span style={{
+                                                                                marginTop: '1em',
+                                                                                fontSize: '0.7em',
+                                                                                fontWeight: '400',
+                                                                                textAlign: 'left',
+                                                                            }}>{transaction.paymentMethods.instructions || ''}</span>
                                                                         </div>
                                                                         <span
                                                                         style={{
