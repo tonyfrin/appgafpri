@@ -31,7 +31,7 @@ export function InitTransfers() {
 
   let itemsPmList = []
 
-  if(useLogin.data.states.currentUser?.id && parseInt(`${useLogin.data.states.currentUser?.id}`, 10) <= 1583) {
+  if(useLogin.data.states.currentUser?.id && parseInt(`${useLogin.data.states.currentUser?.id}`, 10) === 52) {
     itemsPmList  = [
       {
         id: 'pm1',
@@ -54,15 +54,29 @@ export function InitTransfers() {
         backgroundColor: '#ebebeb',
         onClick: () => router.push('/billetera/enviar/pagomovil')
       }, 
+      {
+        id: 'pm5',
+        name: 'Avance de Efectivo',
+        image: LogoCash.src,
+        backgroundColor: '#008000',
+        onClick: () => router.push('/billetera/enviar/efectivo')
+      }
     ]
   } else{
-    itemsPmList  = [
+    itemsPmList  = itemsPmList  = [
       {
         id: 'pm1',
         name: 'Billetera Gafpri',
         image: LogoGafpri.src,
         backgroundColor: '#07b2e7',
         onClick: () => router.push('/billetera/enviar/gafpri')
+      },
+      {
+        id: 'pm2',
+        name: 'Zelle',
+        image: LogoZelle.src,
+        backgroundColor: 'rgb(107 29 207)',
+        onClick: () => router.push('/billetera/enviar/zelle')
       },
       {
         id: 'pm4',

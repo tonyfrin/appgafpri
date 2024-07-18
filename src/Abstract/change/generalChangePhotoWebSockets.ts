@@ -1,4 +1,3 @@
-// import axios, { AxiosRequestConfig } from 'axios';
 import { ChangeEvent } from 'react';
 import { getMimeTypeByExtension } from '../helpers';
 import { v4 as uuidv4 } from 'uuid';
