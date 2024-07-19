@@ -31,7 +31,7 @@ export function InitTransfers() {
 
   let itemsPmList = []
 
-  if(useLogin.data.states.currentUser?.id && parseInt(`${useLogin.data.states.currentUser?.id}`, 10) === 52) {
+  if(useLogin.data.states.currentUser?.id && parseInt(`${useLogin.data.states.currentUser?.id}`, 10) === 52 || parseInt(`${useLogin.data.states.currentUser?.id}`, 10) === 334){
     itemsPmList  = [
       {
         id: 'pm1',
