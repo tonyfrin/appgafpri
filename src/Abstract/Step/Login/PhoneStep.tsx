@@ -64,7 +64,7 @@ export const PhoneStep = () => {
                 placeholder: '414 123 4567',
                 onChange: (e) => useSingUp.attributes.actions.changePhone(e.target.value),
             }}
-            description="Sin el 0 por delante. (Solo télefonos de Venezuela) Ejemplo: 4141234567"
+            description="Sin el 0 por delante. (Solo télefonos de Venezuela con acceso a WhatsApp) Ejemplo: 4141234567"
         />
         <WhatsApp />
         <div className={loginContainerStyles}>

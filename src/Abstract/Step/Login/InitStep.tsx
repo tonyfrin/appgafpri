@@ -7,7 +7,17 @@ import { LayoutLogin } from '../../Component/LayoutLogin';
 import { useRouter } from 'next/router';
 
 const buttonAppMobileContentStyles = css`
-    font-size: 1.5em;
+    font-size: 1.3em;
+    padding: 0.9em;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+`
+
+const subTitle = css`
+    font-size: 1em;
+    color: #5c5c5c;
+    font-weight: 400;
     padding: 0.9em;
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -28,22 +38,12 @@ const loginContentStyles = css`
     text-decoration: none;
 `;
 
-const subTitle = css`
-    font-size: 1em;
-    color: #5c5c5c;
-    font-weight: 400;
-    padding: 0.9em;
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-`
-
 export type FinalStepProps = {
     nextStep: () => void;
 }
 
 
-export const FinalStep = () => {
+export const InitStep = () => {
     const { useSingUp } = useTheme();
     const router = useRouter();
 
@@ -53,39 +53,37 @@ export const FinalStep = () => {
     }
 
   return (
-   
-     <LayoutLogin
-        containerStyles={{
-            custom: `
-                background-color: #f9f9f9;
-            `,
-        }}
-     >
         <>
             <div>
                 <p className={subTitle}>
-                    {'¡Listo! Revisaremos tu información para activar tu cuenta, y te enviaremos un correo con la aprobación y tus credenciales de acceso.'}
+                    {'Antes de continuar, asegurate de tener tu documento de identidad original a la mano.'}
                 </p>
             </div>
             <div>
-                <h1 className={buttonAppMobileContentStyles}>
-                    {'El sistema puede tardar hasta 24 horas en aprobar tu cuenta.'}
-                </h1>
-            </div>
-            <div>
-                <h1 className={buttonAppMobileContentStyles}>¡Muchas Gracias!</h1>
+                <h1 className={buttonAppMobileContentStyles}>¿Ya tienes tu documento de identidad ORIGINAL a la mano?</h1>
             </div>
                 
             <div className={loginContainerStyles}>
+                <div className={loginContentStyles}>
+                    <ButtonAppMobile title="Si, continuar" 
+                        containerProps={{
+                            onClick: useSingUp.pages.actions.onEmail,
+                        }}
+                    />
+                </div>
+                
+          
                 <Link href="/" className={loginContentStyles}>
-                    <ButtonAppMobile title="Volver al Inicio" 
+                    <ButtonAppMobile title="No, volver" 
                         containerProps={{
                             onClick: returnInit,
+                        }}
+                        containerStyles={{
+                            backgroundColor: '#C12429'
                         }}
                     />
                 </Link>
             </div>
         </>
-    </LayoutLogin>
   );
 }

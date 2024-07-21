@@ -89,8 +89,8 @@ export const LegalPhotoStep = () => {
                 margin: '20px 0'
             }}
         >
-            <h1 className={buttonAppMobileContentStyles}>Sube una foto de tu documento de identidad</h1>
-            <p style={{width: '75%'}}className={inputAppTitleStyles}>{`Se requiere cédula de identidad o licencia de conducir`} </p>
+            <h1 className={buttonAppMobileContentStyles}>Sube una foto de tu documento de identidad ORIGINAL</h1>
+            <p style={{width: '75%'}}className={inputAppTitleStyles}>{`Se requiere cédula de identidad o licencia de conducir ORIGINAL`} </p>
             <Image 
                 className={imageStyle}
                 src="https://categorygafpri.s3.us-east-2.amazonaws.com/document-ejemplo.jpg"

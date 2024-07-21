@@ -57,18 +57,20 @@ export const NameStep = () => {
                 <InputAppContainer 
                     inputProps={{
                         type: 'name',
-                        placeholder: 'Nombre',
+                        placeholder: 'Nombres',
                         onChange: (e) => useSingUp.attributes.actions.changeName(e.target.value)
-                    }}
+                    }} 
+                    description="Debe ser igual al que aparece en tu documento de identidad"
                 />
             </div>
             <div className={containerInput}>
                 <InputAppContainer 
                     inputProps={{
                         type: 'name',
-                        placeholder: 'Apellido',
+                        placeholder: 'Apellidos',
                         onChange: (e) => useSingUp.attributes.actions.changeLastName(e.target.value)
                     }}
+                    description="Debe ser igual al que aparece en tu documento de identidad"
                 />
             </div>
             <WhatsApp />

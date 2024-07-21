@@ -4,6 +4,7 @@ import { UseGafpriAttributesSingUpReturn } from './useGafpriAttributesSingUp';
 
 type State = {
     isFetching: boolean;
+    isInit: boolean;
     isEmail: boolean;
     isEmailCheck: boolean;
     isPhone: boolean;
@@ -17,6 +18,7 @@ type State = {
 
 type Actions = {
     onFetching: () => void;
+    onInit: () => void;
     onEmail: () => void;
     onEmailCheck: () => void;
     onPhone: () => void;
@@ -42,7 +44,8 @@ export type UseGafpriPagesSingUpProps = {
 
 export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): UseGafpriPagesSingUpReturn {
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [isEmail, setIsEmail] = useState<boolean>(true);
+  const [isInit, setIsInit] = useState<boolean>(true);
+  const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isEmailCheck, setIsEmailCheck] = useState<boolean>(false);
   const [isPhone, setIsPhone] = useState<boolean>(false);
   const [isPhoneCheck, setIsPhoneCheck] = useState<boolean>(false);
@@ -55,6 +58,21 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
  
   const onFetching = () => {
     setIsFetching(true);
+    setIsInit(false);
+    setIsEmail(false);
+    setIsEmailCheck(false);
+    setIsPhone(false);
+    setIsPhoneCheck(false);
+    setIsName(false);
+    setIsLegal(false);
+    setIsPhotoLegal(false);
+    setIsSelfie(false);
+    setIsFinal(false);
+  };
+
+  const onInit = () => {
+    setIsFetching(false);
+    setIsInit(true);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -68,6 +86,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onEmail = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(true);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -81,6 +100,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onEmailCheck = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(true);
     setIsPhone(false);
@@ -94,6 +114,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onPhone = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(true);
@@ -107,6 +128,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onPhoneCheck = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -120,6 +142,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onName = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -133,6 +156,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onLegal = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -146,6 +170,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onPhotoLegal = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -159,6 +184,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onSelfie = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -172,6 +198,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const onFinal = () => {
     setIsFetching(false);
+    setIsInit(false);
     setIsEmail(false);
     setIsEmailCheck(false);
     setIsPhone(false);
@@ -185,7 +212,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const returnInit = () => {
     attributes.actions.infoReset();
-    onEmail();
+    onInit();
   }
 
 
@@ -197,6 +224,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
    */
   const states = {
     isFetching,
+    isInit,
     isEmail,
     isEmailCheck,
     isPhone,
@@ -210,6 +238,7 @@ export function useGafpriPagesSingUp({attributes}: UseGafpriPagesSingUpProps): U
 
   const actions = {
     onFetching,
+    onInit,
     onEmail,
     onEmailCheck,
     onPhone,

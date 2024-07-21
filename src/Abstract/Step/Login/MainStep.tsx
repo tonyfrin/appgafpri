@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { FiChevronLeft } from 'react-icons/fi';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { EmailStep } from './EmailStep';
 import { EmailCheckStep } from './EmailCheckStep';
 import { PhoneStep } from './PhoneStep';
@@ -16,6 +16,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { Loading } from '../../Loading';
 import { LayoutLogin } from '../../Component/LayoutLogin';
 import { PhoneCheckStep } from './PhoneCheckStep';
+import { InitStep } from './InitStep';
 
 const progressBarContainerStyles = css`
     display: flex;
@@ -31,10 +32,13 @@ const arrowStyle = css`
 
 export const MainStep = () => {
   const { useSingUp } = useTheme();
+  const router = useRouter();
 
   const returnStep = () => {
-    if (useSingUp.pages.states.isEmail) {
-      return <Link href="/login" />;
+    if (useSingUp.pages.states.isInit) {
+      router.push('/');
+    } else if (useSingUp.pages.states.isEmail) {
+      useSingUp.pages.actions.onInit();
     } else if (useSingUp.pages.states.isEmailCheck) {
       useSingUp.pages.actions.onEmail();
     } else if (useSingUp.pages.states.isPhone) {
@@ -86,20 +90,26 @@ export const MainStep = () => {
      
 
       <div className={progressBarContainerStyles}>
-          {!useSingUp.pages.states.isEmail && !useSingUp.pages.states.isFinal &&
-            <FiChevronLeft 
-                className={arrowStyle}
-                onClick={returnStep}
-            />
-          }
           {!useSingUp.pages.states.isFinal && 
-            <div style={{width: '90%'}}>
-                <ProgressBar percentage={percentage} />
-            </div>
+            <>
+              <FiChevronLeft 
+                    className={arrowStyle}
+                    onClick={returnStep}
+                />
+                <div style={{width: '90%'}}>
+                    <ProgressBar percentage={percentage} />
+                </div>
+              </>
           }
       </div>
 
      {useSingUp.pages.states.isFetching && <Loading />}
+
+     {useSingUp.pages.states.isInit &&
+        <FadeIn keyName="isFinal" isVisible={useSingUp.pages.states.isInit}>
+          <InitStep />
+        </FadeIn>
+      }
 
      {useSingUp.pages.states.isEmail && (
         <FadeIn keyName="isEmail" isVisible={useSingUp.pages.states.isEmail}>

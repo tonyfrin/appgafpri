@@ -74,7 +74,7 @@ export const PhoneCheckStep = () => {
                     error={useError.states.error}
                 />
                 <div>
-                    <h1 className={buttonAppMobileContentStyles}>Revisa la bandeja de texto en tu teléfono</h1>
+                    <h1 className={buttonAppMobileContentStyles}>Revisa la bandeja de WhatsApp en tu teléfono</h1>
                 </div>
                 <ButtonEditInfo 
                     content={formatPhoneNumberVzla(useSingUp.attributes.states.phone) || 'Número invalido'}

@@ -110,7 +110,7 @@ export const SelfieStep = () => {
             }}
         >
             <h1 className={buttonAppMobileContentStyles}>Tómate una foto de frente</h1>
-            <p className={inputAppTitleStyles}>{`Se requiere una selfie o una foto retrato`} </p>
+            <p className={inputAppTitleStyles}>{`Se requiere una selfie ( foto retrato ) del momento y sin accesorios o filtros.`} </p>
             <Image 
                 className={imageStyle}
                 src="https://categorygafpri.s3.us-east-2.amazonaws.com/Captura+de+pantalla+2024-05-28+a+la(s)+7.42.37%E2%80%AFp.m..png"
