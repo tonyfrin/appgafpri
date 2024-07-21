@@ -67,7 +67,7 @@ export const LoginStep = ({
                 <InputAppContainer 
                     inputProps={{
                         type: 'name',
-                        placeholder: 'Nombre de usuario',
+                        placeholder: 'Correo electrónico',
                         onChange: (e) => useLogin.attributes.actions.changeUserName(e.target.value)
                     }}
                 />
