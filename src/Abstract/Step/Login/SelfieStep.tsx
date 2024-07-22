@@ -81,12 +81,12 @@ export const SelfieStep = () => {
                 } else {
                     const error = []
                     error.push(data.message);
+                    error.push('Por favor, inténtalo de nuevo.');
                     useError.actions.changeError(error);
-                    useSingUp.pages.actions.returnInit();
                 }
             } catch (error) {
                 useError.actions.changeError(['Lo sentimos, ocurrió un error inesperado. Por favor, inténtalo de nuevo.']);
-                useSingUp.pages.actions.returnInit();
+                
             } finally {
                 setFetching(false);
             }
