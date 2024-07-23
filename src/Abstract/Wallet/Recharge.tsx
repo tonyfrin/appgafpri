@@ -6,6 +6,7 @@ import { ConfirmationRecharge } from './Recharge/ConfirmationRecharge';
 import { SuccessRecharge } from './Recharge/SuccessRecharge';
 import { Loading } from '../Loading';
 import { LayoutAppProfile } from '../Component/LayoutAppProfile';
+import { AlertRecharge } from './Recharge/AlertRecharge';
 
 
 export function Recharge() {
@@ -19,6 +20,8 @@ export function Recharge() {
           {useWallet.pagesRecharge.states.isFetching ? <Loading /> : 
             <div>
                 {useWallet.pagesRecharge.states.isInit && <AmountRecharge />}
+
+                {useWallet.pagesRecharge.states.isAlert && <AlertRecharge />}
 
                 {useWallet.pagesRecharge.states.isInfo && <InfoRecharge />}
 

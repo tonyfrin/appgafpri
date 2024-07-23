@@ -3,6 +3,7 @@ import { UseGafpriAttributesRechargeReturn } from './useGafpriAttributesRecharge
 
 type states = {
     isInit: boolean;
+    isAlert: boolean;
     isInfo: boolean;
     isConfirmation: boolean;
     isSuccess: boolean;
@@ -11,6 +12,7 @@ type states = {
 
 type actions = {
     onInit: () => void;
+    onAlert: () => void;
     onInfo: () => void;
     onConfirmation: () => void;
     returnInit: () => void;
@@ -27,6 +29,7 @@ export type UseGafpriPagesRechargeReturn = {states: states, actions: actions};
 export const useGafpriPagesRecharge = ({attributesRecharge}: UseGafpriPagesRechargeProps ): UseGafpriPagesRechargeReturn => {
     const [isFetching, setIsFetching] = useState<boolean>(false);
     const [isInit, setIsInit] = useState<boolean>(true);
+    const [isAlert, setIsAlert] = useState<boolean>(false);
     const [isInfo, setIsInfo] = useState<boolean>(false);
     const [isConfirmation, setIsConfirmation] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -37,6 +40,16 @@ export const useGafpriPagesRecharge = ({attributesRecharge}: UseGafpriPagesRecha
 
     const onInit = (): void => {
         setIsInit(true);
+        setIsAlert(false);
+        setIsInfo(false);
+        setIsConfirmation(false);
+        setIsSuccess(false);
+        setIsFetching(false);
+    }
+
+    const onAlert = (): void => {
+        setIsInit(false);
+        setIsAlert(true);
         setIsInfo(false);
         setIsConfirmation(false);
         setIsSuccess(false);
@@ -45,6 +58,7 @@ export const useGafpriPagesRecharge = ({attributesRecharge}: UseGafpriPagesRecha
 
     const onInfo = (): void => {
         setIsInit(false);
+        setIsAlert(false);
         setIsInfo(true);
         setIsConfirmation(false);
         setIsSuccess(false);
@@ -53,6 +67,7 @@ export const useGafpriPagesRecharge = ({attributesRecharge}: UseGafpriPagesRecha
 
     const onConfirmation = (): void => {
         setIsInit(false);
+        setIsAlert(false);
         setIsInfo(false);
         setIsConfirmation(true);
         setIsSuccess(false);
@@ -61,6 +76,7 @@ export const useGafpriPagesRecharge = ({attributesRecharge}: UseGafpriPagesRecha
 
     const onSuccess = (): void => {
         setIsInit(false);
+        setIsAlert(false);
         setIsInfo(false);
         setIsConfirmation(false);
         setIsSuccess(true);
@@ -72,9 +88,9 @@ export const useGafpriPagesRecharge = ({attributesRecharge}: UseGafpriPagesRecha
         onInit();
     }
 
-    const states = { isInit, isInfo, isConfirmation, isSuccess, isFetching };
+    const states = { isInit, isAlert, isInfo, isConfirmation, isSuccess, isFetching };
 
-    const actions = { onInit, onInfo, onConfirmation, returnInit, onSuccess, onFetching };
+    const actions = { onInit, onAlert, onInfo, onConfirmation, returnInit, onSuccess, onFetching };
 
     return { states, actions };
 }

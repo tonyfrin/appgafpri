@@ -6,7 +6,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { SelectApp } from '../../Select/SelectApp';
 import { InputAppContainer } from '../../Input/InputAppContainer';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
-import { decimalFormatPriceConverter } from '../../helpers';
+import { decimalFormatPriceConverter, scrollToTop } from '../../helpers';
 import { Loading } from '../../Loading';
 import { Error } from '../../Error/Error';
 import { ButtonEditInfo } from '../../Button/ButtonEditInfo';
@@ -127,7 +127,8 @@ export function AmountRecharge() {
 
   const next = () => {
     if(useWallet.attributesRecharge.actions.validationAmountButton()){
-      useWallet.pagesRecharge.actions.onInfo();
+      useWallet.pagesRecharge.actions.onAlert();
+      scrollToTop();
     }
   }
 
