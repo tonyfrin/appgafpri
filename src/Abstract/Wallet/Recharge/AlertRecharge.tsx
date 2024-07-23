@@ -149,7 +149,7 @@ export function AlertRecharge() {
             </div>
 
             <div>
-                <h1 className={buttonAppMobileContentStyles}>{`¿Tienes el nombre de la persona que realizó la transferencia y el número de confirmación?`}</h1>
+                <h1 className={buttonAppMobileContentStyles}>{`¿Tienes el nombre de la persona que realizó la transferencia y el número de confirmación o referencia?`}</h1>
             </div>
 
             <div>
