@@ -121,8 +121,6 @@ export function AmountRecharge() {
   const [mainCurrencyIsReady, setMainCurrencyIsReady] = React.useState(false);
   const pagoMovilCurrencyId = '2';
 
-  
-
 
 
   const next = () => {
@@ -358,7 +356,7 @@ export function AmountRecharge() {
                   }}>
                     <span className={textInfoStyles}>Los datos para transferencia Zelle son:</span>
                     <span className={textInfoStyles}>A nombre de: <span style={{fontWeight: 600}}>Gafpri Corp</span></span>
-                    <span className={textInfoStyles}>Correo: <span style={{fontWeight: 600}}>billetera@gafpri.com</span></span>
+                    <span className={textInfoStyles}>Correo: <span style={{fontWeight: 600}}>pagos@gafpri.com</span></span>
                   </div>
                 </div>
               }
