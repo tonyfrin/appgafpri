@@ -225,14 +225,14 @@ export function AmountRecharge() {
       checked: useWallet.attributesRecharge.states.paymentType === 'zelle',
       onClick: () => changePM('zelle')
     },
-    {
-      id: 'pm2',
-      name: 'PayPal',
-      image: LogoPaypal.src,
-      backgroundColor: '#003086',
-      checked: useWallet.attributesRecharge.states.paymentType === 'paypal',
-      onClick: () => changePM('paypal')
-    },
+    // {
+    //   id: 'pm2',
+    //   name: 'PayPal',
+    //   image: LogoPaypal.src,
+    //   backgroundColor: '#003086',
+    //   checked: useWallet.attributesRecharge.states.paymentType === 'paypal',
+    //   onClick: () => changePM('paypal')
+    // },
     // {
     //   id: 'pm4',
     //   name: 'Pago Movil (Bs)',
