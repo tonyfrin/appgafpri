@@ -129,42 +129,42 @@ export function TimeZelle() {
 
 
   
-  if (dateVenezuela.hour() >= 6 && dateVenezuela.hour() <= 20){
-    dateVenezuelaPlusOneHour.add(1, 'hour');
+  if (dateVenezuela.hour() >= 6 && dateVenezuela.hour() <= 18){
+    dateVenezuelaPlusOneHour.add(2, 'hour');
     descriptionOptions1 = `Para procesar hoy entre ${dateVenezuela.format('h:mm A')} y las ${dateVenezuelaPlusOneHour.format('h:mm A')}`;
     dateOptions1 = dateVenezuelaPlusOneHour.toDate().toString();
 
     const dateVenezuelaPlusOneBusinessDay: Moment = dateVenezuelaPlusOneDay.add(1, 'day');
-    descriptionOptions2 = `Para procesar ${dateVenezuelaPlusOneBusinessDay.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions2 = `Para procesar ${dateVenezuelaPlusOneBusinessDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions2 = dateVenezuelaPlusOneBusinessDay.toDate().toString();
 
     const dateVenezuelaPlusTwoBusinessDays: Moment = dateVenezuelaPlusTowDay.add(2, 'day');
-    descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions3 = dateVenezuelaPlusTwoBusinessDays.toDate().toString();
 
   } else if(dateVenezuela.hour() < 6){
-    descriptionOptions1 = `Para procesar hoy entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions1 = `Para procesar hoy entre las 8:00 AM y las 10:00 AM`;
     dateOptions1 = dateVenezuela.toDate().toString();
 
     const dateVenezuelaPlusOneBusinessDay: Moment = dateVenezuelaPlusOneDay.add(1, 'day');
-    descriptionOptions2 = `Para procesar ${dateVenezuelaPlusOneBusinessDay.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions2 = `Para procesar ${dateVenezuelaPlusOneBusinessDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions2 = dateVenezuelaPlusOneBusinessDay.toDate().toString();
 
     const dateVenezuelaPlusTwoBusinessDays: Moment = dateVenezuelaPlusTowDay.add(2, 'day');
-    descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions3 = dateVenezuelaPlusTwoBusinessDays.toDate().toString();
     
-  } else if(dateVenezuela.hour() > 20){
+  } else if(dateVenezuela.hour() > 18){
     dateVenezuelaPlusOneHour.add(1, 'day');
-    descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneHour.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;;
+    descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneHour.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;;
     dateOptions1 = dateVenezuelaPlusOneHour.toDate().toString();
 
     const dateVenezuelaPlusOneBusinessDay: Moment = dateVenezuelaPlusOneDay.add(2, 'day');
-    descriptionOptions2 = `Para procesar ${dateVenezuelaPlusOneBusinessDay.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions2 = `Para procesar ${dateVenezuelaPlusOneBusinessDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions2 = dateVenezuelaPlusOneBusinessDay.toDate().toString();
 
     const dateVenezuelaPlusTwoBusinessDays: Moment = dateVenezuelaPlusTowDay.add(3, 'day');
-    descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 6:00 AM y las 7:00 AM`;
+    descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions3 = dateVenezuelaPlusTwoBusinessDays.toDate().toString();
   }
 
