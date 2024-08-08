@@ -128,11 +128,11 @@ export function InfoRecharge() {
                         width: '80%',
                         margin: 'auto',
                       }}>
-                        <span className={textInfoTitleStyles}>Número de confirmación</span>
+                        <span className={textInfoTitleStyles}>Número de confirmación o referencia de la transferencia</span>
                       </div>
                       <InputAppContainer 
                           inputProps={{
-                            placeholder: 'Confirmación',
+                            placeholder: 'Ejemplo: 12ab34cdef',
                             type: 'Text',
                             onChange: (e) => useWallet.attributesRecharge.actions.setNumber(e.target.value),
                             value: useWallet.attributesRecharge.states.number

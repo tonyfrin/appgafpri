@@ -1,5 +1,7 @@
 import React, { use, useEffect } from 'react';
 import { css } from '@emotion/css';
+import moment, { Moment } from 'moment-timezone';
+import 'moment/locale/es';
 import { FiChevronLeft } from 'react-icons/fi';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
@@ -27,6 +29,23 @@ const arrowStyle = css`
     font-size: 1.5rem;
     color: #314577;
     margin: auto 0px;
+`
+
+
+const fila3 = css`
+  border: 2px solid rgb(234, 234, 234);
+  border-radius: 10px;
+  padding: 1em 2%;
+  display: flex;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+`
+const containerColumnCenterStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
 `
 
 const checkboxStyles = css`
@@ -57,6 +76,13 @@ const checkboxStyles = css`
   }
 `;
 
+const priceTotalStyles = css`
+  font-size: 0.8em;
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+`
+
 export function ConfirmationRecharge() {
   const { useWallet, siteOptions, useError } = useTheme();
  
@@ -81,6 +107,43 @@ export function ConfirmationRecharge() {
       }
     }
   }
+
+  function addDay(date: Moment, day: number) {
+    // Sumar un día
+    date.add(day, 'day');
+
+    return date;
+  }
+
+  useEffect(() => {
+    moment.locale('es');
+    const currentTime = new Date();
+    const dateMoment = moment(currentTime);
+    const datePlusOneHour = moment(currentTime);
+    const dateVenezuela = dateMoment.tz('America/Caracas');
+    const dateVenezuelaPlusOneHour = datePlusOneHour.tz('America/Caracas');
+    let descriptionOptions1 = '';
+    let dateOptions1 = '';
+
+    if (dateVenezuela.hour() >= 8 && dateVenezuela.hour() <= 20){
+      dateVenezuelaPlusOneHour.add(30, 'minutes');
+      descriptionOptions1 = `El sistema verificará la recarga hoy entre ${dateVenezuela.format('h:mm A')} y las ${dateVenezuelaPlusOneHour.format('h:mm A')}`;
+      dateOptions1 = dateVenezuela.toDate().toString();
+
+    } else if(dateVenezuela.hour() < 8){
+      descriptionOptions1 = `El sistema verificará la recarga hoy entre las 8:00 AM y las 8:30 AM`;
+      dateOptions1 = dateVenezuela.toDate().toString();
+      
+    } else if(dateVenezuela.hour() > 20){
+      const dateVenezuelaPlusOneDay: Moment = addDay(dateVenezuela.clone(), 1);
+      descriptionOptions1 = `El sistema verificará la recarga el ${dateVenezuelaPlusOneDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 8:30 AM`;
+      dateOptions1 = dateVenezuelaPlusOneDay.toDate().toString();
+      
+    }
+
+    useWallet.attributesRecharge.actions.setDate(dateOptions1);
+    useWallet.attributesRecharge.actions.setInstructions(descriptionOptions1);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     useWallet.attributesRecharge.actions.validationResponsabilitytButton();
@@ -266,8 +329,29 @@ export function ConfirmationRecharge() {
                   <span className={textResumeStyles} style={{fontWeight: '600', width: '70%'}}>{useWallet.attributesRecharge.states.note}</span>
                 </div>
               </div>
+              {useWallet.attributesRecharge.states.instructions !== '' &&
+                  <div className={fila3}>
+                      <div style={{
+                        width: '10%',
+                      }}>
+                        <input
+                            type="checkbox"
+                            className={checkboxStyles}
+                            checked={true}
+                          />
+                      </div>
+                      <div style={{
+                        width: '90%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }} className={containerColumnCenterStyles}>
+                        <span className={priceTotalStyles}>{useWallet.attributesRecharge.states.instructions}</span>
+                        
+                      </div>
+                  </div>
+                }
               <div><h1 className={title1AppStyles} style={{textAlign: 'center'}}>¿La información es correcta?</h1></div>
-
+                
                 <div
                   style={{
                     display: 'flex',

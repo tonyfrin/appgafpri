@@ -19,6 +19,8 @@ type states = {
     currency: CurrenciesAttributesReturn | null;
     responsability: boolean;
     change: string;
+    date: string;
+    instructions: string;
 }
 
 type actions = {
@@ -35,6 +37,8 @@ type actions = {
     setExchangeRate: (exchangeRate: number) => void;
     setCommisionType: (commisionType: string) => void;
     setCommissionRate: (commissionRate: number) => void;
+    setDate: (date: string) => void;
+    setInstructions: (instructions: string) => void;
     setCurrency: (currency: CurrenciesAttributesReturn | null) => void;
     setResponsability: (responsability: boolean) => void;
     validationResponsabilitytButton: () => boolean;
@@ -62,6 +66,8 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
     const [exchangeRate, setExchangeRate] = useState<number>(0);
     const [currency, setCurrency] = useState<CurrenciesAttributesReturn | null>(null);
     const [responsability, setResponsability] = useState<boolean>(false);
+    const [date, setDate] = useState<string>('');
+    const [instructions, setInstructions] = useState<string>('');
 
     const changeTotal = (): void => {
         if(commisionType === 'none') {
@@ -157,8 +163,8 @@ export const useGafpriAttributesRecharge = ():UseGafpriAttributesRechargeReturn 
         changeTotal();
     }, [paymentType, amount]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const states = { paymentType, amount, paymentTypeOptions, commission, total, commissionRate, nameSend, number, walletAccountPostsId, note, currency, exchangeRate, commisionType, responsability, change};
-    const actions = { setPaymentType, setAmount, infoReset, validationAmountButton, setNameSend, setNumber, validationInfoButton, setWalletAccountPostsId, validationAmountMySiteButton, changeNote, setExchangeRate, setCommisionType, setCommissionRate, setCurrency, setResponsability, validationResponsabilitytButton};
+    const states = { paymentType, amount, paymentTypeOptions, commission, total, commissionRate, nameSend, number, walletAccountPostsId, note, currency, exchangeRate, commisionType, responsability, change, date, instructions };
+    const actions = { setPaymentType, setAmount, infoReset, validationAmountButton, setNameSend, setNumber, validationInfoButton, setWalletAccountPostsId, validationAmountMySiteButton, changeNote, setExchangeRate, setCommisionType, setCommissionRate, setCurrency, setResponsability, validationResponsabilitytButton, setDate, setInstructions };
 
     return { states, actions };
 

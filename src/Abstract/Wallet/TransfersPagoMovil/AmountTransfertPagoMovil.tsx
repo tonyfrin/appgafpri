@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import moment, { Moment } from 'moment-timezone';
+import 'moment/locale/es';
 import { css } from '@emotion/css';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonAppMobile } from '../../Button/ButtonAppMobile';
@@ -115,7 +116,7 @@ export function AmountTransfertPagoMovil() {
     date.add(day, 'day');
 
     return date;
-}
+  }
 
 
   useEffect(() => {
@@ -139,7 +140,7 @@ export function AmountTransfertPagoMovil() {
       
     } else if(dateVenezuela.hour() > 18){
       const dateVenezuelaPlusOneDay: Moment = addDay(dateVenezuela.clone(), 1);
-      descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneDay.format('D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
+      descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
       dateOptions1 = dateVenezuelaPlusOneDay.toDate().toString();
       
     }

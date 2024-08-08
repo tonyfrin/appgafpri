@@ -173,6 +173,8 @@ export const useGafpriApiWalletAccount = ({useLogin, attributesRecharge, siteOpt
                                 note: 'Recarga de saldo',
                                 nameSend: attributesRecharge.states.nameSend,
                                 transactionType: 'recharge',
+                                instructions: attributesRecharge.states.instructions,
+                                processingDate: attributesRecharge.states.date,
                                 posts: {
                                     visibility: 'public',
                                 },

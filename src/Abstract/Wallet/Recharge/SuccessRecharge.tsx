@@ -54,7 +54,7 @@ export function SuccessRecharge() {
                     fontFamily: 'Poppins, sans-serif',
                     textAlign: 'center'
                 }}
-            >Hemos recibido de manera exitosa su solicitud de recarga, en breve verificarémos su transferencia y recibirá un correo al tener los fondos disonibles.</p>
+            >{`Hemos recibido de manera exitosa su solicitud de recarga. ${useWallet.attributesRecharge.states.instructions}. Recibirá un correo al tener los fondos disonibles.`}</p>
               <Link href="/billetera" style={{
                 textDecoration: 'none',
                 color: 'inherit',
