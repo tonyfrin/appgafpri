@@ -77,13 +77,6 @@ export function InitTransfers() {
         onClick: () => router.push('/billetera/enviar/gafpri')
       },
       {
-        id: 'pm2',
-        name: 'Zelle',
-        image: LogoZelle.src,
-        backgroundColor: 'rgb(107 29 207)',
-        onClick: () => router.push('/billetera/enviar/zelle')
-      },
-      {
         id: 'pm4',
         name: 'Pago Movil (Bs)',
         image: LogoBanesco.src,
