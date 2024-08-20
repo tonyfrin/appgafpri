@@ -129,7 +129,7 @@ export function TimeZelle() {
 
 
   
-  if (dateVenezuela.hour() >= 6 && dateVenezuela.hour() <= 18){
+  if (dateVenezuela.hour() >= 8 && dateVenezuela.hour() <= 16){
     dateVenezuelaPlusOneHour.add(2, 'hour');
     descriptionOptions1 = `Para procesar hoy entre ${dateVenezuela.format('h:mm A')} y las ${dateVenezuelaPlusOneHour.format('h:mm A')}`;
     dateOptions1 = dateVenezuelaPlusOneHour.toDate().toString();
@@ -142,7 +142,7 @@ export function TimeZelle() {
     descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions3 = dateVenezuelaPlusTwoBusinessDays.toDate().toString();
 
-  } else if(dateVenezuela.hour() < 6){
+  } else if(dateVenezuela.hour() < 8){
     descriptionOptions1 = `Para procesar hoy entre las 8:00 AM y las 10:00 AM`;
     dateOptions1 = dateVenezuela.toDate().toString();
 
@@ -154,7 +154,7 @@ export function TimeZelle() {
     descriptionOptions3 = `Para procesar ${dateVenezuelaPlusTwoBusinessDays.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
     dateOptions3 = dateVenezuelaPlusTwoBusinessDays.toDate().toString();
     
-  } else if(dateVenezuela.hour() > 18){
+  } else if(dateVenezuela.hour() > 16){
     dateVenezuelaPlusOneHour.add(1, 'day');
     descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneHour.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;;
     dateOptions1 = dateVenezuelaPlusOneHour.toDate().toString();

@@ -129,7 +129,7 @@ export function AmountTransfertPagoMovil() {
     let descriptionOptions1 = '';
     let dateOptions1 = '';
 
-    if (dateVenezuela.hour() >= 8 && dateVenezuela.hour() <= 18){
+    if (dateVenezuela.hour() >= 8 && dateVenezuela.hour() <= 16){
       dateVenezuelaPlusOneHour.add(2, 'hour');
       descriptionOptions1 = `Para procesar hoy entre ${dateVenezuela.format('h:mm A')} y las ${dateVenezuelaPlusOneHour.format('h:mm A')}`;
       dateOptions1 = dateVenezuela.toDate().toString();
@@ -138,7 +138,7 @@ export function AmountTransfertPagoMovil() {
       descriptionOptions1 = `Para procesar hoy entre las 8:00 AM y las 10:00 AM`;
       dateOptions1 = dateVenezuela.toDate().toString();
       
-    } else if(dateVenezuela.hour() > 18){
+    } else if(dateVenezuela.hour() > 16){
       const dateVenezuelaPlusOneDay: Moment = addDay(dateVenezuela.clone(), 1);
       descriptionOptions1 = `Para procesar ${dateVenezuelaPlusOneDay.format('dddd D/MM/YYYY')} entre las 8:00 AM y las 10:00 AM`;
       dateOptions1 = dateVenezuelaPlusOneDay.toDate().toString();
