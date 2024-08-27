@@ -233,7 +233,7 @@ export function AmountRechargeMySite({id}: {id: string | string[] | undefined}) 
                   }}>
                     <span className={textInfoStyles}>Los datos para transferencia Zelle son:</span>
                     <span className={textInfoStyles}>A nombre de: <span style={{fontWeight: 600}}>Gafpri Corp</span></span>
-                    <span className={textInfoStyles}>Correo: <span style={{fontWeight: 600}}>recargas@gafpri.com</span></span>
+                    <span className={textInfoStyles}>Correo: <span style={{fontWeight: 600}}>gafpricorp@gmail.com</span></span>
                   </div>
                 </div>
               }
