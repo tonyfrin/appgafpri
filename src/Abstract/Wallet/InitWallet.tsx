@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { useTheme } from '../context/ThemeContext';
+import { Error } from 'gafprilibui';
 import Link from 'next/link';
 import { WalletAccountAtrributesReturn } from '../states/wallet/useGafpriApiWalletAccount';
 import { decimalFormatPriceConverter } from '../helpers';
@@ -10,6 +11,7 @@ import { IoStorefrontOutline } from 'react-icons/io5';
 import { WalletButton } from '../Button/WalletButton';
 import { RiRefund2Line } from 'react-icons/ri';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { WhatsApp } from '../Notification/WhatsApp';
 
 const title1AppStyles = css`
   font-size: 1.2em;
@@ -191,11 +193,11 @@ export const InitWallet = () => {
                                 justifyContent: 'center'
                             }}
                         >
-                             <WalletButton 
+                             {/* <WalletButton 
                                 href='/billetera/recarga'
                                 Icon={RiRefund2Line}
                                 title='Recargar'
-                            />
+                            /> */}
                             <WalletButton 
                                 href='/billetera/enviar'
                                 Icon={IoPaperPlaneOutline}
@@ -203,6 +205,11 @@ export const InitWallet = () => {
                             />
                         </div>
                     </div>
+                    <Error 
+                            error={['La opción de recarga no está disponible por mantenimiento en la plataforma.']}
+                        />
+                        
+                    <WhatsApp />
                 </>
             )}
         </>

@@ -10,6 +10,8 @@ import { RiRefund2Line } from 'react-icons/ri';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { HomeWalletButton } from '../Button/HomeWalletButton';
 import { IoWalletOutline } from 'react-icons/io5';
+import { Error } from 'gafprilibui';
+import { WhatsApp } from '../Notification/WhatsApp';
 
 
 const title1AppStyles = css`
@@ -197,11 +199,11 @@ export const Home = () => {
                                     marginBottom: '0.2em'
                                 }}
                             >
-                                <HomeWalletButton 
+                                {/* <HomeWalletButton 
                                     href='/billetera/recarga'
                                     Icon={RiRefund2Line}
                                     title='Recargar'
-                                />
+                                /> */}
                                 <HomeWalletButton 
                                     href='/billetera/enviar'
                                     Icon={IoPaperPlaneOutline}
@@ -214,8 +216,11 @@ export const Home = () => {
                                 />
                             </div>
                         </div>
+                        <Error 
+                            error={['La opción de recarga no está disponible por mantenimiento en la plataforma.']}
+                        />
                         
-                        
+                        <WhatsApp />
                         
                         
                         <div>
