@@ -132,7 +132,7 @@ export const VideoSection = (): JSX.Element => {
                     <div className={videoSectionSubContentTitle}>
                         <div className={videoSectionContentTitleContainer}>
                             <h1 className={videoSectionContentTitleText}>
-                                <span>Recarga, compra, envía o transfiere <span style={{color: '#07b2e7'}}>con Gafpri.</span></span>
+                                <span>Todo en refrigeración <span style={{color: '#07b2e7'}}>con Gafpri.</span></span>
                                 <span className={videoSectionContentTitleTextSpan}></span>
                             </h1>
                             <div className={videoSectionContentTitleTextP}>

@@ -14,11 +14,8 @@ export const ServiceHome = (): JSX.Element => {
             <Layout>
                 <>
                    <VideoSection/>
-                   <ServiceSection/>
                    <StoreSection/>
-                   <WalletSection />
                    <DeliverySection/>
-                   <CreditSection />
                 </>
             </Layout>
     )

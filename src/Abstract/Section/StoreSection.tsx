@@ -5,7 +5,7 @@ import { CarouselItem } from '../Carousel/Carousel';
 import { ButtonCarouselService } from '../Button/ButtonCarouselService';
 
 const serviceSectionContainer = css`
-    
+    margin: 30px 0px 0px 0px;
 `;
 
 const serviceSectionContent = css`
