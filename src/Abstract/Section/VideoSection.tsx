@@ -2,9 +2,10 @@ import React from "react";
 import { css } from '@emotion/css';
 import { ButtonAppMobile } from "../Button/ButtonAppMobile";
 import Link from "next/link";
+import Header from "../assets/img/header.jpg";
+import Image from "next/image";
 
 const videoSectionContainer = css`
-    background-color: rgba(0, 0, 0, .75);
     border-radius: 0;
     justify-content: center;
     align-items: center;
@@ -82,7 +83,7 @@ const videoSectionContentTitleContainer = css`
 `;
 
 const videoSectionContentTitleText = css`
-    color: #fff;
+    color: #334376;
     text-align: left;
     font-size: 3.2rem;
     margin-top: 1rem;
@@ -109,7 +110,7 @@ const videoSectionContentTitleTextSpan = css`
 `
 
 const videoSectionContentTitleTextP = css`
-    color: #EEEEEE;
+    color: #334376;
     margin-top: 1rem;
     margin-bottom: 2rem;
     margin-right: 1rem;
@@ -125,9 +126,9 @@ export const VideoSection = (): JSX.Element => {
     return (
         <>
             <div className={videoSectionContainer}>
-                <video className={videoSectionContentVideo} autoPlay loop muted>
-                    <source src='https://categorygafpri.s3.us-east-2.amazonaws.com/tecnicos-refrigeracion-gafpri-hvac.mp4' type="video/mp4" />   
-                </video>
+                <Image width={Header.width}  height={Header.height} src={Header.src} className={videoSectionContentVideo} alt='Gafpri' />
+                
+             
                 <div className={videoSectionContentTitle}>
                     <div className={videoSectionSubContentTitle}>
                         <div className={videoSectionContentTitleContainer}>
