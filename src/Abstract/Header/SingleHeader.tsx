@@ -47,16 +47,8 @@ export const SingleHeader = ({
       link: '/',
     },
     {
-      title: 'About',
-      link: '/about',
-    },
-    {
-      title: 'Contact',
-      link: '/contact',
-    },
-    {
-      title: 'Services',
-      link: '/services',
+      title: 'Política de Privacidad',
+      link: '/privacy_policies',
     },
   ]
 
@@ -67,6 +59,10 @@ export const SingleHeader = ({
           styleImage={{
             maxWidth: '100px',
           }}
+          
+        />
+        <SingleMenu 
+          items={itemsMenu}
         />
       </div>
     </header>
