@@ -48,7 +48,7 @@ export const SingleHeader = ({
     },
     {
       title: 'Política de Privacidad',
-      link: '/privacy-policies',
+      link: '/privacy_policies',
     },
   ]
 
