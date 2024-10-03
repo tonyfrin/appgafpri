@@ -1,6 +1,6 @@
 {
   "name": "gafpriappweb",
-  "version": "0.1.144",
+  "version": "0.1.145",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "formidable": "^3.5.1",
     "gafprilibui": "git+ssh://git@github.com:tonyfrin/gafprilibui.git",
     "moment-timezone": "^0.5.45",
-    "next": "14.1.4",
+    "next": "^14.2.14",
     "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18",
@@ -30,13 +30,14 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.14",
     "@types/busboy": "^1.5.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.8",
     "busboy": "^1.6.0",
-    "eslint": "^8",
+    "eslint": "^8.57.1",
     "eslint-config-next": "14.1.4",
     "typescript": "^5"
   }
