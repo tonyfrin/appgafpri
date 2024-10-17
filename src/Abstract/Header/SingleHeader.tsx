@@ -50,6 +50,10 @@ export const SingleHeader = ({
       title: 'Política de Privacidad',
       link: '/privacy_policies',
     },
+    {
+      title: 'Soporte',
+      link: '/contacto',
+    },
   ]
 
   return (
