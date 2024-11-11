@@ -2,8 +2,12 @@ import React from "react";
 import { css } from '@emotion/css';
 import { ButtonAppMobile } from "../Button/ButtonAppMobile";
 import Link from "next/link";
-import Header from "../assets/img/header.jpg";
+import Header from "../assets/fondo-inicio3.jpg";
 import Image from "next/image";
+import { AiFillApple, AiFillAndroid } from 'react-icons/ai';
+import { AiOutlineGlobal } from 'react-icons/ai';
+import { FaGlobe } from 'react-icons/fa';
+
 
 const videoSectionContainer = css`
     border-radius: 0;
@@ -22,7 +26,7 @@ const videoSectionContentVideo = css`
     background-size: cover;
     width: 100%;
     max-width: 100%;
-    height: 100%;
+    height: 105vh;
     margin: auto;
     position: absolute;
     top: -100%;
@@ -133,35 +137,84 @@ export const VideoSection = (): JSX.Element => {
                     <div className={videoSectionSubContentTitle}>
                         <div className={videoSectionContentTitleContainer}>
                             <h1 className={videoSectionContentTitleText}>
-                                <span>Todo en refrigeración <span style={{color: '#07b2e7'}}>con Gafpri.</span></span>
+                                <span style={{color: '#FFF'}}>Todo en refrigeración <span style={{color: '#06b2e7'}}>con Gafpri.</span></span>
                                 <span className={videoSectionContentTitleTextSpan}></span>
                             </h1>
-                            <div className={videoSectionContentTitleTextP}>
-                                GAFPRI es la solución integral diseñada para ti. 
+                            <div className={videoSectionContentTitleTextP} style={{color: '#FFF'}}>
+                            Ahora compra tus repuestos de refrigeración de forma rápida y fácil desde tu móvil. 
                             </div>
                             <div>
-                            <Link href='/login'>
-                                <ButtonAppMobile 
-                                    title="Ingresar" 
-                                    containerStyles={{
-                                        width: '40%',
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                gap: '16px',
+                                padding: '16px 0px',
+                            }}>
+                                <a href="https://play.google.com/store/apps/details?id=com.gafpri.store" 
+                                    target="_blank" rel="noopener noreferrer" 
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-start',
+                                        backgroundColor: '#06b2e7',
+                                        color: 'white',
+                                        padding: '12px 24px',
                                         borderRadius: '8px',
-                                    }} 
-
-                                    contentStyles={{
-                                        padding: '0.7em',
-                                        custom: `
-                                            @media (max-width: 800px) {
-                                                font-size: 1.2em;
-                                            }
-
-                                            @media (max-width: 360px) {
-                                                font-size: 1em;
-                                            }
-                                        `
+                                        textDecoration: 'none',
+                                        fontWeight: 'bold',
+                                        fontSize: '16px',
+                                        width: '100%',
+                                        maxWidth: '300px',
+                                        textAlign: 'center',
                                     }}
-                                />
-                            </Link>
+                                >
+                                    <AiFillAndroid style={styles.icon} />
+                                    <span>Descarga GAFPRI en Play Store</span>
+                                </a>
+                                <a href="https://apps.apple.com/us/app/gafpri-store/id6736999329?l=es-MX" 
+                                    target="_blank" rel="noopener noreferrer" 
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-start',
+                                        backgroundColor: '#06b2e7',
+                                        color: 'white',
+                                        padding: '12px 24px',
+                                        borderRadius: '8px',
+                                        textDecoration: 'none',
+                                        fontWeight: 'bold',
+                                        fontSize: '16px',
+                                        width: '100%',
+                                        maxWidth: '300px',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <AiFillApple style={styles.icon} />
+                                    <span>Descarga GAFPRI en App Store</span>
+                                </a>
+                                <Link 
+                                    href='/login'
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-start',
+                                        backgroundColor: '#06b2e7',
+                                        color: 'white',
+                                        padding: '12px 24px',
+                                        borderRadius: '8px',
+                                        textDecoration: 'none',
+                                        fontWeight: 'bold',
+                                        fontSize: '16px',
+                                        width: '100%',
+                                        maxWidth: '300px',
+                                        textAlign: 'left',
+                                    }}
+                                >
+                                    <FaGlobe style={styles.icon} />
+                                    <span>Inicia sesión desde la web</span>
+                                </Link>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -170,3 +223,33 @@ export const VideoSection = (): JSX.Element => {
         </>
     )
 }
+
+const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '16px',
+      padding: '16px',
+    },
+    button: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#6A1B9A',
+      color: 'white',
+      padding: '12px 24px',
+      borderRadius: '8px',
+      textDecoration: 'none',
+      fontWeight: 'bold',
+      fontSize: '16px',
+      width: '100%',
+      maxWidth: '300px',
+      textAlign: 'center',
+    },
+    icon: {
+      marginRight: '8px',
+      fontSize: '40px',
+    },
+  };
+  

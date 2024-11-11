@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { ServiceCarousel } from '../Carousel/ServiceCarousel';
 import { CarouselItem } from '../Carousel/Carousel';
 import { ButtonCarouselService } from '../Button/ButtonCarouselService';
+import Filtro from '../assets/img/filtro-portada.jpg'
 
 const serviceSectionContainer = css`
     margin: 30px 0px 0px 0px;
@@ -41,14 +42,10 @@ const serviceSectionContentTitle = css`
 const industrialItems = [
         {
             title: 'Filtros',
-            src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/filtro.png',
+            src: Filtro.src,
             href: '/'
         },
-        {
-            title: 'Capacitores',
-            src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/Capacitores.png',
-            href: '/'
-        },
+
         {
             title: 'Motores',
             src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/Motores-us-motor.png',
@@ -69,11 +66,7 @@ const industrialItems = [
             src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/elemento.png',
             href: '/'
         },
-        {
-            title: 'Porta Elementos',
-            src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/Porta-elementos.png',
-            href: '/'
-        },
+
         {
             title: 'Válvulas',
             src: 'https://categorygafpri.s3.us-east-2.amazonaws.com/valvula-expansion.png',

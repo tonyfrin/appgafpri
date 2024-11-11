@@ -14,8 +14,8 @@ export const ServiceHome = (): JSX.Element => {
             <Layout>
                 <>
                    <VideoSection/>
-                   <StoreSection/>
-                   <DeliverySection/>
+                   {/* <StoreSection/>
+                   <DeliverySection/> */}
                 </>
             </Layout>
     )
