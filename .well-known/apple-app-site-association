@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "AXW7Q584QD.com.gafpri.store", 
+        "paths": [
+          "/store/*", 
+          "/store/tienda/producto/*"
+        ]
+      }
+    ]
+  }
+}
