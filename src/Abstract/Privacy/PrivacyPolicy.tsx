@@ -148,7 +148,7 @@ export const PrivacyPolicy: React.FC = () => {
         .container {
           max-width: 800px;
           margin: 0 auto;
-          padding: 20px;
+          padding: 60px;
         }
         h1 {
           font-size: 2em;

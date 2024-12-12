@@ -1,15 +1,15 @@
 import React from "react";
-import { Layout } from '../../Abstract/Component/Layout';
 import { PrivacyPolicy } from "../Privacy/PrivacyPolicy";
+import { LayoutWhite } from "./LayoutWhite";
 
 
 export const PrivacyPolicies = (): JSX.Element => {
     
       return (
-            <Layout>
+            <LayoutWhite>
                 <>
                    <PrivacyPolicy />
                 </>
-            </Layout>
+            </LayoutWhite>
     )
 }

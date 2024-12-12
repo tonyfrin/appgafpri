@@ -394,7 +394,11 @@ const titleThree = css`
 
 export const BudgetSection = (): JSX.Element => {
 
-
+    const trackLeadEvent = (platform: string) => {
+        if (window.fbq) {
+            window.fbq('track', 'Lead', { platform });
+        }
+    };
       
     return (
         <>
@@ -419,6 +423,7 @@ export const BudgetSection = (): JSX.Element => {
                         <a href="https://play.google.com/store/apps/details?id=com.gafpri.store" 
                             target="_blank" rel="noopener noreferrer" 
                             className={buttonStore}
+                            onClick={() => trackLeadEvent('Google Play')}
                         >
                             <AiFillAndroid className={iconStore} />
                             <span>Descarga GAFPRI en Play Store</span>
@@ -426,6 +431,7 @@ export const BudgetSection = (): JSX.Element => {
                         <a href="https://apps.apple.com/us/app/gafpri-store/id6736999329?l=es-MX" 
                             target="_blank" rel="noopener noreferrer" 
                             className={buttonStore}
+                            onClick={() => trackLeadEvent('App Store')}
                         >
                             <AiFillApple className={iconStore} />
                             <span>Descarga GAFPRI en App Store</span>

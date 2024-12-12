@@ -216,6 +216,12 @@ export const VideoSection = (): JSX.Element => {
         'https://categorygafpri.s3.us-east-2.amazonaws.com/06-2508.png',
         'https://categorygafpri.s3.us-east-2.amazonaws.com/protector4.png',
       ];
+
+        const trackLeadEvent = (platform: string) => {
+            if (window.fbq) {
+                window.fbq('track', 'Lead', { platform });
+            }
+        };
       
     return (
         <>
@@ -232,16 +238,22 @@ export const VideoSection = (): JSX.Element => {
                             </div>
                             <div>
                             <div className={buttonStoreContainer}>
-                                <a href="https://play.google.com/store/apps/details?id=com.gafpri.store" 
-                                    target="_blank" rel="noopener noreferrer" 
+                                <a 
+                                    href="https://play.google.com/store/apps/details?id=com.gafpri.store"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className={buttonStore}
+                                    onClick={() => trackLeadEvent('Google Play')}
                                 >
                                     <AiFillAndroid className={iconStore} />
                                     <span>Descarga GAFPRI en Play Store</span>
                                 </a>
-                                <a href="https://apps.apple.com/us/app/gafpri-store/id6736999329?l=es-MX" 
-                                    target="_blank" rel="noopener noreferrer" 
+                                <a 
+                                    href="https://apps.apple.com/us/app/gafpri-store/id6736999329?l=es-MX"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className={buttonStore}
+                                    onClick={() => trackLeadEvent('App Store')}
                                 >
                                     <AiFillApple className={iconStore} />
                                     <span>Descarga GAFPRI en App Store</span>
