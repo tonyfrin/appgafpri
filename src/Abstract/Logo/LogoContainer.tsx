@@ -51,6 +51,7 @@ const containerStyles = (styles: ContainerStyle) => css`
   width: ${styles.width || '100%'};
   margin: ${styles.margin || '0 auto'};
   text-align: ${styles.textAlign || 'center'};
+  
 `;
 
 const imgStyle = (styles: ImageStyle) => css`
@@ -61,11 +62,12 @@ const imgStyle = (styles: ImageStyle) => css`
 
   @media (max-width: 600px) {
     margin-top: ${styles.media600Style?.marginTop || '5px'};
-    max-width: ${styles.media600Style?.maxWidth || '130px'};
+    max-width: ${styles.media600Style?.maxWidth || '100px'};
+    margin-bottom: 0px;
   }
 
   @media (max-width: 300px) {
-    max-width: ${styles.media300Style?.maxWidth || '120px'};
+    max-width: ${styles.media300Style?.maxWidth || '90px'};
   }
 `;
 

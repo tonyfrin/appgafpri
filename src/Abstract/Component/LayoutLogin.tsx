@@ -70,9 +70,6 @@ export const LayoutLogin = ({
         <MainFooter 
             siteName="Gafpri Corp"
             isLogin={false}
-            styles={{
-                position: 'relative',
-            }}
         />
         </> 
       </div>

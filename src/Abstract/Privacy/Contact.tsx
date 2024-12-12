@@ -17,8 +17,8 @@ export const Contact: React.FC = () => {
       <ul style={{ lineHeight: "1.6" }}>
         <li>
           <strong>{`Correo electrónico:`}</strong>{" "}
-          <a href="mailto:soporte@gafpri.com" style={{ color: "#0070f3" }}>
-            {`soporte@gafpri.com`}
+          <a href="mailto:info@gafpristore.com" style={{ color: "#0070f3" }}>
+            {`info@gafpristore.com`}
           </a>
         </li>
         <li>

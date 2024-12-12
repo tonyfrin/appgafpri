@@ -45,13 +45,10 @@ export const Layout = ({
                 },
             }}
         />
-        <main style={{ flexGrow: 1 }}>{children}</main>
+        <main style={{ flexGrow: 1, backgroundColor: '#25467d' }}>{children}</main>
         <MainFooter 
             siteName="Gafpri Corp"
             isLogin={false}
-            styles={{
-                position: 'relative',
-            }}
         />
         </> 
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { cx, css } from '@emotion/css';
 
 const footerStyles = (styles: FooterStyle): string => css`
-  background-color: ${styles.backgroundColor || '#30679e'};
+  background-color: ${styles.backgroundColor || '#25467d'};
   color: ${styles.color || '#ffffff'};
   position: ${styles.position || 'fixed'};
   bottom: ${styles.bottom || 0};

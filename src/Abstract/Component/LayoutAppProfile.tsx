@@ -140,9 +140,6 @@ export const LayoutAppProfile = ({
           <MainFooter 
               siteName="Gafpri Store"
               isLogin={false}
-              styles={{
-                position: 'relative',
-              }}
           />
         </> 
         }

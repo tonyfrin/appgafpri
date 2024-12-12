@@ -28,6 +28,10 @@ const headerContentStyle = css`
     align-items: center;
     padding: 0 20px;
     margin: auto;
+
+     @media (max-width: 600px) {
+      justify-content: center;
+    }
 `;
 
 export type SingleHeaderProps = {

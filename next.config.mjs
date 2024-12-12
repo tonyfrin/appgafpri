@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['categorygafpri.s3.us-east-2.amazonaws.com', 'tiendasgafpri.com'],
+    domains: ['categorygafpri.s3.us-east-2.amazonaws.com', 'tiendasgafpri.com', 's3.us-east-2.amazonaws.com'],
+
   },
   env: {
     API_URL: process.env.API_URL,

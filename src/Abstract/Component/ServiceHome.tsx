@@ -1,22 +1,25 @@
 import React from "react";
 import { Layout } from '../../Abstract/Component/Layout';
 import { VideoSection } from "../../Abstract/Section/VideoSection";
-import { ServiceSection } from "../../Abstract/Section/ServiceSection";
-import { StoreSection } from "../../Abstract/Section/StoreSection";
-import { WalletSection } from "../../Abstract/Section/WalletSection";
-import { DeliverySection } from "../../Abstract/Section/DeliverySection";
-import { CreditSection } from "../../Abstract/Section/CreditSection";
+import { BudgetSection } from "../Section/BudgetSection";
+import FloatingWhatsAppButton from "../Notification/FloatingWhatsAppButton";
 
 
 export const ServiceHome = (): JSX.Element => {
+
+    
     
       return (
             <Layout>
-                <>
-                   <VideoSection/>
-                   {/* <StoreSection/>
-                   <DeliverySection/> */}
-                </>
+                <div
+                    style={{
+                        paddingBottom: '200px'
+                    }}
+                >
+                    <VideoSection/>
+                    <BudgetSection />
+                   <FloatingWhatsAppButton />
+                </div>
             </Layout>
     )
 }
