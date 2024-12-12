@@ -19,6 +19,3 @@ export default function FacebookPixel() {
 
   return null;
 }
-
-
-
