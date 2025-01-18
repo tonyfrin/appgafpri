@@ -85,6 +85,7 @@ export function PaymentPage() {
         
             if (result.status === "OK") {
               const dataToSend = JSON.stringify({
+                action: 'tokenize',
                 status: result.status,
                 token: result.token,
                 details: result.details,
@@ -147,7 +148,10 @@ export function PaymentPage() {
         className={buttonBackStyle}
         onClick={() => {
           if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage("closeWebView");
+            const dataToSend = JSON.stringify({
+              action: 'closeWebView',
+            });
+            window.ReactNativeWebView.postMessage(dataToSend);
           }
         }}
         >
