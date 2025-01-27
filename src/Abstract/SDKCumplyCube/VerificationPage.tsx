@@ -33,6 +33,28 @@ export function VerificationPage({ token }: VerificationPageProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
+  useEffect(() => {
+    if (!hasInitialized.current) {
+      hasInitialized.current = true;
+      setIsLoading(true);
+
+      // Cargar el SDK de ComplyCube
+      const script = document.createElement("script");
+      script.src = "https://assets.complycube.com/web-sdk/v1/complycube.min.js";
+      script.async = true;
+      script.onload = () => {
+        setIsLoading(false);
+        console.log("ComplyCube SDK loaded.");
+      };
+      document.head.appendChild(script);
+
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://assets.complycube.com/web-sdk/v1/style.css";
+      document.head.appendChild(link);
+    }
+  }, []);
+
   const startVerification = () => {
     if (window.ComplyCube) {
       const complycube = window.ComplyCube.mount({
@@ -77,7 +99,7 @@ export function VerificationPage({ token }: VerificationPageProps) {
       </div>
 
       <p style={{ margin: "20px 0", fontSize: "16px", lineHeight: "1.5", textAlign: "center" }}>
-        By clicking on the "Start Verification" button, you will be redirected to ComplyCube, the company responsible for identity and KYC verification. Gafpri does not collect any selfies or document photos; ComplyCube handles the entire verification process securely and independently.
+        {'By clicking on the "Start Verification" button, you will be redirected to ComplyCube, the company responsible for identity and KYC verification. Gafpri does not collect any selfies or document photos; ComplyCube handles the entire verification process securely and independently.'}
       </p>
 
       <div id="complycube-mount" style={{ marginBottom: "20px" }}></div>

@@ -12,13 +12,6 @@ export default function Document() {
           src="https://sandbox.web.squarecdn.com/v1/square.js"
           async
         ></script>
-        <script 
-          src="https://assets.complycube.com/web-sdk/v1/complycube.min.js"
-        ></script>
-        <link 
-          rel="stylesheet"
-          href="https://assets.complycube.com/web-sdk/v1/style.css"
-        />
       </Head>
       <body>
         <Main />
