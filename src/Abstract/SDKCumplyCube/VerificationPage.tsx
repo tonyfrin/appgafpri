@@ -100,16 +100,10 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
               ],
               language,
               onExit: function () {
-                if (window.ReactNativeWebView) {
-                  const dataToSend = JSON.stringify({ action: 'closeWebView' });
-                  window.ReactNativeWebView.postMessage(dataToSend);
-                }
+                window.location.href = 'gafpristore://store';
               },
               onModalClose: function () {
-                if (window.ReactNativeWebView) {
-                  const dataToSend = JSON.stringify({ action: 'closeWebView' });
-                  window.ReactNativeWebView.postMessage(dataToSend);
-                }
+                window.location.href = 'gafpristore://store';
               },
               onComplete: function (data: any) {
                 console.log("Capture complete", data);
