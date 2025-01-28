@@ -37,90 +37,107 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
       hasInitialized.current = true;
       setIsLoading(true);
 
-      // Cargar el SDK de ComplyCube
-      const script = document.createElement("script");
-      script.src = "https://assets.complycube.com/web-sdk/v1/complycube.min.js";
-      script.async = true;
-      script.onload = () => {
-        setIsLoading(false);
-        console.log("ComplyCube SDK loaded.");
-      };
-      document.head.appendChild(script);
+      // Solicitar permisos para la cámara
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(() => {
+          // Si los permisos se otorgan, cargar el SDK
+          const script = document.createElement("script");
+          script.src = "https://assets.complycube.com/web-sdk/v1/complycube.min.js";
+          script.async = true;
+          script.onload = () => {
+            setIsLoading(false);
+            console.log("ComplyCube SDK loaded.");
+          };
+          document.head.appendChild(script);
 
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "https://assets.complycube.com/web-sdk/v1/style.css";
-      document.head.appendChild(link);
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = "https://assets.complycube.com/web-sdk/v1/style.css";
+          document.head.appendChild(link);
+        })
+        .catch(error => {
+          console.error('Camera permission denied', error);
+          setIsLoading(false);
+        });
     }
   }, []);
 
   const startVerification = () => {
-    if (window.ComplyCube) {
-      const complycube = window.ComplyCube.mount({
-        token,
-        stages: [
-          'intro',  
-          'userConsentCapture', 
-          {
-            name: "faceCapture",
-            options: {
-              mode: "photo"
-            },
-          }, 
-          {
-            name: "documentCapture",
-            options: {
-              crossDeviceOnly: true,
-              captureMode: "photo",
-              documentTypes: {
-                passport: true,
-                driving_license: false,
-                national_identity_card: true,
-                residence_permit: {
-                  country: "VE",
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(() => {
+          // Si los permisos de la cámara fueron concedidos, proceder con la verificación
+          if (window.ComplyCube) {
+            const complycube = window.ComplyCube.mount({
+              token,
+              stages: [
+                'intro',
+                'userConsentCapture',
+                {
+                  name: "faceCapture",
+                  options: {
+                    mode: "photo",
+                  },
                 },
+                {
+                  name: "documentCapture",
+                  options: {
+                    crossDeviceOnly: true,
+                    documentTypes: {
+                      passport: true,
+                      national_identity_card: true,
+                      residence_permit: { country: "VE" },
+                    },
+                  },
+                },
+                {
+                  name: "completion",
+                  options: {
+                    heading: texts[language].successTitle,
+                    message: [texts[language].successSubtitle],
+                  },
+                },
+              ],
+              language,
+              onExit: function () {
+                if (window.ReactNativeWebView) {
+                  const dataToSend = JSON.stringify({ action: 'closeWebView' });
+                  window.ReactNativeWebView.postMessage(dataToSend);
+                }
               },
-            },
-          }, 
-          {
-            name: "completion",
-            options: {
-              heading: texts[language].successTitle,
-              message: [texts[language].successSubtitle]
-            },
-          },
-        ],
-        language,
-        onModalClose: function () {
-          if (window.ReactNativeWebView) {
-            const dataToSend = JSON.stringify({
-              action: 'closeWebView',
+              onModalClose: function () {
+                if (window.ReactNativeWebView) {
+                  const dataToSend = JSON.stringify({ action: 'closeWebView' });
+                  window.ReactNativeWebView.postMessage(dataToSend);
+                }
+              },
+              onComplete: function (data: any) {
+                console.log("Capture complete", data);
+                if (window.ReactNativeWebView) {
+                  const dataToSend = JSON.stringify({
+                    action: 'completeWebView',
+                    data
+                  });
+                  window.ReactNativeWebView.postMessage(dataToSend);
+                }
+              },
+              onError: function (error: any) {
+                console.error("Verification error", error);
+                if (window.ReactNativeWebView) {
+                  const dataToSend = JSON.stringify({ action: 'closeWebView' });
+                  window.ReactNativeWebView.postMessage(dataToSend);
+                }
+              },
             });
-            window.ReactNativeWebView.postMessage(dataToSend);
+          } else {
+            console.error("ComplyCube SDK is not loaded.");
           }
-        },
-        onComplete: function (data: any) {
-          console.log("Capture complete", data);
-          if (window.ReactNativeWebView) {
-            const dataToSend = JSON.stringify({
-              action: 'completeWebView',
-              data
-            });
-            window.ReactNativeWebView.postMessage(dataToSend);
-          }
-        },
-        onError: function (error: any) {
-          console.error("Verification error", error);
-          if (window.ReactNativeWebView) {
-            const dataToSend = JSON.stringify({
-              action: 'closeWebView',
-            });
-            window.ReactNativeWebView.postMessage(dataToSend);
-          }
-        },
-      });
+        })
+        .catch(error => {
+          console.error('Permission to access camera denied:', error);
+        });
     } else {
-      console.error("ComplyCube SDK is not loaded.");
+      console.error('Browser does not support media devices');
     }
   };
 
