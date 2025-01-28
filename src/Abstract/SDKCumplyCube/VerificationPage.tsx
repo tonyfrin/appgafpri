@@ -58,7 +58,31 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
     if (window.ComplyCube) {
       const complycube = window.ComplyCube.mount({
         token,
-        stages: ['intro',  'userConsentCapture', 'faceCapture', 'documentCapture', 'poaCapture', 'completion'],
+        stages: [
+          'intro',  
+          'userConsentCapture', 
+          {
+            name: "faceCapture",
+            options: {
+              mode: "photo"
+            },
+          }, 
+          {
+            name: "documentCapture",
+            options: {
+              crossDeviceOnly: true,
+              documentTypes: {
+                passport: true,
+                driving_license: false,
+                national_identity_card: true,
+                residence_permit: {
+                  country: "VE",
+                },
+              },
+            },
+          }, 
+          'completion'
+        ],
         language,
         onModalClose: function () {
           if (window.ReactNativeWebView) {
@@ -70,6 +94,13 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         },
         onComplete: function (data: any) {
           console.log("Capture complete", data);
+          if (window.ReactNativeWebView) {
+            const dataToSend = JSON.stringify({
+              action: 'completeWebView',
+              data
+            });
+            window.ReactNativeWebView.postMessage(dataToSend);
+          }
         },
         onError: function (error: any) {
           console.error("Verification error", error);
