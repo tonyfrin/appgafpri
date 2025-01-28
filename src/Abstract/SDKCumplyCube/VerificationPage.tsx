@@ -71,6 +71,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
             name: "documentCapture",
             options: {
               crossDeviceOnly: true,
+              captureMode: "photo",
               documentTypes: {
                 passport: true,
                 driving_license: false,
@@ -81,7 +82,13 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
               },
             },
           }, 
-          'completion'
+          {
+            name: "completion",
+            options: {
+              heading: texts[language].successTitle,
+              message: [texts[language].successSubtitle]
+            },
+          },
         ],
         language,
         onModalClose: function () {
@@ -122,11 +129,15 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
       verificationTitle: 'Verification in ComplyCube',
       verificationDescription: 'By clicking on the "Start Verification" button, you will be redirected to ComplyCube, the company responsible for identity and KYC verification. Gafpri does not collect any selfies or document photos; ComplyCube handles the entire verification process securely and independently.',
       startVerification: 'Start Verification',
+      successTitle: 'Verification Sent',
+      successSubtitle: 'Your verification has been successfully sent. You will shortly receive an email with the results.',
     },
     es: {
       verificationTitle: 'Verificación en ComplyCube',
       verificationDescription: 'Al hacer clic en el botón "Iniciar Verificación", será redirigido a ComplyCube, la empresa responsable de la verificación de identidad y KYC. Gafpri no recopila selfies ni fotos de documentos; ComplyCube maneja todo el proceso de verificación de manera segura e independiente.',
       startVerification: 'Iniciar Verificación',
+      successTitle: 'Verificación Enviada',
+      successSubtitle: 'Tu verificación ha sido enviada con éxito. En breve recibirás un correo electrónico con los resultados.',
     }
   };
 
