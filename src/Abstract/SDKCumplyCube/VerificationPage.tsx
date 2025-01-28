@@ -100,10 +100,10 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
               ],
               language,
               onExit: function () {
-                window.location.href = 'gafpristore://store';
+                window.location.href = 'gafpri://store';
               },
               onModalClose: function () {
-                window.location.href = 'gafpristore://store';
+                window.location.href = 'gafpri://store';
               },
               onComplete: function (data: any) {
                 console.log("Capture complete", data);
@@ -166,12 +166,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         <button
           className={buttonBackStyle}
           onClick={() => {
-            if (window.ReactNativeWebView) {
-              const dataToSend = JSON.stringify({
-                action: 'closeWebView',
-              });
-              window.ReactNativeWebView.postMessage(dataToSend);
-            }
+            window.location.href = 'gafpri://store';
           }}
         >
           <IoArrowBack style={{ fontSize: 18 }} />
