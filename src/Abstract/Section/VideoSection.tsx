@@ -198,23 +198,23 @@ const iconStore = css`
 export const VideoSection = (): JSX.Element => {
 
     const images: string[] = [
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/protector1.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/protector1.png',
         'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/GMCC.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/04-2060.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/04-2152.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/01-591.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/protector2.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/01-079.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/protector6.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/04-2060.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/04-2152.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/01-591.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/protector2.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/01-079.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/protector6.png',
         'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/GMCC.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/01-119.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/04-2044.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/04-2027.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/09-1320.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/02-1006.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/07-1508.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/06-2508.png',
-        'https://categorygafpri.s3.us-east-2.amazonaws.com/protector4.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/01-119.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/04-2044.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/04-2027.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/09-1320.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/02-1006.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/07-1508.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/06-2508.png',
+        'https://s3.us-east-2.amazonaws.com/gafpristore.com/image/protector4.png',
       ];
 
         const trackLeadEvent = (platform: string) => {
