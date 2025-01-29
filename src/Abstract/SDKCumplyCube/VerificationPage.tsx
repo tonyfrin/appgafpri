@@ -100,10 +100,10 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
               ],
               language,
               onExit: function () {
-                window.location.href = 'gafpri://store';
+                window.location.href = 'gafpri://';
               },
               onModalClose: function () {
-                window.location.href = 'gafpri://store';
+                window.location.href = 'gafpri://';
               },
               onComplete: function (data: any) {
                 console.log("Capture complete", data);
@@ -166,7 +166,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         <button
           className={buttonBackStyle}
           onClick={() => {
-            window.location.href = 'gafpri://store';
+            window.location.href = 'gafpri://';
           }}
         >
           <IoArrowBack style={{ fontSize: 18 }} />
