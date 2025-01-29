@@ -123,7 +123,12 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
   };
 
   const returnInit = () => {
+    if (window.ComplyCube && typeof window.ComplyCube.unmount === "function") {
+        window.ComplyCube.unmount();
+    }
+
     window.location.href = 'gafpri://';
+
 
     setTimeout(() => {
         router.push('/');
