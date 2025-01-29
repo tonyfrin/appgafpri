@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cx, css } from '@emotion/css';
 import { Loading } from "../Loading";
-import { ButtonAppMobile } from "../Button/ButtonAppMobile";
+import { useRouter } from "next/router";
 import { IoArrowBack } from "react-icons/io5";
 
 const mainContainerStyle = css`
@@ -28,6 +28,7 @@ type VerificationPageProps = {
 
 export function VerificationPage({ token, language }: VerificationPageProps) {
   const hasInitialized = useRef(false);
+  const router = useRouter();
 
   // Maneja si estamos esperando a que se inicialice el SDK
   const [isLoading, setIsLoading] = useState(false);
@@ -96,10 +97,10 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         ],
         language,
         onExit: function () {
-          window.location.href = 'gafpri://';
+          returnInit();
         },
         onModalClose: function () {
-          window.location.href = 'gafpri://';
+          returnInit();
         },
         onComplete: function (data: any) {
           console.log("Capture complete", data);
@@ -113,16 +114,21 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         },
         onError: function (error: any) {
           console.error("Verification error", error);
-          if (window.ReactNativeWebView) {
-            const dataToSend = JSON.stringify({ action: 'closeWebView' });
-            window.ReactNativeWebView.postMessage(dataToSend);
-          }
+          returnInit();
         },
       });
     } else {
       console.error("ComplyCube SDK is not loaded.");
     }
   };
+
+  const returnInit = () => {
+    window.location.href = 'gafpri://';
+
+    setTimeout(() => {
+        router.push('/');
+    }, 500);
+};
 
   useEffect(() => {
     startVerification();
@@ -159,9 +165,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
       >
         <button
           className={buttonBackStyle}
-          onClick={() => {
-            window.location.href = 'gafpri://';
-          }}
+          onClick={() => returnInit()}
         >
           <IoArrowBack style={{ fontSize: 18 }} />
         </button>
