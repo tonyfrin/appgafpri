@@ -168,40 +168,9 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         <h3>{texts[language].verificationTitle}</h3>
       </div>
 
-      <p style={{ margin: "20px 0", fontSize: "16px", lineHeight: "1.5", textAlign: "center" }}>
-        {texts[language].verificationDescription}
-      </p>
-
       <div id="complycube-mount" style={{ marginBottom: "20px" }}></div>
 
-      <form
-        id="verification-form"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 20,
-        }}
-      >
-        {isLoading && <Loading />}
-
-        <ButtonAppMobile
-          title={texts[language].startVerification}
-          containerProps={{ 
-            type: "button",
-            onClick: startVerification,
-          }}
-          contentStyles={{
-            fontSize: '18px',
-            padding: '10px',
-          }}
-          containerStyles={{
-            borderRadius: '10px',
-            width: '100%'
-          }}
-        />
-      </form>
-
-      <div id="payment-status-container" style={{ marginTop: "20px" }}></div>
+      {isLoading && <Loading />}
     </div>
   );
 }
