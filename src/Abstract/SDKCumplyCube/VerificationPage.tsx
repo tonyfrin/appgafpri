@@ -63,77 +63,71 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
   }, []);
 
   const startVerification = () => {
-    if (navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(() => {
-          // Si los permisos de la cámara fueron concedidos, proceder con la verificación
-          if (window.ComplyCube) {
-            const complycube = window.ComplyCube.mount({
-              token,
-              stages: [
-                'intro',
-                'userConsentCapture',
-                {
-                  name: "faceCapture",
-                  options: {
-                    mode: "photo",
-                  },
-                },
-                {
-                  name: "documentCapture",
-                  options: {
-                    crossDeviceOnly: true,
-                    documentTypes: {
-                      passport: true,
-                      national_identity_card: true,
-                      residence_permit: { country: "VE" },
-                    },
-                  },
-                },
-                {
-                  name: "completion",
-                  options: {
-                    heading: texts[language].successTitle,
-                    message: [texts[language].successSubtitle],
-                  },
-                },
-              ],
-              language,
-              onExit: function () {
-                window.location.href = 'gafpri://';
+    if (window.ComplyCube) {
+      const complycube = window.ComplyCube.mount({
+        token,
+        stages: [
+          'intro',
+          'userConsentCapture',
+          {
+            name: "faceCapture",
+            options: {
+              mode: "photo",
+            },
+          },
+          {
+            name: "documentCapture",
+            options: {
+              crossDeviceOnly: true,
+              documentTypes: {
+                passport: true,
+                national_identity_card: true,
+                residence_permit: { country: "VE" },
               },
-              onModalClose: function () {
-                window.location.href = 'gafpri://';
-              },
-              onComplete: function (data: any) {
-                console.log("Capture complete", data);
-                if (window.ReactNativeWebView) {
-                  const dataToSend = JSON.stringify({
-                    action: 'completeWebView',
-                    data
-                  });
-                  window.ReactNativeWebView.postMessage(dataToSend);
-                }
-              },
-              onError: function (error: any) {
-                console.error("Verification error", error);
-                if (window.ReactNativeWebView) {
-                  const dataToSend = JSON.stringify({ action: 'closeWebView' });
-                  window.ReactNativeWebView.postMessage(dataToSend);
-                }
-              },
+            },
+          },
+          {
+            name: "completion",
+            options: {
+              heading: texts[language].successTitle,
+              message: [texts[language].successSubtitle],
+            },
+          },
+        ],
+        language,
+        onExit: function () {
+          window.location.href = 'gafpri://';
+        },
+        onModalClose: function () {
+          window.location.href = 'gafpri://';
+        },
+        onComplete: function (data: any) {
+          console.log("Capture complete", data);
+          if (window.ReactNativeWebView) {
+            const dataToSend = JSON.stringify({
+              action: 'completeWebView',
+              data
             });
-          } else {
-            console.error("ComplyCube SDK is not loaded.");
+            window.ReactNativeWebView.postMessage(dataToSend);
           }
-        })
-        .catch(error => {
-          console.error('Permission to access camera denied:', error);
-        });
+        },
+        onError: function (error: any) {
+          console.error("Verification error", error);
+          if (window.ReactNativeWebView) {
+            const dataToSend = JSON.stringify({ action: 'closeWebView' });
+            window.ReactNativeWebView.postMessage(dataToSend);
+          }
+        },
+      });
     } else {
-      console.error('Browser does not support media devices');
+      console.error("ComplyCube SDK is not loaded.");
     }
   };
+
+  useEffect(() => {
+    startVerification();
+  }, [window.ComplyCube]);
+
 
   const texts = {
     en: {
