@@ -114,7 +114,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         },
         onError: function (error: any) {
           console.error("Verification error", error);
-          returnInit();
+          // returnInit();
         },
       });
     } else {
