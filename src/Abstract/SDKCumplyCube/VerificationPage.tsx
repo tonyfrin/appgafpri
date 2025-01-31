@@ -69,13 +69,6 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         token,
         stages: [
           'intro',
-          'userConsentCapture',
-          {
-            name: "faceCapture",
-            options: {
-              mode: "photo",
-            },
-          },
           {
             name: "documentCapture",
             options: {
@@ -87,6 +80,8 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
               },
             },
           },
+          'userConsentCapture',
+          'faceCapture',
           {
             name: "completion",
             options: {
