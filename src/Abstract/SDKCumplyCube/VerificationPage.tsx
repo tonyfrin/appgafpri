@@ -44,6 +44,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
           data
         }
       });
+      alert(`${resp.success}`);
   }
 
   useEffect(() => {
