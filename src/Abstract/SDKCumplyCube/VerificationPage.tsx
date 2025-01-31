@@ -69,6 +69,13 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         token,
         stages: [
           'intro',
+          'userConsentCapture',
+          {
+            name: "faceCapture",
+            options: {
+              mode: "photo",
+            },
+          },
           {
             name: "documentCapture",
             options: {
@@ -76,12 +83,11 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
               documentTypes: {
                 passport: true,
                 national_identity_card: true,
+                driving_license: true,
                 residence_permit: { country: "VE" },
               },
             },
           },
-          'userConsentCapture',
-          'faceCapture',
           {
             name: "completion",
             options: {
@@ -98,18 +104,13 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
           returnInit();
         },
         onComplete: function (data: any) {
-          console.log("Capture complete", data);
-          if (window.ReactNativeWebView) {
-            const dataToSend = JSON.stringify({
-              action: 'completeWebView',
-              data
-            });
-            window.ReactNativeWebView.postMessage(dataToSend);
-          }
+          setTimeout(() => {
+              returnInit();
+          }, 5000);
         },
         onError: function (error: any) {
           console.error("Verification error", error);
-          // returnInit();
+          returnInit();
         },
       });
     } else {
@@ -141,14 +142,14 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
       verificationDescription: 'By clicking on the "Start Verification" button, you will be redirected to ComplyCube, the company responsible for identity and KYC verification. Gafpri does not collect any selfies or document photos; ComplyCube handles the entire verification process securely and independently.',
       startVerification: 'Start Verification',
       successTitle: 'Verification Sent',
-      successSubtitle: 'Your verification has been successfully sent. You will shortly receive an email with the results.',
+      successSubtitle: 'Your verification has been successfully submitted. Please continue the process in the Gafpri app.',
     },
     es: {
       verificationTitle: 'Verificación en ComplyCube',
       verificationDescription: 'Al hacer clic en el botón "Iniciar Verificación", será redirigido a ComplyCube, la empresa responsable de la verificación de identidad y KYC. Gafpri no recopila selfies ni fotos de documentos; ComplyCube maneja todo el proceso de verificación de manera segura e independiente.',
       startVerification: 'Iniciar Verificación',
       successTitle: 'Verificación Enviada',
-      successSubtitle: 'Tu verificación ha sido enviada con éxito. En breve recibirás un correo electrónico con los resultados.',
+      successSubtitle: 'Tu verificación se ha enviado con éxito. Por favor, continúa el proceso en la app de Gafpri.',
     }
   };
 
