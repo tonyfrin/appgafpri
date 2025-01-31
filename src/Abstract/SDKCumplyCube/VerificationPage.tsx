@@ -37,7 +37,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
 
   const onComplete = async (data: any) => {
      const resp = await gafpriFetch({
-        initMethod: 'GET',
+        initMethod: 'PATCH',
         initRoute: `${ENTITY_ROUTE}/reception-comply-cube`,
         initCredentials: {
           token,
