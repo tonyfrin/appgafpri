@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { cx, css } from '@emotion/css';
+import { gafpriFetch } from '../helpers';
 import { Loading } from "../Loading";
 import { useRouter } from "next/router";
 import { IoArrowBack } from "react-icons/io5";
+import { ENTITY_ROUTE } from "../constants";
 
 const mainContainerStyle = css`
   max-width: 600px; 
@@ -32,6 +34,17 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
 
   // Maneja si estamos esperando a que se inicialice el SDK
   const [isLoading, setIsLoading] = useState(false);
+
+  const onComplete = async (data: any) => {
+     const resp = await gafpriFetch({
+        initMethod: 'GET',
+        initRoute: `${ENTITY_ROUTE}/reception-comply-cube`,
+        initCredentials: {
+          token,
+          data
+        }
+      });
+  }
 
   useEffect(() => {
     if (!hasInitialized.current) {
@@ -103,7 +116,8 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
         onModalClose: function () {
           returnInit();
         },
-        onComplete: function (data: any) {
+        onComplete: async function (data: any) {
+          await onComplete(data)
           setTimeout(() => {
               returnInit();
           }, 5000);
