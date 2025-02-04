@@ -44,7 +44,6 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
           data
         }
       });
-      alert(`${resp.success}`);
   }
 
   useEffect(() => {
@@ -121,7 +120,7 @@ export function VerificationPage({ token, language }: VerificationPageProps) {
           await onComplete(data)
           setTimeout(() => {
               returnInit();
-          }, 5000);
+          }, 3000);
         },
         onError: function (error: any) {
           console.error("Verification error", error);
